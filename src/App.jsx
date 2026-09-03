@@ -1,5 +1,11 @@
+import { HabitList } from './components/HabitList';
+
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <HabitList />
+    </div>
+  );
 }
 
 export default App;
