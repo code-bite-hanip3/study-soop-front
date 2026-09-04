@@ -1,0 +1,68 @@
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100; 
+  /*위에 요부분만 추가 */
+  padding: 20px 32px;
+  background: var(--color-background);
+  transition: all 0.5s ease;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.logoMobile {
+  display: none;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 252px;
+  height: 58px;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-family: EF_jejudoldam;
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 16px;
+  transition: all 0.5s ease;
+}
+
+@media (width <= 1024px) {
+  header {
+    padding: 20px 24px;
+  }
+  .button {
+    width: 160px;
+    height: 58px;
+    border-radius: 14px;
+  }
+}
+
+@media (width <= 480px) {
+  header {
+    padding: 20px 16px;
+  }
+  .logoDesktop {
+    display: none;
+  }
+  .logoMobile {
+    display: block;
+  }
+  .button {
+    width: 106px;
+    height: 38px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+}

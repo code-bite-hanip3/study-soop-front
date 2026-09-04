@@ -1,0 +1,14 @@
+.main {
+  padding: 40px;
+  transition: all 0.5s ease;
+}
+@media (width <= 1024px) {
+  .main {
+    padding: 24px;
+  }
+}
+@media (width <= 480px) {
+  .main {
+    padding: 16px;
+  }
+}
