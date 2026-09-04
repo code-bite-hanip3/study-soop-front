@@ -1,0 +1,60 @@
+.button {
+  display: flex;
+  width: 64px;
+  height: 64px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 50%;
+
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  transition: all 0.2s;
+}
+.button:active {
+  transform: translateY(3px);
+}
+.restart {
+  background-image: url(@/assets/icon_restart.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.pause {
+  background-image: url(@/assets/icon_pause.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.primary {
+  background-color: var(--color-primary);
+}
+.green {
+  background-color: var(--color-green);
+}
+.disabled {
+  background-color: var(--color-gray);
+  pointer-events: none;
+}
+@media (width <= 480px) {
+  .button {
+    width: 48px;
+    height: 48px;
+  }
+  .restart {
+    background-image: url(@/assets/icon_restart.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26.4px 26.4px;
+  }
+  .pause {
+    background-image: url(@/assets/icon_pause.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26.4px 26.4px;
+  }
+}

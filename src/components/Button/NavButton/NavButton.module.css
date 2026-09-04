@@ -1,0 +1,50 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+  background: #fff;
+  /* width: 144px; */
+  height: 48px;
+  padding: 10px;
+
+  color: var(--gray-gray_818181, #818181);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.button::after {
+  content: "";
+  display: inline-block;
+  background-image: url(@/assets/icon_arrow_right.svg);
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+.button:active {
+  transform: translateY(3px);
+}
+
+.type01 {
+  width: 144px;
+}
+.type02 {
+  width: 82px;
+}
+
+@media (width <= 480px) {
+  .type01 {
+    width: 120px;
+  }
+  .type02 {
+    width: 58px;
+  }
+}
