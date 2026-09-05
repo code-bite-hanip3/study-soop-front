@@ -1,5 +1,5 @@
 {
-  "name": "study-soop",
+  "name": "study-forest-web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,12 +8,14 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write ."
   },
   "dependencies": {
+    "classix": "^2.2.18",
+    "nanoid": "^6.0.1",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-icons": "^5.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
