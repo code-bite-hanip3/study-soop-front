@@ -7,3 +7,27 @@
   width: 20rem;
   height: 5rem;
 }
+.button {
+  display: flex;
+}
+.start {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+.disabled {
+  color: gray;
+}
+.puase {
+  display: block;
+}
+/* .puaseHidden {
+  display: none;
+} */
+.cancel {
+  display: block;
+}
+/* .cancelHidden {
+  display: none;
+} */
