@@ -1,27 +1,20 @@
+import { useHabit } from '@/hooks/useHabit';
+import styles from './HabitList.module.css';
+// import { useParams } from 'react-router'; -> study페이지 완성되면 적용
+
 export function HabitList() {
-  const habits = [
-    '미라클모닝',
-    '미라클모닝',
-    '미라클모닝',
-    '미라클모닝',
-    '미라클모닝',
-    '미라클모닝',
-    "미라클모닝",
-  ];
+  const studyId = '27c6dfa6-d801-4c2b-90d2-d4b394c9dd64';
+  const { habits, error } = useHabit(studyId);
+
+  if (error) {
+    alert('데이터를 불러오지 못했습니다....ㅠ');
+  }
 
   return (
     <>
-      <div className="habitListouter">
-        <div className="habitListbox">
-          <div className="todayHabit">
-            <p>오늘의 습관</p>
-            <button className="listEdit">목록수정</button>
-          </div>
-          <div className="habitList">
-            {habits.map((habit) => (<li>{habit}</li>))}
-          </div>
-        </div>
-      </div>
+      {habits.map((habit) => (
+        <li className={styles.habitContent} key={habit.id}>{habit.name}</li>
+      ))}
     </>
   );
 }
