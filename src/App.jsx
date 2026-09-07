@@ -13,6 +13,8 @@ import { RecordButton } from './components/Button/RecordButton';
 import { NavButton } from './components/Button/NavButton';
 import { useState } from 'react';
 import { Input } from './components/Input';
+import { Route, Routes } from 'react-router-dom';
+import { Focus } from './pages/focus';
 
 function App() {
   const [nickname, setNickname] = useState('');
@@ -92,6 +94,9 @@ function App() {
           <CircleButton icon="pause" disabled />
         </Frame>
       </Layout>
+      <Routes>
+        <Route path="/focus" element={<Focus />} />
+      </Routes>
     </>
   );
 }

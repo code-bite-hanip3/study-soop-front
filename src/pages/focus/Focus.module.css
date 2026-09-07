@@ -1,0 +1,9 @@
+.time {
+  font-size: 4rem;
+}
+.input {
+  outline: none;
+  border: none;
+  width: 20rem;
+  height: 5rem;
+}
