@@ -4,6 +4,7 @@ import { Frame } from '@/components/Frame';
 import { RecordButton } from '@/components/Button/RecordButton';
 import { CircleButton } from '@/components/Button/CircleButton';
 import { useCountdown } from '@/hooks/useCountdown.js';
+import { useState } from 'react';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
@@ -14,7 +15,26 @@ const formatTime = (totalSeconds) => {
   return `${minutes.padStart(2, '0')} : ${seconds.padStart(2, '0')}`;
 };
 
+const formatInitMinutes = (num) => {
+  const t = Number(num * 60);
+  const minutes = String(Math.floor(t / 60));
+  const seconds = String(t % 60);
+
+  return `${minutes.padStart(2, '0')} : ${seconds.padStart(2, '0')}`;
+};
+
 function Focus() {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleFocus = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    setInputMinutes(validInputMinutes(inputMinutes));
+  };
+
   const {
     status,
     start,
@@ -47,12 +67,16 @@ function Focus() {
               type="text"
               className={`${styles.timerInput} ${timerAlert ? styles.timerAlert : ''}`}
               value={
-                status !== 'READY' ? formatTime(remainingSeconds) : inputMinutes
+                status !== 'READY'
+                  ? formatTime(remainingSeconds)
+                  : isEditing
+                    ? inputMinutes
+                    : formatInitMinutes(inputMinutes)
               }
               onChange={(e) => acceptOnlyNumber(e)}
               disabled={status !== 'READY'}
-              onBlur={() => setInputMinutes(validInputMinutes(inputMinutes))}
-              placeholder="00:00"
+              onBlur={handleBlur}
+              onFocus={handleFocus}
             />
           </section>
           <section className={styles.button}>
