@@ -31,39 +31,56 @@ function Focus() {
   return (
     <Layout>
       <Frame>
-        <div className={styles.time}>{formatTime(remainingSeconds)}</div>
-        <div>
-          <input
-            type="text"
-            className={`${styles.input} ${timerAlert ? styles.timerAlert : ''}`}
-            value={
-              status !== 'READY' ? formatTime(remainingSeconds) : inputMinutes
-            }
-            onChange={(e) => acceptOnlyNumber(e)}
-            disabled={status !== 'READY'}
-            onBlur={() => setInputMinutes(validInputMinutes(inputMinutes))}
-          />
-        </div>
-        <section className={styles.button}>
-          <div
-            className={`${status === 'READY' ? styles.hidden : styles.pause}`}
-            onClick={pause}
-          >
-            <CircleButton icon="pause" bgcolor="green" />
+        <section className={styles.intro}>
+          <div className={styles.title}>
+            <p className={styles.userTitle}>연우의 개발공장</p>
+            <div className={styles.linkTag}>오늘의 습관</div>
+            <div className={styles.linkTag}>홈</div>
           </div>
-          <div
-            onClick={start}
-            className={`${status === 'READY' ? styles.start : styles.disabled}`}
-          >
-            <RecordButton>Start!</RecordButton>
-          </div>
-          <div
-            className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
-            onClick={cancel}
-          >
-            <CircleButton />
-          </div>
+          <div className={styles.pointText}>현재까지 획득한 포인트</div>
+          <div className={styles.earnedPoint}>🍀310P 획득</div>
         </section>
+        <div className={styles.wrapper}>
+          <section className={styles.timer}>
+            <p className={styles.content}>오늘의 집중</p>
+            <input
+              type="text"
+              className={`${styles.timerInput} ${timerAlert ? styles.timerAlert : ''}`}
+              value={
+                status !== 'READY' ? formatTime(remainingSeconds) : inputMinutes
+              }
+              onChange={(e) => acceptOnlyNumber(e)}
+              disabled={status !== 'READY'}
+              onBlur={() => setInputMinutes(validInputMinutes(inputMinutes))}
+              placeholder="00:00"
+            />
+          </section>
+          <section className={styles.button}>
+            <div
+              className={`${status === 'READY' ? styles.hidden : styles.pause}`}
+              onClick={pause}
+            >
+              <CircleButton
+                icon={`${status === 'RUNNING' ? 'pause' : 'restart'}`}
+                bgcolor="green"
+              />
+            </div>
+            <div
+              onClick={start}
+              className={`${status === 'READY' ? styles.start : styles.disabled}`}
+            >
+              <RecordButton disabled={status !== 'READY' ? true : false}>
+                Start!
+              </RecordButton>
+            </div>
+            <div
+              className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
+              onClick={cancel}
+            >
+              <CircleButton />
+            </div>
+          </section>
+        </div>
       </Frame>
     </Layout>
   );
