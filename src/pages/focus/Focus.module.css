@@ -31,3 +31,6 @@
 /* .cancelHidden {
   display: none;
 } */
+.timerAlert {
+  color: red;
+}
