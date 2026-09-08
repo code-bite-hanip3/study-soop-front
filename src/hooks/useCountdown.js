@@ -21,7 +21,7 @@ export function useCountdown() {
   // 입력값 검증
   const validInputMinutes = (num) => {
     let n = Math.floor(Number(num));
-    if (isNaN(num) || n <= 0) {
+    if (isNaN(n) || n <= 0) {
       n = DEFAULT_MINUTES;
     } else if (n > 99) {
       n = 60;
