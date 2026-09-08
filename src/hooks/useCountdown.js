@@ -69,6 +69,7 @@ export function useCountdown() {
 
   const cancel = () => {
     calculateValidNum(status);
+    setTimerAlert(false);
     setStatus('READY');
   };
 
@@ -93,13 +94,15 @@ export function useCountdown() {
       () =>
         setRemainingSeconds((prev) => {
           const next = prev - 1;
-          underOneMinute(next);
+
           if (next <= 0) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
             setStatus('READY');
+            setTimerAlert(false);
             return 0;
           }
+          underOneMinute(next);
           return next;
         }),
       1000,
