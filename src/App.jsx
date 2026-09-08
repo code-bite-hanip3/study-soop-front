@@ -7,6 +7,8 @@ import './styles/global.css';
 import { Layout } from './components/Layout';
 import { Frame } from './components/Frame';
 import { HabitsPage } from './pages/habits';
+import { Routes, Route } from 'react-router-dom';
+import { Focus } from './pages/focus';
 // import { Point } from './components/Point/Point';
 // import { Button } from './components/Button/BasicButton';
 // import { CircleButton } from './components/Button/CircleButton';
@@ -92,6 +94,10 @@ function App() {
           <CircleButton icon="pause" disabled /> */}
         </Frame>
       </Layout>
+
+      <Routes>
+        <Route path="/focus" element={<Focus />} />
+      </Routes>
     </main>
   );
 }
