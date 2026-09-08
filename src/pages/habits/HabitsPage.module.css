@@ -1,0 +1,122 @@
+.head {
+  width: 100%;
+}
+.habitNav {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+
+  & h2 {
+    font-size: 32px;
+  }
+  & .habitBtns {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+.habitDate {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-bottom: 24px;
+
+  & p {
+    color: var(--gray-gray_818181, #818181);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  & .date {
+    width: fit-content;
+    display: flex;
+    padding: 8px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.3);
+
+    color: var(--black-black_414141, #414141);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+.habitFrame {
+  width: 100%;
+  display: flex;
+  padding: 40px 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 20px;
+  border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+  background: #fff;
+
+  & .habitBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.habitFrame .habitBox .todayHabit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 45%;
+  margin-bottom: 24px;
+  & .spacer, p, .listEdit{
+    flex-shrink: 0;
+  }
+
+  & .spacer {
+    visibility: hidden;
+    font-size: 14px;
+  }
+  & p {
+    color: var(--black-black_414141, #414141);
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  & .listEdit {
+    color: var(--gray-gray_818181, #818181);
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  & .listEdit:active {
+    transform: translateY(2px);
+  }
+}
+.habitFrame .habitList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
