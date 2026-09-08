@@ -9,7 +9,7 @@ export function useHabit(studyId) {
     const getHabits = async () => {
       try {
         const result = await fetchHabits(studyId);
-        setHabits(result);
+        setHabits(result.habits);
       } catch (error) {
         setError(error.message)
       }

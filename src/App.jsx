@@ -2,8 +2,8 @@
 // 라우팅은 각 페이지 담당자가 추가합니다 (react-router-dom 등).
 
 import './App.css';
-import './reset.css';
-import './global.css';
+import './styles/reset.css';
+import './styles/global.css';
 import { Layout } from './components/Layout';
 import { Frame } from './components/Frame';
 import { HabitsPage } from './pages/habits';
