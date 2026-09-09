@@ -7,6 +7,8 @@ import './styles/global.css';
 import { Layout } from './components/Layout';
 import { Frame } from './components/Frame';
 import { HabitsPage } from './pages/habits';
+import { Routes, Route } from 'react-router-dom';
+import { Focus } from './pages/focus';
 // import { Point } from './components/Point/Point';
 // import { Button } from './components/Button/BasicButton';
 // import { CircleButton } from './components/Button/CircleButton';
@@ -21,10 +23,10 @@ function App() {
   // const [passwordConfirm, setPasswordConfirm] = useState('');
 
   return (
-      <main>
-        {/* <h1>공부의 숲</h1> */}
-        {/* TODO(각자): 자기 페이지를 pages/ 에 만들고 여기로 진입 */}
-        <Layout hasCreateButton>
+    <main>
+      {/* <h1>공부의 숲</h1> */}
+      {/* TODO(각자): 자기 페이지를 pages/ 에 만들고 여기로 진입 */}
+      <Layout hasCreateButton>
         <Frame>
           <HabitsPage />
           {/* <Point></Point>
@@ -92,8 +94,11 @@ function App() {
           <CircleButton icon="pause" disabled /> */}
         </Frame>
       </Layout>
-      </main>
-      
+
+      <Routes>
+        <Route path="/focus" element={<Focus />} />
+      </Routes>
+    </main>
   );
 }
 
