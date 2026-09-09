@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styles from './Modal.module.css';
 
 
@@ -10,6 +11,16 @@ import styles from './Modal.module.css';
 // 각자 페이지 : const [isModalOpen, setIsModalOpen] = useState(false); 가 있어야됨 변수 이름은 자유
 // 모달이 열리는 페이지 : onClose={() => setIsModalOpen(false)} 이게 props로 들어가야됨 
 export function Modal({children, onClose}){
+    useEffect(() => {
+    // 모달이 열리는 순간(컴포넌트가 마운트되는 순간) 실행
+    document.body.style.overflow = 'hidden';
+
+    // 모달이 닫히는 순간(컴포넌트가 언마운트되는 순간) 실행되는 clean-up 함수
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []); // 빈 배열 -> 마운트/언마운트 시에만 실행
+  
   return(
     <>
       <div className={styles.wrapModal} onClick={onClose}>

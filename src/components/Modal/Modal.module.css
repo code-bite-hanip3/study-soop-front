@@ -13,7 +13,7 @@
 .wrapModal .mainModal {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   width: 64.8%;
   /* height: 861px; */
