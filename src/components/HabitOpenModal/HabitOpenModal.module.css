@@ -1,0 +1,27 @@
+  .title {
+    color: var(--black-black_414141, #414141);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  & .content {
+    background-color: #69aef7;
+  }
+  & .button {
+    background-color: #ffc954;
+  }
+
+.habitList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
