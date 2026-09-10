@@ -20,7 +20,7 @@ export const updateHabit = async (habitId, habitData) => {
 };
 
 // DELETE /habits/:habitId (소프트 삭제)
-export const deleteHabit = async (habitId) => {
-  const res = await http.delete(`/habits/${habitId}`);
+export const deleteHabit = async (studyId, habitId) => {
+  const res = await http.delete(`/studies/${studyId}/habits/${habitId}`);
   return res.data;
 };

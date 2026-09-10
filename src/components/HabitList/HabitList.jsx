@@ -32,7 +32,7 @@ export function HabitList() {
     try {
       let result;
       if (habit.recordId === null) {
-        result = await createHabitRecord({
+          result = await createHabitRecord({
           habitId: habit.id,
           dateKey: getTodayDate(),
           isCompleted: true,
