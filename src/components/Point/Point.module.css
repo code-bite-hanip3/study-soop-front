@@ -3,6 +3,7 @@
   flex-direction: row;
   gap: 4px;
   padding: 8px 12px;
+  flex-shrink: 0;
   background: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 50px;
