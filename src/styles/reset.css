@@ -100,9 +100,6 @@ h6 {
 }
 
 /* 여기서부터는 내가 직접 추가한 속성들 */
-html {
-  font-size: 62.5%;
-}
 a {
   text-decoration: none;
 }
