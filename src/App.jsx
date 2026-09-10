@@ -2,32 +2,34 @@
 // 라우팅은 각 페이지 담당자가 추가합니다 (react-router-dom 등).
 
 import './App.css';
-import './reset.css';
-import './global.css';
+import './styles/reset.css';
+import './styles/global.css';
 import { Layout } from './components/Layout';
 import { Frame } from './components/Frame';
-import { Point } from './components/Point/Point';
-import { Button } from './components/Button/BasicButton';
-import { CircleButton } from './components/Button/CircleButton';
-import { RecordButton } from './components/Button/RecordButton';
-import { NavButton } from './components/Button/NavButton';
-import { useState } from 'react';
-import { Input } from './components/Input';
+import { HabitsPage } from './pages/habits';
+import { Routes, Route } from 'react-router-dom';
+import { Focus } from './pages/focus';
+// import { Point } from './components/Point/Point';
+// import { Button } from './components/Button/BasicButton';
+// import { CircleButton } from './components/Button/CircleButton';
+// import { RecordButton } from './components/Button/RecordButton';
+// import { NavButton } from './components/Button/NavButton';
+// import { useState } from 'react';
+// import { Input } from './components/Input';
 
 function App() {
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  // const [nickname, setNickname] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [passwordConfirm, setPasswordConfirm] = useState('');
 
   return (
-    <>
-      <main>
-        <h1>공부의 숲</h1>
-        {/* TODO(각자): 자기 페이지를 pages/ 에 만들고 여기로 진입 */}
-      </main>
+    <main>
+      {/* <h1>공부의 숲</h1> */}
+      {/* TODO(각자): 자기 페이지를 pages/ 에 만들고 여기로 진입 */}
       <Layout hasCreateButton>
         <Frame>
-          <Point></Point>
+          <HabitsPage />
+          {/* <Point></Point>
           <Point></Point>
           <Point></Point>
           <NavButton size="type01"> 오늘의 습관</NavButton>
@@ -56,10 +58,10 @@ function App() {
 
           <RecordButton bgcolor="primary" />
 
-          <RecordButton bgcolor="primary" disabled />
+          <RecordButton bgcolor="primary" disabled /> */}
         </Frame>
         <Frame isNarrow={true}>
-          <div className="test">
+          {/* <div className="test">
             <Input
               label="닉네임"
               placeholder="닉네임을 입력해 주세요"
@@ -89,10 +91,14 @@ function App() {
           <CircleButton bgcolor="primary" />
           <CircleButton icon="pause" bgcolor="green" />
           <CircleButton disabled />
-          <CircleButton icon="pause" disabled />
+          <CircleButton icon="pause" disabled /> */}
         </Frame>
       </Layout>
-    </>
+
+      <Routes>
+        <Route path="/focus" element={<Focus />} />
+      </Routes>
+    </main>
   );
 }
 
