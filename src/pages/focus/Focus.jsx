@@ -46,6 +46,8 @@ function Focus() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
+    getTotalCount,
+    getRecordList,
   } = useCountdown();
 
   return (
@@ -62,6 +64,12 @@ function Focus() {
         </section>
         <div className={styles.wrapper}>
           <section className={styles.timer}>
+            <div onClick={getTotalCount} className={styles.test1}>
+              <CircleButton />
+            </div>
+            <div onClick={getRecordList} className={styles.test1}>
+              <CircleButton />
+            </div>
             <p className={styles.content}>오늘의 집중</p>
             <input
               type="text"

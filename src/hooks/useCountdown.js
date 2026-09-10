@@ -1,4 +1,6 @@
+import { timer } from '@/api/focusSessions.js';
 import { useEffect, useRef, useState } from 'react';
+// import { useParams } from 'react-router-dom';
 
 const DEFAULT_MINUTES = 25;
 const ALERT_SECONDS = 60;
@@ -9,7 +11,9 @@ export function useCountdown() {
   // Status는 'READY', 'RUNNING', 'PAUSED' 세가지만 사용
   const [status, setStatus] = useState('READY');
   const [timerAlert, setTimerAlert] = useState(false);
+  const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
+  // const { studyId } = useParams();
 
   const minutesToSeconds = (minutes) => minutes * 60;
 
@@ -23,7 +27,7 @@ export function useCountdown() {
     let n = Math.floor(Number(num));
     if (isNaN(n) || n <= 0) {
       n = DEFAULT_MINUTES;
-    } else if (n > 99) {
+    } else if (n > 60) {
       n = 60;
     }
     setInputMinutes(n);
@@ -53,24 +57,70 @@ export function useCountdown() {
     }
   };
 
-  const start = () => {
-    if (status !== 'READY') return;
-    calculateValidNum(status);
-    setStatus('RUNNING');
-  };
-
-  const pause = () => {
-    if (status === 'RUNNING') {
-      setStatus('PAUSED');
-    } else if (status === 'PAUSED') {
+  const start = async () => {
+    try {
+      if (status !== 'READY') return;
+      calculateValidNum(status);
       setStatus('RUNNING');
+      const res = await timer.start();
+      setFocusSessionId(res.id);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const cancel = () => {
-    calculateValidNum(status);
-    setTimerAlert(false);
-    setStatus('READY');
+  const pause = async () => {
+    try {
+      let nextStatus;
+      if (status === 'RUNNING') {
+        nextStatus = 'PAUSED';
+        setStatus('PAUSED');
+      } else if (status === 'PAUSED') {
+        nextStatus = 'RUNNING';
+        setStatus('RUNNING');
+      }
+      if (!focusSessionId) return;
+      const res = await timer.changeFocusStatus(focusSessionId, nextStatus);
+      if (focusSessionId !== res.id) {
+        throw new Error('해당 기록이 아닙니다.');
+      }
+      setFocusSessionId(res.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cancel = async () => {
+    try {
+      calculateValidNum(status);
+      setTimerAlert(false);
+      setStatus('READY');
+      const res = await timer.cancel(focusSessionId);
+      if (focusSessionId !== res.id) {
+        throw new Error('해당 기록이 아닙니다.');
+      }
+      setFocusSessionId(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getTotalCount = async () => {
+    try {
+      const res = await timer.getTotalCount();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getRecordList = async () => {
+    try {
+      const res = await timer.getRecordList();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // 1분 이하 빨간색
@@ -122,6 +172,8 @@ export function useCountdown() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
+    getTotalCount,
+    getRecordList,
   };
 
   return value;
