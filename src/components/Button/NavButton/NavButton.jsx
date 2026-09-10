@@ -7,12 +7,15 @@
       <NavButton size="type02"> 홈</NavButton>*/
 }
 
-import styles from "./NavButton.module.css";
+import { Link } from 'react-router';
+import styles from './NavButton.module.css';
 
-export const NavButton = ({ children, size = "type01" }) => {
+export const NavButton = ({ children, size = 'type01', to }) => {
   return (
     <>
-      <button className={`${styles.button} ${styles[size]}`}>{children}</button>
+      <Link className={`${styles.button} ${styles[size]}`} to={to}>
+        {children}
+      </Link>
     </>
   );
 };
