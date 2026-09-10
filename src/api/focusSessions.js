@@ -21,7 +21,7 @@ const cancel = async (focusSessionId) => {
 
 const getTotalCount = async () => {
   const res = await http.get(`/focus-sessions/total`);
-  return res.data;
+  return res.data._sum;
 };
 
 const getRecordList = async (cursorId) => {
