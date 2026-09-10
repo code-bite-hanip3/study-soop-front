@@ -5,6 +5,8 @@ import { RecordButton } from '@/components/Button/RecordButton';
 import { CircleButton } from '@/components/Button/CircleButton';
 import { useCountdown } from '@/hooks/useCountdown.js';
 import { useState } from 'react';
+import { Modal } from '@/components/Modal';
+import { Toast } from '@/components/Toast';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
@@ -64,12 +66,14 @@ function Focus() {
         </section>
         <div className={styles.wrapper}>
           <section className={styles.timer}>
-            <div onClick={getTotalCount} className={styles.test1}>
-              <CircleButton />
-            </div>
-            <div onClick={getRecordList} className={styles.test1}>
-              <CircleButton />
-            </div>
+            {/* <Modal>
+              <div onClick={getTotalCount} className={styles.test1}>
+                <CircleButton />
+              </div>
+              <div onClick={getRecordList} className={styles.test1}>
+                <CircleButton />
+              </div>
+            </Modal> */}
             <p className={styles.content}>오늘의 집중</p>
             <input
               type="text"
@@ -112,6 +116,7 @@ function Focus() {
               <CircleButton />
             </div>
           </section>
+          <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} />
         </div>
       </Frame>
     </Layout>
