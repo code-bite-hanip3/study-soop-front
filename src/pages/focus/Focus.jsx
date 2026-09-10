@@ -7,6 +7,8 @@ import { useCountdown } from '@/hooks/useCountdown.js';
 import { useState } from 'react';
 import { Modal } from '@/components/Modal';
 import { Toast } from '@/components/Toast';
+import { TotalPointChip } from '@/components/TotalPointChip';
+import icon_arrow_right from '@/assets/icon_arrow_right.svg';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
@@ -48,7 +50,6 @@ function Focus() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
-    getTotalCount,
     getRecordList,
   } = useCountdown();
 
@@ -58,22 +59,21 @@ function Focus() {
         <section className={styles.intro}>
           <div className={styles.title}>
             <p className={styles.userTitle}>연우의 개발공장</p>
-            <div className={styles.linkTag}>오늘의 습관</div>
-            <div className={styles.linkTag}>홈</div>
+            <div className={styles.linkTag}>
+              오늘의 습관 <img src={icon_arrow_right} aria-hidden="true" />
+            </div>
+            <div className={styles.linkTag}>
+              홈
+              <img src={icon_arrow_right} aria-hidden="true" />
+            </div>
           </div>
           <div className={styles.pointText}>현재까지 획득한 포인트</div>
-          <div className={styles.earnedPoint}>🍀310P 획득</div>
+          <div className={styles.earnedPoint}>
+            <TotalPointChip />
+          </div>
         </section>
         <div className={styles.wrapper}>
           <section className={styles.timer}>
-            {/* <Modal>
-              <div onClick={getTotalCount} className={styles.test1}>
-                <CircleButton />
-              </div>
-              <div onClick={getRecordList} className={styles.test1}>
-                <CircleButton />
-              </div>
-            </Modal> */}
             <p className={styles.content}>오늘의 집중</p>
             <input
               type="text"
@@ -116,9 +116,14 @@ function Focus() {
               <CircleButton />
             </div>
           </section>
-          <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} />
         </div>
       </Frame>
+      {/* <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} variant={'variant'} /> */}
+      {/* <Modal>
+        <div onClick={getRecordList} className={styles.test1}>
+          <CircleButton />
+        </div>
+      </Modal> */}
     </Layout>
   );
 }

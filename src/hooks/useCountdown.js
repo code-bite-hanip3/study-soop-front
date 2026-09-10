@@ -105,15 +105,6 @@ export function useCountdown() {
     }
   };
 
-  const getTotalCount = async () => {
-    try {
-      const res = await timer.getTotalCount();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getRecordList = async () => {
     try {
       const res = await timer.getRecordList();
@@ -172,7 +163,6 @@ export function useCountdown() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
-    getTotalCount,
     getRecordList,
   };
 

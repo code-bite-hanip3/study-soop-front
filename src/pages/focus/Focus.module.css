@@ -14,8 +14,6 @@
   color: var(--color-black);
 }
 .linkTag {
-  width: 9rem;
-  height: 3rem;
   border-radius: 0.9375rem;
   border: 1px solid var(--color-gray-light);
   background: #fff;
@@ -24,6 +22,9 @@
   align-items: center;
   font-weight: 500;
   margin-left: 2rem;
+  font-size: 1.4rem;
+  color: var(--color-gray);
+  padding: 0.75rem 1.2rem 0.75rem 1.5rem;
 }
 .pointText {
   color: var(--color-gray);
@@ -31,18 +32,13 @@
   font-weight: 400;
 }
 .earnedPoint {
-  display: inline;
-  padding: 0.5rem 0.75rem;
-  border-radius: 3.125rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  font-size: 1.6rem;
+  margin-top: 0.5rem;
   margin-bottom: 1rem;
-  margin-top: 1rem;
 }
 
 .wrapper {
   border-radius: 20px;
-  border: 1px solid var(--color-black);
+  border: 1px solid var(--color-gray-light);
   margin: auto;
   width: 100%;
   display: flex;
@@ -61,7 +57,7 @@
   height: 14rem;
   color: var(--color-black);
   text-align: center;
-  font-size: 9.375rem;
+  font-size: 11.375rem;
   font-weight: 800;
   outline: none;
   border: none;
@@ -69,9 +65,11 @@
 }
 
 .content {
-  font-size: 3rem;
   text-align: center;
   margin-bottom: 8rem;
+  color: var(--color-black);
+  font-size: 2.5rem;
+  font-weight: 800;
 }
 
 .button {
