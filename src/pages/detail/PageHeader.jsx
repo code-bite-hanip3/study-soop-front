@@ -49,7 +49,7 @@ function PageHeader() {
           </div>
 
           <div className={styles.pointGroup}>
-            <div className={styles.pontLabel}>현재까지 획득한 포인트</div>
+            <div className={styles.pointLabel}>현재까지 획득한 포인트</div>
             <Point />
           </div>
         </div>
