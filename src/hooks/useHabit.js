@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 
 export function useHabit(studyId) {
   const [habits, setHabits] = useState([]);
+
+  
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -17,5 +19,5 @@ export function useHabit(studyId) {
     getHabits();
   }, [studyId]);
 
-  return {habits, error};
+  return {habits, setHabits, error}; // habit의 상태를 바꿔주는 setHabits를 리턴에 추가 -> 다른 곳에서 사용할 수 있게
 }
