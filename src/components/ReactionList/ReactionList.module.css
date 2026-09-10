@@ -1,0 +1,47 @@
+.reactionList {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  margin: auto 0 0;
+  padding: 12px 0 0;
+}
+
+.reactionPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  background: rgba(40, 38, 35, 0.55);
+  color: #f0f1f6;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+}
+
+.reactionPill:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+
+.overlay .reactionPill {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+
+.reactionPill:disabled {
+  border-color: #210b92;
+  border-width: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(27, 35, 149, 0.45), 0 0 10px rgba(87, 73, 208, 0.35);
+  color: #0bce80;
+  cursor: default;
+}
+
+
+.overlay .reactionPill:disabled {
+  background: rgba(255, 255, 255, 0.15);
+}

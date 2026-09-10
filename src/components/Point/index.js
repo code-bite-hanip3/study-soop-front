@@ -1,1 +1,1 @@
-export { Point } from "./Header";
+export { Point } from "./Point";
