@@ -2,10 +2,18 @@
   text-align: center;
   padding: 0.875rem 1.75rem;
   border-radius: 0.75rem;
-  background: var(--color-pink-light);
+  background-color: var(--color-pink-light);
   font-size: 1.45rem;
   color: var(--color-error-red);
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .imoji {
   margin-right: 0.5rem;
+}
+.variant {
+  background-color: var(--color-green-light);
+  color: var(--color-green);
 }
