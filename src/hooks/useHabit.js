@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 
 export function useHabit(studyId) {
   const [habits, setHabits] = useState([]);
-
-  
   const [error, setError] = useState(null);
 
   useEffect(() => {

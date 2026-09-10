@@ -43,7 +43,8 @@ export function HabitsPage() {
         </div>
       </div>
       {/* 조건문으로 모달창이 열리고 닫히는걸 구현 */}
-      {isModalOpen && <HabitOpenModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && 
+      <HabitOpenModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 }
