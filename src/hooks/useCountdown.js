@@ -8,12 +8,14 @@ const ALERT_SECONDS = 60;
 export function useCountdown() {
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [inputMinutes, setInputMinutes] = useState(DEFAULT_MINUTES);
-  // Status는 'READY', 'RUNNING', 'PAUSED' 세가지만 사용
+  // Status는 'READY', 'RUNNING', 'PAUSED' 'COMPLETED'
   const [status, setStatus] = useState('READY');
   const [timerAlert, setTimerAlert] = useState(false);
   const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
   // const { studyId } = useParams();
+  const [isStop, setIsStop] = useState(false);
+  const [earnPoint, setEarnPoint] = useState(0);
 
   const minutesToSeconds = (minutes) => minutes * 60;
 
@@ -60,6 +62,7 @@ export function useCountdown() {
   const start = async () => {
     try {
       if (status !== 'READY') return;
+      setEarnPoint(0);
       calculateValidNum(status);
       setStatus('RUNNING');
       const res = await timer.start();
@@ -75,16 +78,19 @@ export function useCountdown() {
       if (status === 'RUNNING') {
         nextStatus = 'PAUSED';
         setStatus('PAUSED');
+        setIsStop(true);
       } else if (status === 'PAUSED') {
         nextStatus = 'RUNNING';
         setStatus('RUNNING');
+        setIsStop(false);
       }
       if (!focusSessionId) return;
       const res = await timer.changeFocusStatus(focusSessionId, nextStatus);
+
       if (focusSessionId !== res.id) {
         throw new Error('해당 기록이 아닙니다.');
       }
-      setFocusSessionId(res.id);
+      // setFocusSessionId(res.id);
     } catch (error) {
       console.log(error);
     }
@@ -139,8 +145,15 @@ export function useCountdown() {
           if (next <= 0) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
+
+            timer
+              .changeFocusStatus(focusSessionId, 'COMPLETED')
+              .then((res) => setEarnPoint(res.earnedPoint))
+              .catch((error) => console.log('성공 처리 실패', error));
+
             setStatus('READY');
             setTimerAlert(false);
+            setFocusSessionId(null);
             return 0;
           }
           underOneMinute(next);
@@ -150,7 +163,7 @@ export function useCountdown() {
     );
 
     return () => clearInterval(intervalRef.current);
-  }, [status]);
+  }, [status, focusSessionId]);
 
   const value = {
     status,
@@ -164,6 +177,8 @@ export function useCountdown() {
     inputMinutes,
     acceptOnlyNumber,
     getRecordList,
+    isStop,
+    earnPoint,
   };
 
   return value;

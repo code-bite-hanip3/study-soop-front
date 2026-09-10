@@ -6,7 +6,7 @@
   font-size: 1.45rem;
   color: var(--color-error-red);
   position: fixed;
-  bottom: 80px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
 }

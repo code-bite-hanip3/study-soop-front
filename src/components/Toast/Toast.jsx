@@ -10,7 +10,7 @@
 import { useEffect, useState } from 'react';
 import styles from './Toast.module.css';
 
-export function Toast({ imoji, text, variant, className = '' }) {
+export function Toast({ imoji, number, text, variant, className = '' }) {
   const [isToast, setIsToast] = useState(true);
 
   useEffect(() => {
@@ -25,7 +25,10 @@ export function Toast({ imoji, text, variant, className = '' }) {
       className={`${styles.toast} ${variant ? styles[variant] : ''} ${className}`}
     >
       <span className={styles.imoji}>{imoji}</span>
-      <span>{text}</span>
+      <span>
+        {number}
+        {text}
+      </span>
     </div>
   );
 }

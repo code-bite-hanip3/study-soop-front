@@ -51,80 +51,92 @@ function Focus() {
     inputMinutes,
     acceptOnlyNumber,
     getRecordList,
+    isStop,
+    earnPoint,
   } = useCountdown();
 
   return (
-    <Layout>
-      <Frame>
-        <section className={styles.intro}>
-          <div className={styles.title}>
-            <p className={styles.userTitle}>연우의 개발공장</p>
-            <div className={styles.linkTag}>
-              오늘의 습관 <img src={icon_arrow_right} aria-hidden="true" />
+    <>
+      <Layout>
+        <Frame>
+          <section className={styles.intro}>
+            <div className={styles.title}>
+              <p className={styles.userTitle}>연우의 개발공장</p>
+              <div className={styles.linkTag}>
+                오늘의 습관 <img src={icon_arrow_right} aria-hidden="true" />
+              </div>
+              <div className={styles.linkTag}>
+                홈
+                <img src={icon_arrow_right} aria-hidden="true" />
+              </div>
             </div>
-            <div className={styles.linkTag}>
-              홈
-              <img src={icon_arrow_right} aria-hidden="true" />
+            <div className={styles.pointText}>현재까지 획득한 포인트</div>
+            <div className={styles.earnedPoint}>
+              <TotalPointChip />
             </div>
-          </div>
-          <div className={styles.pointText}>현재까지 획득한 포인트</div>
-          <div className={styles.earnedPoint}>
-            <TotalPointChip />
-          </div>
-        </section>
-        <div className={styles.wrapper}>
-          <section className={styles.timer}>
-            <p className={styles.content}>오늘의 집중</p>
-            <input
-              type="text"
-              className={`${styles.timerInput} ${timerAlert ? styles.timerAlert : ''}`}
-              value={
-                status !== 'READY'
-                  ? formatTime(remainingSeconds)
-                  : isEditing
-                    ? inputMinutes
-                    : formatInitMinutes(inputMinutes)
-              }
-              onChange={(e) => acceptOnlyNumber(e)}
-              disabled={status !== 'READY'}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-            />
           </section>
-          <section className={styles.button}>
-            <div
-              className={`${status === 'READY' ? styles.hidden : styles.pause}`}
-              onClick={pause}
-            >
-              <CircleButton
-                icon={`${status === 'RUNNING' ? 'pause' : 'restart'}`}
-                bgcolor="green"
+          <div className={styles.wrapper}>
+            <section className={styles.timer}>
+              <p className={styles.content}>오늘의 집중</p>
+              <input
+                type="text"
+                className={`${styles.timerInput} ${timerAlert ? styles.timerAlert : ''}`}
+                value={
+                  status !== 'READY'
+                    ? formatTime(remainingSeconds)
+                    : isEditing
+                      ? inputMinutes
+                      : formatInitMinutes(inputMinutes)
+                }
+                onChange={(e) => acceptOnlyNumber(e)}
+                disabled={status !== 'READY'}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
               />
-            </div>
-            <div
-              onClick={start}
-              className={`${status === 'READY' ? styles.start : styles.disabled}`}
-            >
-              <RecordButton disabled={status !== 'READY' ? true : false}>
-                Start!
-              </RecordButton>
-            </div>
-            <div
-              className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
-              onClick={cancel}
-            >
-              <CircleButton />
-            </div>
-          </section>
-        </div>
-      </Frame>
-      {/* <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} variant={'variant'} /> */}
+            </section>
+            <section className={styles.button}>
+              <div
+                className={`${status === 'READY' ? styles.hidden : styles.pause}`}
+                onClick={pause}
+              >
+                <CircleButton
+                  icon={`${status === 'RUNNING' ? 'pause' : 'restart'}`}
+                  bgcolor="green"
+                />
+              </div>
+              <div
+                onClick={start}
+                className={`${status === 'READY' ? styles.start : styles.disabled}`}
+              >
+                <RecordButton disabled={status !== 'READY' ? true : false}>
+                  Start!
+                </RecordButton>
+              </div>
+              <div
+                className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
+                onClick={cancel}
+              >
+                <CircleButton />
+              </div>
+            </section>
+          </div>
+        </Frame>
+      </Layout>
+      {isStop && <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} />}
+      {earnPoint && (
+        <Toast
+          imoji={'🎉'}
+          text={'포인트를 획득했습니다!.'}
+          variant={'variant'}
+          number={earnPoint}
+        />
+      )}
       {/* <Modal>
         <div onClick={getRecordList} className={styles.test1}>
           <CircleButton />
         </div>
       </Modal> */}
-    </Layout>
+    </>
   );
 }
 
