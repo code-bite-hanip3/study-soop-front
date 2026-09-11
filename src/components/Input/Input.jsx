@@ -32,7 +32,7 @@ export function Input({
           value={value}
           onChange={onChange}
           disabled={disabled}
-          autoComplete={type === 'password' ? 'new-password' : 'off'}
+          autoComplete={autoComplete}
         />
         {type === 'password' && (
           <button
