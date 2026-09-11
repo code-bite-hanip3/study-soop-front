@@ -22,9 +22,11 @@ export const HabitOpenModal = ({ onClose }) => {
     setCopyHabit(habits); //원본 카피 : 사본
   }, [habits]);
 
-  if (error) {
-    alert('데이터를 불러오지 못했습니다....ㅠ');
-  }
+  useEffect(() => {
+    if (error) {
+      alert('데이터를 불러오지 못했습니다....ㅠ');
+    }
+  });
 
   //사본에서 추가
   const handleAdd = () => {
@@ -72,27 +74,29 @@ export const HabitOpenModal = ({ onClose }) => {
     <>
       <Modal onClose={onClose}>
         <div className={styles.title}>습관 목록</div>
-        <ul className={styles.habitList}>
-          {copyHabit.map((habit) => (
-            <div className={styles.editBox} key={habit.id}>
-              <li className={styles.habitContent}>{habit.name}</li>
-              <button
-                className={styles.deleteBtn}
-                onClick={() => handleDelete(habit.id)}
-              ></button>
-            </div>
-          ))}
-          <input
-            className={styles.inputValue}
-            type="text"
-            value={inputHabit}
-            onChange={handleInputChange}
-            placeholder="새로운 습관을 입력해보세요"
-          />
-          <button className={styles.editBtn} onClick={handleAdd}>
-            +
-          </button>
-        </ul>
+        <div className={styles.habitListWrap}>
+          <ul className={styles.habitList}>
+            {copyHabit.map((habit) => (
+              <div className={styles.editBox} key={habit.id}>
+                <li className={styles.habitContent}>{habit.name}</li>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => handleDelete(habit.id)}
+                ></button>
+              </div>
+            ))}
+          </ul>
+        </div>
+        <input
+          className={styles.inputValue}
+          type="text"
+          value={inputHabit}
+          onChange={handleInputChange}
+          placeholder="새로운 습관을 입력해보세요"
+        />
+        <button className={styles.editBtn} onClick={handleAdd}>
+          +
+        </button>
         <div className={styles.Buttons}>
           <Button size="type02" bgcolor="gray" onClick={onClose}>
             취소

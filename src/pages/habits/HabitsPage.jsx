@@ -3,6 +3,7 @@ import { NavButton } from '@/components/Button/NavButton';
 import { HabitList } from '@/components/HabitList/HabitList';
 import { HabitOpenModal } from '@/components/HabitOpenModal';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export function HabitsPage() {
   //모달창 열고 닫고 상태 관리
@@ -16,8 +17,8 @@ export function HabitsPage() {
         <div className={styles.habitNav}>
           <h2>스터디 이름</h2>
           <div className={styles.habitBtns}>
-            <NavButton size="type01">오늘의 습관</NavButton>
-            <NavButton size="type02">홈</NavButton>
+            <Link><NavButton size="type01">오늘의 집중</NavButton></Link>
+            <Link><NavButton size="type02">홈</NavButton></Link>            
           </div>
         </div>
         <div className={styles.habitDate}>
