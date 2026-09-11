@@ -1,1 +1,1 @@
-export { DetailPage } from './DetailPage';
+export { default as DetailPage } from './DetailPage.jsx';
