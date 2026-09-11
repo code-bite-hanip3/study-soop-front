@@ -1,5 +1,4 @@
 import styles from './Focus.module.css';
-import { Layout } from '@/components/Layout';
 import { Frame } from '@/components/Frame';
 import { RecordButton } from '@/components/Button/RecordButton';
 import { CircleButton } from '@/components/Button/CircleButton';
@@ -49,9 +48,8 @@ function Focus() {
   } = useCountdown();
 
   return (
-    <Layout>
-      <Frame>
-        <section className={styles.intro}>
+    <Frame>
+      <section className={styles.intro}>
           <div className={styles.title}>
             <p className={styles.userTitle}>연우의 개발공장</p>
             <div className={styles.linkTag}>오늘의 습관</div>
@@ -106,7 +104,6 @@ function Focus() {
           </section>
         </div>
       </Frame>
-    </Layout>
   );
 }
 
