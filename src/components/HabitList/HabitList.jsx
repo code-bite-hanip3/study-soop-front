@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react';
 import { createHabitRecord, updateHabitRecord } from '@/api/habit-records';
 import styles from './HabitList.module.css';
 import { getTodayDate } from '@/utils/koreaServerTime';
+import { useParams } from 'react-router';
 // import { useParams } from 'react-router'; -> study페이지 완성되면 적용
 
 export function HabitList() {
-  const studyId = '27c6dfa6-d801-4c2b-90d2-d4b394c9dd64';
+  const { studyId } = useParams();
+  console.log('studyId', studyId);
+  // '27c6dfa6-d801-4c2b-90d2-d4b394c9dd64'
   const { habits, setHabits, error } = useHabit(studyId);
 
   //더블클릭 방지:먼저 클릭한 데이터의 habitId 추적

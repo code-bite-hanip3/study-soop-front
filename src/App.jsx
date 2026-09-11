@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ListPage />} />
         <Route path="/studies/:studyId" element={<DetailPage />} />
-        <Route path="/habits" element={<HabitsPage />} />
+        <Route path="/studies/:studyId/habits" element={<HabitsPage />} />
         <Route path="/focus" element={<Focus />} />
         <Route path="/create" element={<CreatePage />} />
       </Routes>

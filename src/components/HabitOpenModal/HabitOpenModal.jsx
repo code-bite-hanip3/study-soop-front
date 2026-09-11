@@ -4,9 +4,10 @@ import { useHabit } from '@/hooks/useHabit';
 import { Button } from '../Button/BasicButton';
 import { useEffect, useState } from 'react';
 import { updateHabitBatch } from '@/api/habits';
+import { useParams } from 'react-router';
 
 export const HabitOpenModal = ({ onClose }) => {
-  const studyId = '27c6dfa6-d801-4c2b-90d2-d4b394c9dd64';
+  const { studyId } = useParams();
 
   const { habits, error } = useHabit(studyId);
   const [copyHabit, setCopyHabit] = useState([]); //사본
