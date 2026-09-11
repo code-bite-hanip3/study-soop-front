@@ -1,13 +1,10 @@
-import '../../reset.css';
-import '../../global.css';
-
 // import styles from './DetailPage.module.css';
 import { Frame } from '@/components/Frame';
 import { Layout } from '@/components/Layout';
 import PageHeader from './PageHeader';
 import PageTable from './PageTable';
 
-export function DetailPage() {
+function DetailPage() {
   return (
     <Layout>
       <Frame>
@@ -17,3 +14,5 @@ export function DetailPage() {
     </Layout>
   );
 }
+
+export default DetailPage;
