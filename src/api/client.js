@@ -23,7 +23,7 @@ export const clearToken = clearPassword;
 // 쓰기 메서드 판정 — 이 요청들에만 password가 필요합니다 (조회는 인증 없음)
 const WRITE_METHODS = new Set(['POST', 'PATCH', 'PUT', 'DELETE']);
 
-async function request(path, { method = 'GET', body } = {}) {
+async function request(path, { method = 'GET', body, params } = {}) {
   const headers = { 'Content-Type': 'application/json' };
 
   let payload = body;
@@ -35,7 +35,8 @@ async function request(path, { method = 'GET', body } = {}) {
     }
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const query = params ? `?${new URLSearchParams(params)}` : '';
+  const response = await fetch(`${API_BASE_URL}${path}${query}`, {
     method,
     headers,
     body: payload ? JSON.stringify(payload) : undefined,
@@ -53,9 +54,9 @@ async function request(path, { method = 'GET', body } = {}) {
 }
 
 export const http = {
-  get: (path) => request(path),
+  get: (path, options) => request(path, options),
   post: (path, body) => request(path, { method: 'POST', body }),
   patch: (path, body) => request(path, { method: 'PATCH', body }),
   put: (path, body) => request(path, { method: 'PUT', body }),
-  delete: (path, body) => request(path, { method: 'DELETE', body }),  //DELETE도 password를 위해 body 허용
+  delete: (path, body) => request(path, { method: 'DELETE', body }), //DELETE도 password를 위해 body 허용
 };
