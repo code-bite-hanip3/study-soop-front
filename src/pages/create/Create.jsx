@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import styles from './Create.module.css';
 import { Panel } from '../../components/Panel';
 import { Input } from '../../components/Input';
@@ -24,6 +25,8 @@ const bgOptions = [
 ];
 
 function CreatePage() {
+  const navigate = useNavigate();
+
   const [creatorNickname, setCreatorNickname] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -39,8 +42,14 @@ function CreatePage() {
   const [passwordError, setPasswordError] = useState('');
   const [passwordConfirmError, setPasswordConfirmError] = useState('');
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
 
     if (!creatorNickname) {
       setNicknameError('닉네임을 입력해 주세요');
@@ -67,6 +76,8 @@ function CreatePage() {
     setPasswordConfirmError('');
 
     try {
+      setIsSubmitting(true);
+
       const result = await createStudy({
         creatorNickname,
         name,
@@ -77,9 +88,12 @@ function CreatePage() {
       });
 
       setPassword(studyPassword);
-      console.log('생성됨:', result.id);
+
+      navigate(`/studies/${result.id}`);
     } catch (error) {
       setNameError(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -120,7 +134,7 @@ function CreatePage() {
 
         <label className={styles.inputLabel}>배경을 선택해주세요</label>
         <div className={styles.bgList}>
-          {bgOptions.map((option, index) => {
+          {bgOptions.map((option) => {
             const isSelected =
               backgroundType === option.type &&
               backgroundValue === option.value;
@@ -128,7 +142,7 @@ function CreatePage() {
             return (
               <button
                 className={styles.bgItems}
-                key={index}
+                key={option.value}
                 type="button"
                 style={
                   option.type === 'COLOR'
@@ -177,8 +191,8 @@ function CreatePage() {
         </div>
 
         <div className={styles.underButton}>
-          <Button bgcolor="primary" size="type02">
-            만들기
+          <Button bgcolor="primary" size="type02" disabled={isSubmitting}>
+            {isSubmitting ? '생성 중...' : '만들기'}
           </Button>
         </div>
       </form>
