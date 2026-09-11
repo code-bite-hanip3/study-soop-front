@@ -1,21 +1,22 @@
-import { useState } from "react";
-import styles from "./Input.module.css";
+import { useState } from 'react';
+import styles from './Input.module.css';
 
-import visibilityOff from "../../assets/btn_visibility_off.svg";
-import visibilityOn from "../../assets/btn_visibility_on.svg";
+import visibilityOff from '../../assets/btn_visibility_off.svg';
+import visibilityOn from '../../assets/btn_visibility_on.svg';
 
 export function Input({
   label,
-  type = "text",
+  type = 'text',
   placeholder,
   value,
   onChange,
   error,
   disabled = false,
+  autoComplete,
 }) {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const inputType = type === "password" && isShowPassword ? "text" : type;
+  const inputType = type === 'password' && isShowPassword ? 'text' : type;
   const handlePassword = () => {
     setIsShowPassword((prev) => !prev);
   };
@@ -25,14 +26,15 @@ export function Input({
       {label && <label className={styles.inputLabel}>{label}</label>}
       <div className={styles.inputContainer}>
         <input
-          className={`${styles.input} ${error ? styles.inputError : ""}`}
+          className={`${styles.input} ${error ? styles.inputError : ''}`}
           type={inputType}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
           disabled={disabled}
+          autoComplete={autoComplete}
         />
-        {type === "password" && (
+        {type === 'password' && (
           <button
             type="button"
             className={styles.passwordToggle}
