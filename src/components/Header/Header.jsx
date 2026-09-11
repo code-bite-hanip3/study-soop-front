@@ -11,7 +11,7 @@ export function Header({ hasCreateButton = false }) {
           <img className={styles.logoMobile} src={logoMobile} alt="공부의숲 로고 이미지" />
         </a>
         {hasCreateButton && (
-          <a className={styles.button} href="/">
+          <a className={styles.button} href="/create">
             스터디 만들기
           </a>
         )}
