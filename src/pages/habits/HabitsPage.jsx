@@ -2,13 +2,13 @@ import styles from './HabitsPage.module.css';
 import { NavButton } from '@/components/Button/NavButton';
 import { HabitList } from '@/components/HabitList/HabitList';
 import { HabitOpenModal } from '@/components/HabitOpenModal';
+import { useRealTime } from '@/hooks/useRealTime';
 import { useState } from 'react';
 
 export function HabitsPage() {
   //모달창 열고 닫고 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const nowDate = new Date().toLocaleString();
+  const nowDate = useRealTime();
 
   return (
     <>
@@ -43,8 +43,7 @@ export function HabitsPage() {
         </div>
       </div>
       {/* 조건문으로 모달창이 열리고 닫히는걸 구현 */}
-      {isModalOpen && 
-      <HabitOpenModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <HabitOpenModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 }
