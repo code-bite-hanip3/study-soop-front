@@ -1,0 +1,19 @@
+.more {
+  width: 8rem;
+  height: 4rem;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 0.9375rem;
+  color: var(--color-gray);
+  font-size: 2rem;
+}
+.recordList {
+  background-color: var(--color-gray-lighter);
+  list-style: none;
+  padding-left: 0;
+  overflow-y: auto;
+  max-height: 400px;
+}
+.record {
+  font-size: 1.6rem;
+  padding: 0.8rem;
+}

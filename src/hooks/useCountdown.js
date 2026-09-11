@@ -111,15 +111,6 @@ export function useCountdown() {
     }
   };
 
-  const getRecordList = async () => {
-    try {
-      const res = await timer.getRecordList();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // 1분 이하 빨간색
   const underOneMinute = (remainingSeconds) => {
     if (remainingSeconds >= ALERT_SECONDS) {
@@ -176,7 +167,6 @@ export function useCountdown() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
-    getRecordList,
     isStop,
     earnPoint,
   };

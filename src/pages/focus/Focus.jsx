@@ -9,6 +9,7 @@ import { Modal } from '@/components/Modal';
 import { Toast } from '@/components/Toast';
 import { TotalPointChip } from '@/components/TotalPointChip';
 import icon_arrow_right from '@/assets/icon_arrow_right.svg';
+import { RecordList } from './RecordList.jsx';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
@@ -29,6 +30,7 @@ const formatInitMinutes = (num) => {
 
 function Focus() {
   const [isEditing, setIsEditing] = useState(false);
+  const [showList, setShowList] = useState(false);
 
   const handleFocus = () => {
     setIsEditing(true);
@@ -50,7 +52,6 @@ function Focus() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
-    getRecordList,
     isStop,
     earnPoint,
   } = useCountdown();
@@ -70,10 +71,22 @@ function Focus() {
                 <img src={icon_arrow_right} aria-hidden="true" />
               </div>
             </div>
-            <div className={styles.pointText}>현재까지 획득한 포인트</div>
-            <div className={styles.earnedPoint}>
-              <TotalPointChip />
+            <div className={styles.pointAndList}>
+              <div>
+                <div className={styles.pointText}>현재까지 획득한 포인트</div>
+                <div className={styles.earnedPoint}>
+                  <TotalPointChip />
+                </div>
+              </div>
+              <button className={styles.listButton} onClick={setShowList}>
+                기록 보기
+              </button>
             </div>
+            {showList && (
+              <Modal>
+                <RecordList />
+              </Modal>
+            )}
           </section>
           <div className={styles.wrapper}>
             <section className={styles.timer}>
@@ -131,11 +144,6 @@ function Focus() {
           number={earnPoint}
         />
       )}
-      {/* <Modal>
-        <div onClick={getRecordList} className={styles.test1}>
-          <CircleButton />
-        </div>
-      </Modal> */}
     </>
   );
 }
