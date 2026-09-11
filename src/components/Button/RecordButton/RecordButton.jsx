@@ -9,19 +9,18 @@
   /* <RecordButton bgcolor="primary" disabled /> */
 }
 
-import { useState } from "react";
-import styles from "./RecordButton.module.css";
+import { useState } from 'react';
+import styles from './RecordButton.module.css';
 
 export const RecordButton = ({
   children,
-  bgcolor = "primary",
+  bgcolor = 'primary',
   disabled = false,
-  
 }) => {
-  const [record, setRecord] = useState("start");
+  const [record, setRecord] = useState('start');
 
   const handleRecord = () => {
-    setRecord((prev) => (prev === "start" ? "stop" : "start"));
+    setRecord((prev) => (prev === 'start' ? 'stop' : 'start'));
   };
 
   return (
@@ -29,12 +28,12 @@ export const RecordButton = ({
       <button
         className={`${styles.button} 
         ${styles[bgcolor]} 
-        ${styles[record === "start" ? "start" : "stop"]}
-        ${disabled ? styles.disabled : ""}`}
+        ${styles[disabled ? 'stop' : 'start']}
+        ${disabled ? styles.disabled : ''}`}
         onClick={handleRecord}
         disabled={disabled}
       >
-        {children ?? (record === "start" ? "Start!" : "Stop!")}
+        {children ?? (record === 'start' ? 'Start!' : 'Stop!')}
       </button>
     </>
   );
