@@ -1,5 +1,15 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 
+@font-face {
+  font-family: "EF_jejudoldam";
+  src:
+    url("/fonts/EF_jejudoldam(OTF).otf") format("opentype"),
+    url("/fonts/EF_jejudoldam(TTF).ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* 기본 */
   --color-black: #414141;
