@@ -13,18 +13,15 @@ import CreatePage from './pages/create';
 
 function App() {
   return (
-    <main>
-      <Layout hasCreateButton>
-      </Layout>
-
-      <Routes>
+    <Routes>
+      <Route element={<Layout hasCreateButton />}>
         <Route path="/" element={<ListPage />} />
         <Route path="/studies/:studyId" element={<DetailPage />} />
         <Route path="/studies/:studyId/habits" element={<HabitsPage />} />
         <Route path="/focus" element={<Focus />} />
         <Route path="/create" element={<CreatePage />} />
-      </Routes>
-    </main>
+      </Route>
+    </Routes>
   );
 }
 
