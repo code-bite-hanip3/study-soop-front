@@ -1,5 +1,10 @@
 import styles from './StudyCard.module.css';
-import listBack from '../../../../assets/listBack.png';
+import listBack from '../../../../assets/images/listBack.png';
+import sf from '../../../../assets/images/sf.png';
+import banff from '../../../../assets/images/banff.png';
+import calgary from '../../../../assets/images/calgary.png';
+import canmore from '../../../../assets/images/canmore.png';
+import hanGang from '../../../../assets/images/hanGang.png';
 import { Point } from '../../../../components/Point';
 import { ReactionList } from '../../../../components/ReactionList';
 import { postStudyReaction } from '../../mocks/mockData';
@@ -10,8 +15,15 @@ const THEME_CLASS = {
   yellow: styles.themeYellow,
 };
 
+const DARK_IMAGES = ['banff', 'calgary', 'canmore', 'sf'];
+
 const THUMBNAILS = {
   listBack,
+  sf,
+  banff,
+  calgary,
+  canmore,
+  hanGang,
 };
 
 function StudyCard({ study }) {
@@ -22,6 +34,7 @@ function StudyCard({ study }) {
   const cardClassName = [
     styles.card,
     hasImage ? styles.hasImage : THEME_CLASS[themeColor] || styles.themeDefault,
+    hasImage && DARK_IMAGES.includes(thumbnail) ? styles.hasImageDark : '',
   ].join(' ');
 
   const handleReact = (type) => postStudyReaction({ studyId: id, type });
