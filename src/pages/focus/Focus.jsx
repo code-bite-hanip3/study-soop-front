@@ -54,6 +54,7 @@ function Focus() {
     acceptOnlyNumber,
     isStop,
     earnPoint,
+    addTime,
   } = useCountdown();
 
   return (
@@ -107,29 +108,51 @@ function Focus() {
                 onFocus={handleFocus}
               />
             </section>
-            <section className={styles.button}>
-              <div
-                className={`${status === 'READY' ? styles.hidden : styles.pause}`}
-                onClick={pause}
-              >
-                <CircleButton
-                  icon={`${status === 'RUNNING' ? 'pause' : 'restart'}`}
-                  bgcolor="green"
-                />
+            <section className={styles.buttons}>
+              <div className={styles.addTimeButtons}>
+                <button
+                  onClick={() => addTime(1)}
+                  className={styles.addTimeButton}
+                >
+                  +1분
+                </button>
+                <button
+                  onClick={() => addTime(5)}
+                  className={styles.addTimeButton}
+                >
+                  +5분
+                </button>
+                <button
+                  onClick={() => addTime(10)}
+                  className={styles.addTimeButton}
+                >
+                  +10분
+                </button>
               </div>
-              <div
-                onClick={start}
-                className={`${status === 'READY' ? styles.start : styles.disabled}`}
-              >
-                <RecordButton disabled={status !== 'READY' ? true : false}>
-                  Start!
-                </RecordButton>
-              </div>
-              <div
-                className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
-                onClick={cancel}
-              >
-                <CircleButton />
+              <div className={styles.controls}>
+                <div
+                  className={`${status === 'READY' ? styles.hidden : styles.pause}`}
+                  onClick={pause}
+                >
+                  <CircleButton
+                    icon={`${status === 'RUNNING' ? 'pause' : 'restart'}`}
+                    bgcolor="green"
+                  />
+                </div>
+                <div
+                  onClick={start}
+                  className={`${status === 'READY' ? styles.start : styles.disabled}`}
+                >
+                  <RecordButton disabled={status !== 'READY' ? true : false}>
+                    Start!
+                  </RecordButton>
+                </div>
+                <div
+                  className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
+                  onClick={cancel}
+                >
+                  <CircleButton />
+                </div>
               </div>
             </section>
           </div>

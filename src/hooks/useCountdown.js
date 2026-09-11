@@ -59,6 +59,10 @@ export function useCountdown() {
     }
   };
 
+  const addTime = (num) => {
+    setInputMinutes((prev) => prev + num);
+  };
+
   const start = async () => {
     try {
       if (status !== 'READY') return;
@@ -169,6 +173,7 @@ export function useCountdown() {
     acceptOnlyNumber,
     isStop,
     earnPoint,
+    addTime,
   };
 
   return value;
