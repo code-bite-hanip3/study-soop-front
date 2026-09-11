@@ -157,7 +157,7 @@ function Focus() {
       </Frame>
 
       {isStop && <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} />}
-      {earnPoint && (
+      {earnPoint !== 0 && (
         <Toast
           imoji={'🎉'}
           text={'포인트를 획득했습니다!.'}
