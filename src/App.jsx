@@ -10,6 +10,7 @@ import { Routes, Route } from 'react-router';
 import { Focus } from './pages/focus';
 import ListPage from './pages/list';
 import { DetailPage } from './pages/detail';
+import CreatePage from './pages/create';
 // import { Point } from './components/Point/Point';
 // import { Button } from './components/Button/BasicButton';
 // import { CircleButton } from './components/Button/CircleButton';
@@ -96,6 +97,7 @@ function App() {
         <Route path="/studies/:studyId" element={<DetailPage />} />
         <Route path="/habits" element={<HabitsPage />} />
         <Route path="/focus" element={<Focus />} />
+        <Route path="/create" element={<CreatePage />} />
       </Routes>
     </main>
   );
