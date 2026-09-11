@@ -1,0 +1,97 @@
+.title {
+  color: var(--black-black_414141, #414141);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+& .content {
+  background-color: #69aef7;
+}
+& .button {
+  background-color: #ffc954;
+}
+
+.habitList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  white-space: nowrap;
+
+  & .editBox {
+    position: relative;
+    width: 60%;
+
+    & .habitContent {
+      width: 100%;
+      height: 54px;
+      border-radius: 20px;
+      background: var(--color-gray-lighter);
+      color: var(--gray-gray_818181, #818181);
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 54px;
+      text-decoration-line: underline;
+      text-decoration-style: solid;
+      text-decoration-skip-ink: none;
+      text-decoration-thickness: auto;
+      text-underline-offset: auto;
+      text-underline-position: from-font;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    & .deleteBtn {
+      display: flex;
+      padding: 12px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      position: absolute;
+      right: -56px;
+      bottom: 50%;
+      transform: translateY(50%);
+      width: 48px;
+      height: 48px;
+      background-image: url(@/assets/icon_trash.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+
+      border-radius: 50%;
+      background-color: var(--pink-pink_FDE0E9, #fde0e9);
+
+      transition: all 0.5s;
+    }
+    & .deleteBtn:active {
+      transform: translateY(70%);
+    }
+  }
+}
+.editBtn {
+  border: 1px solid #000;
+  width: 60%;
+  height: 54px;
+  border-radius: 20px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.Buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}

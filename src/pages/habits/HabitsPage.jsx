@@ -1,8 +1,13 @@
 import styles from './HabitsPage.module.css';
 import { NavButton } from '@/components/Button/NavButton';
 import { HabitList } from '@/components/HabitList/HabitList';
+import { HabitOpenModal } from '@/components/HabitOpenModal';
+import { useState } from 'react';
 
 export function HabitsPage() {
+  //모달창 열고 닫고 상태 관리
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const nowDate = new Date().toLocaleString();
 
   return (
@@ -25,13 +30,21 @@ export function HabitsPage() {
           <div className={styles.todayHabit}>
             <div className={styles.spacer}>여백균형</div>
             <p>오늘의 습관</p>
-            <button className={styles.listEdit}>목록수정</button>
+            <button
+              className={styles.listEdit}
+              onClick={() => setIsModalOpen(true)}
+            >
+              목록수정
+            </button>
           </div>
           <ul className={styles.habitList}>
             <HabitList />
           </ul>
         </div>
       </div>
+      {/* 조건문으로 모달창이 열리고 닫히는걸 구현 */}
+      {isModalOpen && 
+      <HabitOpenModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 }
