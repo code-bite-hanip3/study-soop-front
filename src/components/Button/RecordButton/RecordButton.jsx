@@ -16,6 +16,7 @@ export const RecordButton = ({
   children,
   bgcolor = "primary",
   disabled = false,
+  
 }) => {
   const [record, setRecord] = useState("start");
 

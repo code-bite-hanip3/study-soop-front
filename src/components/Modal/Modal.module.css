@@ -1,0 +1,26 @@
+.wrapModal {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapModal .mainModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 64.8%;
+  /* height: 861px; */
+  /*height 내용 채우면 지워도됨   */
+  padding: 40px 24px;
+  z-index: 200;
+  border-radius: 20px;
+  border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+  background: #fff;
+}

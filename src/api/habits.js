@@ -20,7 +20,13 @@ export const updateHabit = async (habitId, habitData) => {
 };
 
 // DELETE /habits/:habitId (소프트 삭제)
-export const deleteHabit = async (habitId) => {
-  const res = await http.delete(`/habits/${habitId}`);
+export const deleteHabit = async (studyId, habitId) => {
+  const res = await http.delete(`/studies/${studyId}/habits/${habitId}`);
   return res.data;
 };
+
+//PATCH - UPDATE BATCH /studies/:studyId/habits/batch
+export const updateHabitBatch = async (studyId, updates) => {
+  const res = await http.patch(`/studies/${studyId}/habits/batch`, updates);
+  return res.data;
+}

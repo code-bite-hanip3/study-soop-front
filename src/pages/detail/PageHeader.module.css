@@ -1,0 +1,135 @@
+.studyInfo {
+  width: 100%;
+  margin-bottom: 40px;
+}
+.studyInfoHeader {
+  margin-bottom: 24px;
+}
+.studyInfoTopRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap-reverse;
+  gap: 16px;
+}
+.emojiGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.emojiWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+.emoji {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 5px;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+}
+.addButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: 500;
+}
+.actionLinks {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-gray);
+}
+.shareLink,
+.editLink {
+  color: var(--color-green);
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.studyTitleRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.studyTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-black);
+}
+.pageShiftGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+.studyInfoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.descriptionLabel {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-gray);
+}
+.descriptionText {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-black);
+}
+.pointGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pontLabel {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-gray);
+}
+
+@media (width <= 1024px) {
+  .studyInfo {
+    margin-bottom: 24px;
+  }
+  .pageShiftGroup {
+    gap: 8px;
+  }
+  .studyTitleRow {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media (width <= 480px) {
+  .actionLinks {
+    font-size: 14px;
+  }
+}

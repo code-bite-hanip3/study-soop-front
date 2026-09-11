@@ -1,0 +1,36 @@
+.habitCompleted {
+  width: 45%;
+  height: 54px;
+  border-radius: 20px;
+  background: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 54px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  overflow: hidden;
+}
+.habitNotok {
+  width: 45%;
+  height: 54px;
+  border-radius: 20px;
+  background: var(--color-gray-lighter);
+  color: var(--color-gray);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 54px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.habitCompleted:active,
+.habitNotok:active {
+  transform: translateY(5px);
+  user-select: none;
+}
