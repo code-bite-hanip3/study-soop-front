@@ -27,7 +27,7 @@ export const HabitOpenModal = ({ onClose }) => {
     if (error) {
       alert('데이터를 불러오지 못했습니다....ㅠ');
     }
-  });
+  }, [error]);
 
   //사본에서 추가
   const handleAdd = () => {
@@ -78,13 +78,13 @@ export const HabitOpenModal = ({ onClose }) => {
         <div className={styles.habitListWrap}>
           <ul className={styles.habitList}>
             {copyHabit.map((habit) => (
-              <div className={styles.editBox} key={habit.id}>
-                <li className={styles.habitContent}>{habit.name}</li>
+              <li className={styles.editBox} key={habit.id}>
+                <p className={styles.habitContent}>{habit.name}</p>
                 <button
                   className={styles.deleteBtn}
                   onClick={() => handleDelete(habit.id)}
                 ></button>
-              </div>
+              </li>
             ))}
           </ul>
         </div>
