@@ -1,6 +1,6 @@
 import { timer } from '@/api/focusSessions.js';
 import { useEffect, useRef, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router';
 
 const DEFAULT_MINUTES = 25;
 const ALERT_SECONDS = 60;
@@ -14,7 +14,7 @@ export function useCountdown() {
   const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
   // const { studyId } = useParams();
-  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205'; // 테스트 후 삭제
+  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205'; // 스터디 아이디 적용 후 삭제
   const [isStop, setIsStop] = useState(false);
   const [earnPoint, setEarnPoint] = useState(0);
 
