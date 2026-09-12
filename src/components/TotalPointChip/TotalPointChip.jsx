@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 export function TotalPointChip() {
   const [totalPoint, setTotalPoint] = useState(0);
   const { studyId } = useParams();
-
   useEffect(() => {
     if (!studyId) return;
 
@@ -38,7 +37,7 @@ export function TotalPointChip() {
         alt="포인트 칩 이모지"
         className={styles.chipImoji}
       />
-      <span>{totalPoint}P 획득</span>
+      <span>{totalPoint ?? 0}P 획득</span>
     </div>
   );
 }
