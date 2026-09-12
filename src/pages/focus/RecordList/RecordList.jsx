@@ -1,6 +1,8 @@
 import { timer } from '@/api/focusSessions';
 import { useEffect, useRef, useState } from 'react';
 import styles from './RecordList.module.css';
+import dayjs from 'dayjs';
+import { formatToRelativeTime } from '@/utils/koreaServerTime.js';
 
 export function RecordList() {
   const [recordList, setRecordList] = useState([]);
@@ -8,16 +10,6 @@ export function RecordList() {
   const [isLoading, setIsLoading] = useState(false);
   const fetchingOnce = useRef(false); // 배포 이전에 삭제
 
-  // 시간 변환
-  function formatRecordDate(isoString) {
-    const date = new Date(isoString);
-    return new Intl.DateTimeFormat('ko-KR', {
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-    }).format(date);
-  }
   const getRecordList = async (cursorId = '') => {
     try {
       setIsLoading(true);
@@ -50,9 +42,11 @@ export function RecordList() {
           <li key={record.id} className={styles.record}>
             <span className={styles.recordRow}>{record.earnedPoint}점</span>
             <span className={styles.recordRow}>
-              {formatRecordDate(record.updatedAt)}
+              {dayjs(record.updatedAt).format('M월 D일 A h:mm')}
             </span>
-            <span className={styles.recordRow}>5분전</span>
+            <span className={styles.recordRow}>
+              {formatToRelativeTime(record.updatedAt)}
+            </span>
           </li>
         ))}
       </ul>
