@@ -28,7 +28,7 @@
   background-color: var(--color-gray);
 }
 .start::before {
-  content: "";
+  content: '';
   display: inline-block;
   background-image: url(@/assets/icon_play.svg);
   background-repeat: no-repeat;
@@ -36,7 +36,7 @@
   height: 44px;
 }
 .stop::before {
-  content: "";
+  content: '';
   display: inline-block;
   background-image: url(@/assets/icon_stop.svg);
   background-size: contain;
@@ -49,14 +49,23 @@
   background-color: var(--color-gray);
   pointer-events: none;
 }
+
+@media (max-width: 600px) {
+  .button {
+    width: 195px;
+    height: 67px;
+    font-size: 25px;
+  }
+}
+
 @media (width <= 480px) {
   .button {
-    width: 145px;
-    height: 45px;
-    font-size: 18px;
+    width: 195px;
+    height: 67px;
+    font-size: 25px;
   }
   .start::before {
-    content: "";
+    content: '';
     display: inline-block;
     background-image: url(@/assets/icon_play.svg);
     background-size: contain;
@@ -65,7 +74,7 @@
     height: 24px;
   }
   .stop::before {
-    content: "";
+    content: '';
     display: inline-block;
     background-image: url(@/assets/icon_stop.svg);
     background-size: contain;

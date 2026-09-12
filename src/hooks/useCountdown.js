@@ -1,4 +1,6 @@
+import { timer } from '@/api/focusSessions.js';
 import { useEffect, useRef, useState } from 'react';
+// import { useParams } from 'react-router';
 
 const DEFAULT_MINUTES = 25;
 const ALERT_SECONDS = 60;
@@ -6,10 +8,15 @@ const ALERT_SECONDS = 60;
 export function useCountdown() {
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [inputMinutes, setInputMinutes] = useState(DEFAULT_MINUTES);
-  // Status는 'READY', 'RUNNING', 'PAUSED' 세가지만 사용
+  // Status는 'READY', 'RUNNING', 'PAUSED' 'COMPLETED'
   const [status, setStatus] = useState('READY');
   const [timerAlert, setTimerAlert] = useState(false);
+  const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
+  // const { studyId } = useParams();
+  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205'; // 스터디 아이디 적용 후 삭제
+  const [isStop, setIsStop] = useState(false);
+  const [earnPoint, setEarnPoint] = useState(0);
 
   const minutesToSeconds = (minutes) => minutes * 60;
 
@@ -23,7 +30,7 @@ export function useCountdown() {
     let n = Math.floor(Number(num));
     if (isNaN(n) || n <= 0) {
       n = DEFAULT_MINUTES;
-    } else if (n > 99) {
+    } else if (n > 60) {
       n = 60;
     }
     setInputMinutes(n);
@@ -53,24 +60,59 @@ export function useCountdown() {
     }
   };
 
-  const start = () => {
-    if (status !== 'READY') return;
-    calculateValidNum(status);
-    setStatus('RUNNING');
+  const addTime = (num) => {
+    setInputMinutes((prev) => prev + num);
   };
 
-  const pause = () => {
-    if (status === 'RUNNING') {
-      setStatus('PAUSED');
-    } else if (status === 'PAUSED') {
+  const start = async () => {
+    try {
+      if (status !== 'READY') return;
+      setEarnPoint(0);
+      calculateValidNum(status);
       setStatus('RUNNING');
+      const res = await timer.start(studyId);
+      setFocusSessionId(res.id);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const cancel = () => {
-    calculateValidNum(status);
-    setTimerAlert(false);
-    setStatus('READY');
+  const pause = async () => {
+    try {
+      let nextStatus;
+      if (status === 'RUNNING') {
+        nextStatus = 'PAUSED';
+        setStatus('PAUSED');
+        setIsStop(true);
+      } else if (status === 'PAUSED') {
+        nextStatus = 'RUNNING';
+        setStatus('RUNNING');
+        setIsStop(false);
+      }
+      if (!focusSessionId) return;
+      const res = await timer.changeFocusStatus(focusSessionId, nextStatus);
+
+      if (focusSessionId !== res.id) {
+        throw new Error('해당 기록이 아닙니다.');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cancel = async () => {
+    try {
+      calculateValidNum(status);
+      setTimerAlert(false);
+      setStatus('READY');
+      const res = await timer.cancel(focusSessionId);
+      if (focusSessionId !== res.id) {
+        throw new Error('해당 기록이 아닙니다.');
+      }
+      setFocusSessionId(null);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // 1분 이하 빨간색
@@ -98,8 +140,15 @@ export function useCountdown() {
           if (next <= 0) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
+
+            timer
+              .changeFocusStatus(focusSessionId, 'COMPLETED')
+              .then((res) => setEarnPoint(res.earnedPoint))
+              .catch((error) => console.log('성공 처리 실패', error));
+
             setStatus('READY');
             setTimerAlert(false);
+            setFocusSessionId(null);
             return 0;
           }
           underOneMinute(next);
@@ -109,7 +158,7 @@ export function useCountdown() {
     );
 
     return () => clearInterval(intervalRef.current);
-  }, [status]);
+  }, [status, focusSessionId]);
 
   const value = {
     status,
@@ -122,6 +171,9 @@ export function useCountdown() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
+    isStop,
+    earnPoint,
+    addTime,
   };
 
   return value;

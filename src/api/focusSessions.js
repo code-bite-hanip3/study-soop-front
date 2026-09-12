@@ -1,9 +1,8 @@
-// 집중 세션 API (⑤ 담당)
 import { http } from './client.js';
 
-const start = async (focusSessionId, durationSeconds) => {
-  const res = await http.post(`/focus-sessions/${focusSessionId}`, {
-    durationSeconds,
+const start = async (studyId) => {
+  const res = await http.post(`/focus-sessions`, {
+    studyId,
   });
   return res.data;
 };
@@ -20,4 +19,22 @@ const cancel = async (focusSessionId) => {
   return res.data;
 };
 
-export const timer = { start, changeFocusStatus, cancel };
+const getTotalCount = async () => {
+  const res = await http.get(`/focus-sessions/total`);
+  return res.data._sum;
+};
+
+const getRecordList = async (cursorId) => {
+  const res = await http.get(`/focus-sessions`, {
+    params: cursorId ? { cursorId } : {},
+  });
+  return res.data;
+};
+
+export const timer = {
+  start,
+  changeFocusStatus,
+  cancel,
+  getTotalCount,
+  getRecordList,
+};

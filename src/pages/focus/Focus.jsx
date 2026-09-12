@@ -4,6 +4,11 @@ import { RecordButton } from '@/components/Button/RecordButton';
 import { CircleButton } from '@/components/Button/CircleButton';
 import { useCountdown } from '@/hooks/useCountdown.js';
 import { useState } from 'react';
+import { Modal } from '@/components/Modal';
+import { Toast } from '@/components/Toast';
+import { TotalPointChip } from '@/components/TotalPointChip';
+import icon_arrow_right from '@/assets/icon_arrow_right.svg';
+import { RecordList } from './RecordList/RecordList.jsx';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
@@ -24,6 +29,7 @@ const formatInitMinutes = (num) => {
 
 function Focus() {
   const [isEditing, setIsEditing] = useState(false);
+  const [showRecordList, setShowRecordList] = useState(false);
 
   const handleFocus = () => {
     setIsEditing(true);
@@ -45,18 +51,39 @@ function Focus() {
     validInputMinutes,
     inputMinutes,
     acceptOnlyNumber,
+    isStop,
+    earnPoint,
+    addTime,
   } = useCountdown();
 
   return (
-    <Frame>
-      <section className={styles.intro}>
+    <>
+      <Frame>
+        <section className={styles.intro}>
           <div className={styles.title}>
             <p className={styles.userTitle}>연우의 개발공장</p>
-            <div className={styles.linkTag}>오늘의 습관</div>
-            <div className={styles.linkTag}>홈</div>
+            <div className={styles.linkTag}>
+              오늘의 습관 <img src={icon_arrow_right} aria-hidden="true" />
+            </div>
+            <div className={styles.linkTag}>
+              홈
+              <img src={icon_arrow_right} aria-hidden="true" />
+            </div>
           </div>
-          <div className={styles.pointText}>현재까지 획득한 포인트</div>
-          <div className={styles.earnedPoint}>🍀310P 획득</div>
+          <div className={styles.pointAndList}>
+            <div>
+              <div className={styles.pointText}>현재까지 획득한 포인트</div>
+              <div className={styles.earnedPoint}>
+                <TotalPointChip />
+              </div>
+            </div>
+            <button
+              className={styles.listButton}
+              onClick={() => setShowRecordList(true)}
+            >
+              기록 보기
+            </button>
+          </div>
         </section>
         <div className={styles.wrapper}>
           <section className={styles.timer}>
@@ -77,33 +104,70 @@ function Focus() {
               onFocus={handleFocus}
             />
           </section>
-          <section className={styles.button}>
-            <div
-              className={`${status === 'READY' ? styles.hidden : styles.pause}`}
-              onClick={pause}
-            >
-              <CircleButton
-                icon={`${status === 'RUNNING' ? 'pause' : 'restart'}`}
-                bgcolor="green"
-              />
+          <section className={styles.buttons}>
+            <div className={styles.addTimeButtons}>
+              <button
+                onClick={() => addTime(1)}
+                className={styles.addTimeButton}
+              >
+                +1분
+              </button>
+              <button
+                onClick={() => addTime(5)}
+                className={styles.addTimeButton}
+              >
+                +5분
+              </button>
+              <button
+                onClick={() => addTime(10)}
+                className={styles.addTimeButton}
+              >
+                +10분
+              </button>
             </div>
-            <div
-              onClick={start}
-              className={`${status === 'READY' ? styles.start : styles.disabled}`}
-            >
-              <RecordButton disabled={status !== 'READY' ? true : false}>
-                Start!
-              </RecordButton>
-            </div>
-            <div
-              className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
-              onClick={cancel}
-            >
-              <CircleButton />
+            <div className={styles.controls}>
+              <div
+                className={`${status === 'READY' ? styles.hidden : styles.pause}`}
+                onClick={pause}
+              >
+                <CircleButton
+                  icon={`${status === 'RUNNING' ? 'pause' : 'restart'}`}
+                  bgcolor="green"
+                />
+              </div>
+              <div
+                onClick={start}
+                className={`${status === 'READY' ? styles.start : styles.disabled}`}
+              >
+                <RecordButton disabled={status !== 'READY' ? true : false}>
+                  Start!
+                </RecordButton>
+              </div>
+              <div
+                className={`${status === 'READY' ? styles.hidden : styles.cancel}`}
+                onClick={cancel}
+              >
+                <CircleButton />
+              </div>
             </div>
           </section>
         </div>
       </Frame>
+      {showRecordList && (
+        <Modal onClose={() => setShowRecordList(false)}>
+          <RecordList />
+        </Modal>
+      )}
+      {isStop && <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} />}
+      {earnPoint !== 0 && (
+        <Toast
+          imoji={'🎉'}
+          text={'포인트를 획득했습니다!.'}
+          variant={'variant'}
+          number={earnPoint}
+        />
+      )}
+    </>
   );
 }
 
