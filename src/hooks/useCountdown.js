@@ -14,6 +14,7 @@ export function useCountdown() {
   const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
   // const { studyId } = useParams();
+  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205'; // 테스트 후 삭제
   const [isStop, setIsStop] = useState(false);
   const [earnPoint, setEarnPoint] = useState(0);
 
@@ -69,7 +70,7 @@ export function useCountdown() {
       setEarnPoint(0);
       calculateValidNum(status);
       setStatus('RUNNING');
-      const res = await timer.start();
+      const res = await timer.start(studyId);
       setFocusSessionId(res.id);
     } catch (error) {
       console.log(error);
@@ -94,7 +95,6 @@ export function useCountdown() {
       if (focusSessionId !== res.id) {
         throw new Error('해당 기록이 아닙니다.');
       }
-      // setFocusSessionId(res.id);
     } catch (error) {
       console.log(error);
     }

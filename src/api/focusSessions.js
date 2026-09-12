@@ -1,9 +1,9 @@
 import { http } from './client.js';
 
-//  `/study/:${studyId}/focus-sessions/${focusSessionId}`
-
-const start = async () => {
-  const res = await http.post(`/focus-sessions`);
+const start = async (studyId) => {
+  const res = await http.post(`/focus-sessions`, {
+    studyId,
+  });
   return res.data;
 };
 
