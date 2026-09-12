@@ -32,6 +32,13 @@
   --desc-color: #2f2f2f;
 }
 
+.themeBlue {
+  background: #e0f1f5;
+  --title-color: #2f4f7a;
+  --day-color: #6f8aa8;
+  --desc-color: #2f2f2f;
+}
+
 .hasImage {
   --title-color: #ffffff;
   --day-color: #e7e7e7;
