@@ -40,16 +40,24 @@ export function RecordList() {
 
   return (
     <>
+      <div className={styles.listTitle}>
+        <p className={styles.point}>획득한 점수</p>
+        <p className={styles.date}>날짜</p>
+        <p className={styles.time}>경과 시간</p>
+      </div>
       <ul className={styles.recordList}>
         {recordList.map((record) => (
           <li key={record.id} className={styles.record}>
-            <p>{formatRecordDate(record.updatedAt)}</p>
-            <p>획득한 점수: {record.earnedPoint}점</p>
+            <span className={styles.recordRow}>{record.earnedPoint}점</span>
+            <span className={styles.recordRow}>
+              {formatRecordDate(record.updatedAt)}
+            </span>
+            <span className={styles.recordRow}>5분전</span>
           </li>
         ))}
       </ul>
       <button
-        className={styles.more}
+        className={styles.moreButton}
         onClick={() => getRecordList(cursorId)}
         disabled={!cursorId || isLoading}
       >

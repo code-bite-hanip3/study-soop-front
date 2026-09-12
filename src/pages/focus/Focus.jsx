@@ -8,7 +8,7 @@ import { Modal } from '@/components/Modal';
 import { Toast } from '@/components/Toast';
 import { TotalPointChip } from '@/components/TotalPointChip';
 import icon_arrow_right from '@/assets/icon_arrow_right.svg';
-import { RecordList } from './RecordList.jsx';
+import { RecordList } from './RecordList/RecordList.jsx';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
