@@ -29,7 +29,7 @@ const formatInitMinutes = (num) => {
 
 function Focus() {
   const [isEditing, setIsEditing] = useState(false);
-  const [showList, setShowList] = useState(false);
+  const [showRecordList, setShowRecordList] = useState(false);
 
   const handleFocus = () => {
     setIsEditing(true);
@@ -77,15 +77,13 @@ function Focus() {
                 <TotalPointChip />
               </div>
             </div>
-            <button className={styles.listButton} onClick={setShowList}>
+            <button
+              className={styles.listButton}
+              onClick={() => setShowRecordList(true)}
+            >
               기록 보기
             </button>
           </div>
-          {showList && (
-            <Modal>
-              <RecordList />
-            </Modal>
-          )}
         </section>
         <div className={styles.wrapper}>
           <section className={styles.timer}>
@@ -155,7 +153,11 @@ function Focus() {
           </section>
         </div>
       </Frame>
-
+      {showRecordList && (
+        <Modal onClose={() => setShowRecordList(false)}>
+          <RecordList />
+        </Modal>
+      )}
       {isStop && <Toast imoji={'🚨'} text={'집중이 중단되었습니다.'} />}
       {earnPoint !== 0 && (
         <Toast
