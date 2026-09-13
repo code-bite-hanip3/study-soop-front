@@ -29,8 +29,8 @@ async function request(path, { method = 'GET', body } = {}) {
   let payload = body;
   if (WRITE_METHODS.has(method.toUpperCase())) {
     const password = getPassword();
-    if (password) {
-      //  쓰기 요청이면 저장된 password를 Body에 자동 병합
+    // body에 이미 password가 있으면 그대로 두고, 없을 때만 저장된 값으로 채움
+    if (password && body?.password === undefined) {
       payload = { ...(body ?? {}), password };
     }
   }
@@ -57,5 +57,5 @@ export const http = {
   post: (path, body) => request(path, { method: 'POST', body }),
   patch: (path, body) => request(path, { method: 'PATCH', body }),
   put: (path, body) => request(path, { method: 'PUT', body }),
-  delete: (path, body) => request(path, { method: 'DELETE', body }),  //DELETE도 password를 위해 body 허용
+  delete: (path, body) => request(path, { method: 'DELETE', body }), //DELETE도 password를 위해 body 허용
 };

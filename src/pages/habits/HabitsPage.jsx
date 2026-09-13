@@ -1,17 +1,19 @@
 import styles from './HabitsPage.module.css';
 import { NavButton } from '@/components/Button/NavButton';
 import { Frame } from '@/components/Frame';
+import { HabitList } from './components/HabitList';
 import { HabitOpenModal } from './components/HabitOpenModal';
+import { useRealTime } from '@/hooks/useRealTime';
 import { useState } from 'react';
 import { useParams } from 'react-router';
-import { HabitList } from './components/HabitList';
+
 
 export function HabitsPage() {
   //모달창 열고 닫고 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { studyId } = useParams();
 
-  const nowDate = new Date().toLocaleString();
+  const nowDate = useRealTime();
 
   return (
     <>
