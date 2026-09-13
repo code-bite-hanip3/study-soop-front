@@ -91,9 +91,13 @@ export function useCountdown() {
         setIsStop(false);
       }
       if (!focusSessionId) return;
-      const res = await timer.changeFocusStatus(focusSessionId, nextStatus);
+      const res = await timer.changeFocusStatus(
+        focusSessionId,
+        nextStatus,
+        studyId,
+      );
 
-      if (focusSessionId !== res.id) {
+      if (focusSessionId !== res.updatedResult.id) {
         throw new Error('해당 기록이 아닙니다.');
       }
     } catch (error) {
@@ -144,7 +148,7 @@ export function useCountdown() {
 
             timer
               .changeFocusStatus(focusSessionId, 'COMPLETED')
-              .then((res) => setEarnPoint(res.earnedPoint))
+              .then((res) => setEarnPoint(res.pointHistory.earnedPoint))
               .catch((error) => console.log('성공 처리 실패', error));
 
             setStatus('READY');

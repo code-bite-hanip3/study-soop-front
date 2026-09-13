@@ -5,8 +5,8 @@ import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 
 export function TotalPointChip() {
-  const { studyId } = useParams();
-
+  // const { studyId } = useParams();
+  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205';
   const { data } = useQuery({
     queryKey: ['totalPoint', studyId],
     queryFn: () => timer.getTotalCount(studyId),
@@ -14,7 +14,7 @@ export function TotalPointChip() {
     refetchInterval: 20000,
   });
 
-  const totalPoint = data?.earnedPoint ?? 0;
+  const totalPoint = data?.amount ?? 0;
 
   return (
     <div className={styles.chip}>

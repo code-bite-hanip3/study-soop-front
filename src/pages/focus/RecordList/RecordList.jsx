@@ -9,11 +9,16 @@ export function RecordList() {
   const [cursorId, setCursorId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const fetchingOnce = useRef(false); // 배포 이전에 삭제
+  // const { studyId } = useParams();
+  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205';
 
   const getRecordList = async (cursorId = '') => {
     try {
       setIsLoading(true);
-      const { recordList, nextCursor } = await timer.getRecordList(cursorId);
+      const { nextCursor, recordList } = await timer.getRecordList(
+        studyId,
+        cursorId,
+      );
       setCursorId(nextCursor ?? '');
       setRecordList((prev) => [...prev, ...recordList]);
     } catch (error) {
