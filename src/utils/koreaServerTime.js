@@ -13,6 +13,11 @@ export function getTodayDate() {
   return dayjs().tz('Asia/Seoul').format('YYYY-MM-DD');
 }
 
+//실시간 시간 렌더링 때 필요한 양식 지정하기
+export function getFormattedDateTime() {
+  return dayjs().tz('Asia/Seoul').format('YYYY-MM-DD A h:mm');
+}
+
 export function formatToRelativeTime(date) {
   if (!date) return '';
   return dayjs(date).tz('Asia/Seoul').fromNow();
