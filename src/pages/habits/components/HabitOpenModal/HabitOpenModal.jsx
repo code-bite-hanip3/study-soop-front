@@ -1,7 +1,7 @@
 import styles from './HabitOpenModal.module.css';
-import { Modal } from '../Modal';
+import { Modal } from '@/components/Modal';
 import { useHabit } from '@/hooks/useHabit';
-import { Button } from '../Button/BasicButton';
+import { Button } from '@/components/Button/BasicButton/Button';
 import { useEffect, useState } from 'react';
 import { updateHabitBatch } from '@/api/habits';
 import { useParams } from 'react-router';
