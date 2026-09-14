@@ -86,7 +86,7 @@ function CreatePage() {
         description: description.trim(),
         backgroundType,
         backgroundValue,
-        password: studyPassword,
+        password: studyPassword.trim(),
       });
 
       setPassword(studyPassword);
