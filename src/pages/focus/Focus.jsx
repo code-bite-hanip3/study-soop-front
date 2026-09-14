@@ -9,6 +9,7 @@ import { Toast } from '@/components/Toast';
 import { TotalPointChip } from '@/components/TotalPointChip';
 import icon_arrow_right from '@/assets/icon_arrow_right.svg';
 import { RecordList } from './RecordList/RecordList.jsx';
+import { Link, useParams } from 'react-router';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
@@ -30,6 +31,7 @@ const formatInitMinutes = (num) => {
 function Focus() {
   const [isEditing, setIsEditing] = useState(false);
   const [showRecordList, setShowRecordList] = useState(false);
+  const { studyId } = useParams();
 
   const handleFocus = () => {
     setIsEditing(true);
@@ -62,13 +64,13 @@ function Focus() {
         <section className={styles.intro}>
           <div className={styles.title}>
             <p className={styles.userTitle}>연우의 개발공장</p>
-            <div className={styles.linkTag}>
+            <Link to={`/studies/${studyId}/habits`} className={styles.linkTag}>
               오늘의 습관 <img src={icon_arrow_right} aria-hidden="true" />
-            </div>
-            <div className={styles.linkTag}>
+            </Link>
+            <Link to={'/'} className={styles.linkTag}>
               홈
-              <img src={icon_arrow_right} aria-hidden="true" />
-            </div>
+              <img src={icon_arrow_right} alt="" aria-hidden="true" />
+            </Link>
           </div>
           <div className={styles.pointAndList}>
             <div>
