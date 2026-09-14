@@ -109,18 +109,21 @@ function Focus() {
               <button
                 onClick={() => addTime(1)}
                 className={styles.addTimeButton}
+                disabled={status !== 'READY'}
               >
                 +1분
               </button>
               <button
                 onClick={() => addTime(5)}
                 className={styles.addTimeButton}
+                disabled={status !== 'READY'}
               >
                 +5분
               </button>
               <button
                 onClick={() => addTime(10)}
                 className={styles.addTimeButton}
+                disabled={status !== 'READY'}
               >
                 +10분
               </button>
