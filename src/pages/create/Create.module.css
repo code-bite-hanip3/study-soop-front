@@ -47,6 +47,10 @@
   justify-content: center;
 }
 
+.formError {
+  border-color: var(--color-error);
+}
+
 .bgList {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
