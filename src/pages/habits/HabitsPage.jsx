@@ -1,11 +1,12 @@
 import styles from './HabitsPage.module.css';
 import { NavButton } from '@/components/Button/NavButton';
 import { Frame } from '@/components/Frame';
-import { HabitList } from '@/components/HabitList/HabitList';
-import { HabitOpenModal } from '@/components/HabitOpenModal';
+import { HabitList } from './components/HabitList';
+import { HabitOpenModal } from './components/HabitOpenModal';
 import { useRealTime } from '@/hooks/useRealTime';
 import { useState } from 'react';
 import { useParams } from 'react-router';
+
 
 export function HabitsPage() {
   //모달창 열고 닫고 상태 관리
