@@ -3,7 +3,7 @@ import iconSmile from '../../assets/icon_smile.svg';
 import { Point } from '@/components/Point/Point';
 import { NavButton } from '@/components/Button/NavButton';
 
-function PageHeader() {
+function PageHeader({ study }) {
   return (
     <section className={styles.studyInfo}>
       <div className={styles.studyInfoHeader}>
@@ -29,7 +29,9 @@ function PageHeader() {
       </div>
       <div className={styles.infoContainer}>
         <div className={styles.studyTitleRow}>
-          <h2 className={styles.studyTitle}>연우의 개발공장</h2>
+          <h2 className={styles.studyTitle}>
+            {study?.name ?? '데이터를 불러오지 못했습니다'}
+          </h2>
           <div className={styles.pageShiftGroup}>
             <NavButton size="type01" to="/habits">
               오늘의 습관
@@ -44,13 +46,13 @@ function PageHeader() {
           <div className={styles.description}>
             <div className={styles.descriptionLabel}>소개</div>
             <p className={styles.descriptionText}>
-              Slow And Steady Wins The Race! 다들 오늘 하루도 화이팅 :)
+              {study?.description ?? '데이터를 불러오지 못했습니다'}
             </p>
           </div>
 
           <div className={styles.pointGroup}>
             <div className={styles.pointLabel}>현재까지 획득한 포인트</div>
-            <Point />
+            <Point point={study?.pointTotal ?? 0} />
           </div>
         </div>
       </div>
