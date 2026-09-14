@@ -35,6 +35,17 @@ export const HabitOpenModal = ({ onClose }) => {
   const handleAdd = () => {
     if (!inputHabit.trim()) return;
 
+    //습관 이름 중복 확인 (공백, 대소문자 차이도 동일 습관으로 처리)
+    const isSameHabit = copyHabit.find(
+      (h) => h.name.trim().toLowerCase() === inputHabit.trim().toLowerCase(),
+    );
+    if (isSameHabit) {
+      alert('이미 같은 습관이 있어요!');
+      setInputHabit('');
+      return;
+    }
+
+    // 하루 습관 개수 제한
     if (copyHabit.length > MAX_HABIT_COUNT) {
       alert('작심삼일이 되고 싶습니까 휴먼...');
       setInputHabit(''); //클릭했을 때 공란으로 만들어줌
@@ -55,7 +66,7 @@ export const HabitOpenModal = ({ onClose }) => {
 
   //Enter 키로 습관 목록 추가
   const hadleKeyDown = (event) => {
-    if(event.nativeEvent.isComposing) return;
+    if (event.nativeEvent.isComposing) return;
 
     if (event.key === 'Enter') {
       handleAdd();
