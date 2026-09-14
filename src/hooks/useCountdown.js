@@ -61,7 +61,7 @@ export function useCountdown() {
   };
 
   const addTime = (num) => {
-    setInputMinutes((prev) => prev + num);
+    setInputMinutes((prev) => prev + Number(num));
   };
 
   const start = async () => {
