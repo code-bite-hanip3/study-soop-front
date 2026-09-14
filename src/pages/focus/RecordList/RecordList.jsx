@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import styles from './RecordList.module.css';
 import dayjs from 'dayjs';
 import { formatToRelativeTime } from '@/utils/koreaServerTime.js';
+import { useParams } from 'react-router';
 
 export function RecordList() {
   const [recordList, setRecordList] = useState([]);
   const [cursorId, setCursorId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const { studyId } = useParams();
-  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205';
+  const { studyId } = useParams();
 
   const getRecordList = async (cursorId = '') => {
     try {
