@@ -150,6 +150,7 @@ export function useCountdown() {
             setStatus('READY');
             setTimerAlert(false);
             setFocusSessionId(null);
+            setEarnPoint(0);
             return 0;
           }
           underOneMinute(next);
