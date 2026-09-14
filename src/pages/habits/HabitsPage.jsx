@@ -3,6 +3,7 @@ import { NavButton } from '@/components/Button/NavButton';
 import { Frame } from '@/components/Frame';
 import { HabitList } from '@/components/HabitList/HabitList';
 import { HabitOpenModal } from '@/components/HabitOpenModal';
+import { useRealTime } from '@/hooks/useRealTime';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 
@@ -11,7 +12,7 @@ export function HabitsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { studyId } = useParams();
 
-  const nowDate = new Date().toLocaleString();
+  const nowDate = useRealTime();
 
   return (
     <>

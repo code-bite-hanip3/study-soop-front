@@ -29,14 +29,51 @@
 }
 
 
+.recentScroll {
+  position: relative;
+  width: 100%;
+}
+
 .recentRow {
   display: flex;
   gap: 20px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   padding-bottom: 4px;
   min-width: 0;
   max-width: 100%;
-  width:100%;
+  width: 100%;
+}
+
+.recentRow::-webkit-scrollbar {
+  height: 8px;
+}
+
+.recentRow::-webkit-scrollbar-track {
+  background: #ece9e2;
+  border-radius: 4px;
+}
+
+.recentRow::-webkit-scrollbar-thumb {
+  background: #c8c3b8;
+  border-radius: 4px;
+}
+
+/* 힌트 본체 — 기본 숨김, 카드가 가려질 때만 노출 (JS 감지, 모든 브라우저 동일 렌더) */
+.recentScroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, rgba(246, 244, 239, 0.9));
+  pointer-events: none;
+  display: none;
+}
+
+.recentScroll.overflow::after {
+  display: block;
 }
 
 .recentItem {
