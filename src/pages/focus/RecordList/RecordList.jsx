@@ -1,19 +1,23 @@
 import { timer } from '@/api/focusSessions';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './RecordList.module.css';
 import dayjs from 'dayjs';
 import { formatToRelativeTime } from '@/utils/koreaServerTime.js';
+import { useParams } from 'react-router';
 
 export function RecordList() {
   const [recordList, setRecordList] = useState([]);
   const [cursorId, setCursorId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const fetchingOnce = useRef(false); // 배포 이전에 삭제
+  const { studyId } = useParams();
 
   const getRecordList = async (cursorId = '') => {
     try {
       setIsLoading(true);
-      const { recordList, nextCursor } = await timer.getRecordList(cursorId);
+      const { nextCursor, recordList } = await timer.getRecordList(
+        studyId,
+        cursorId,
+      );
       setCursorId(nextCursor ?? '');
       setRecordList((prev) => [...prev, ...recordList]);
     } catch (error) {
@@ -25,10 +29,31 @@ export function RecordList() {
 
   // 페이지 처음
   useEffect(() => {
-    if (fetchingOnce.current) return;
-    fetchingOnce.current = true;
+    let ignore = false;
+    const getRecordList = async (cursorId = '') => {
+      try {
+        setIsLoading(true);
+        const { nextCursor, recordList } = await timer.getRecordList(
+          studyId,
+          cursorId,
+        );
+
+        if (ignore) return;
+
+        setCursorId(nextCursor ?? '');
+        setRecordList((prev) => [...prev, ...recordList]);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     getRecordList();
-  }, []);
+    return () => {
+      ignore = true;
+    };
+  }, [studyId]);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { timer } from '@/api/focusSessions.js';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router';
 // import { useParams } from 'react-router';
 
 const DEFAULT_MINUTES = 25;
@@ -13,8 +14,7 @@ export function useCountdown() {
   const [timerAlert, setTimerAlert] = useState(false);
   const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
-  // const { studyId } = useParams();
-  const studyId = '126d30dc-bf24-4a65-be40-951fb9d1d205'; // 스터디 아이디 적용 후 삭제
+  const { studyId } = useParams();
   const [isStop, setIsStop] = useState(false);
   const [earnPoint, setEarnPoint] = useState(0);
 
@@ -91,9 +91,13 @@ export function useCountdown() {
         setIsStop(false);
       }
       if (!focusSessionId) return;
-      const res = await timer.changeFocusStatus(focusSessionId, nextStatus);
+      const res = await timer.changeFocusStatus(
+        focusSessionId,
+        nextStatus,
+        studyId,
+      );
 
-      if (focusSessionId !== res.id) {
+      if (focusSessionId !== res.updatedResult.id) {
         throw new Error('해당 기록이 아닙니다.');
       }
     } catch (error) {
@@ -144,7 +148,7 @@ export function useCountdown() {
 
             timer
               .changeFocusStatus(focusSessionId, 'COMPLETED')
-              .then((res) => setEarnPoint(res.earnedPoint))
+              .then((res) => setEarnPoint(res.pointHistory.earnedPoint))
               .catch((error) => console.log('성공 처리 실패', error));
 
             setStatus('READY');

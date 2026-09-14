@@ -7,9 +7,10 @@ const start = async (studyId) => {
   return res.data;
 };
 
-const changeFocusStatus = async (focusSessionId, status) => {
+const changeFocusStatus = async (focusSessionId, status, studyId) => {
   const res = await http.patch(`/focus-sessions/${focusSessionId}`, {
     status,
+    studyId,
   });
   return res.data;
 };
@@ -19,14 +20,16 @@ const cancel = async (focusSessionId) => {
   return res.data;
 };
 
-const getTotalCount = async () => {
-  const res = await http.get(`/focus-sessions/total`);
-  return res.data._sum;
+const getTotalCount = async (studyId) => {
+  const res = await http.get(`/focus-sessions/total`, {
+    params: { studyId },
+  });
+  return res.data;
 };
 
-const getRecordList = async (cursorId) => {
+const getRecordList = async (studyId, cursorId) => {
   const res = await http.get(`/focus-sessions`, {
-    params: cursorId ? { cursorId } : {},
+    params: { studyId, ...(cursorId ? { cursorId } : {}) },
   });
   return res.data;
 };
