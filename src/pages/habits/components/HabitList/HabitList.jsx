@@ -8,8 +8,6 @@ import { useParams } from 'react-router';
 
 export function HabitList() {
   const { studyId } = useParams();
-  console.log('studyId', studyId);
-  // '27c6dfa6-d801-4c2b-90d2-d4b394c9dd64'
   const { habits, setHabits, error } = useHabit(studyId);
 
   //더블클릭 방지:먼저 클릭한 데이터의 habitId 추적
@@ -20,6 +18,18 @@ export function HabitList() {
       alert('데이터를 불러오지 못했습니다....ㅠ');
     }
   }, [error]);
+
+  //습관 목록이 없을 경우
+  if (habits.length === 0) {
+    return (
+      <>
+        <div className={styles.habitNothing}>
+          <p>아직 생성된 습관이 없어요</p>
+          <p>목록 수정을 눌러 새로운 습관을 시작해요</p>
+        </div>
+      </>
+    );
+  }
 
   //습관 목록 체크 기능 구현 habitRecord 속성 계속 변경
   const handleHabitToggle = async (habit) => {
