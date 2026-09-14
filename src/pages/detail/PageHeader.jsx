@@ -2,8 +2,11 @@ import styles from './PageHeader.module.css';
 import iconSmile from '../../assets/icon_smile.svg';
 import { Point } from '@/components/Point/Point';
 import { NavButton } from '@/components/Button/NavButton';
+import { useParams } from 'react-router';
 
 function PageHeader({ study }) {
+  const { studyId } = useParams();
+
   return (
     <section className={styles.studyInfo}>
       <div className={styles.studyInfoHeader}>
@@ -33,7 +36,7 @@ function PageHeader({ study }) {
             {study?.name ?? '데이터를 불러오지 못했습니다'}
           </h2>
           <div className={styles.pageShiftGroup}>
-            <NavButton size="type01" to="/habits">
+            <NavButton size="type01" to={`/studies/${studyId}/habits`}>
               오늘의 습관
             </NavButton>
             <NavButton size="type01" to="/focus">
