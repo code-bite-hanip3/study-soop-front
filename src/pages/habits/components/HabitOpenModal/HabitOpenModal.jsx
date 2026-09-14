@@ -7,6 +7,8 @@ import { updateHabitBatch } from '@/api/habits';
 import { useParams } from 'react-router';
 
 export const HabitOpenModal = ({ onClose }) => {
+  const MAX_HABIT_COUNT = 7;
+
   const { studyId } = useParams();
 
   const { habits, error } = useHabit(studyId);
@@ -32,16 +34,32 @@ export const HabitOpenModal = ({ onClose }) => {
   //사본에서 추가
   const handleAdd = () => {
     if (!inputHabit.trim()) return;
-    setCopyHabit((prev) => [
-      ...prev,
-      {
-        id: `fake_${Date.now()}`, //FE에서 쓸 임시 id만 만들어둠 BE로 안보냄
-        name: inputHabit,
-        isNew: true, //이걸로 추가된 걸 구분에서 BE로 보냄
-      },
-    ]);
+
+    if (copyHabit.length > MAX_HABIT_COUNT) {
+      alert('작심삼일이 되고 싶습니까 휴먼...');
+      setInputHabit(''); //클릭했을 때 공란으로 만들어줌
+      return;
+    } else {
+      setCopyHabit((prev) => [
+        ...prev,
+        {
+          id: `fake_${Date.now()}`, //FE에서 쓸 임시 id만 만들어둠 BE로 안보냄
+          name: inputHabit,
+          isNew: true, //이걸로 추가된 걸 구분에서 BE로 보냄
+        },
+      ]);
+    }
 
     setInputHabit('');
+  };
+
+  //Enter 키로 습관 목록 추가
+  const hadleKeyDown = (event) => {
+    if(event.nativeEvent.isComposing) return;
+
+    if (event.key === 'Enter') {
+      handleAdd();
+    }
   };
 
   //사본에서 삭제
@@ -93,6 +111,7 @@ export const HabitOpenModal = ({ onClose }) => {
           type="text"
           value={inputHabit}
           onChange={handleInputChange}
+          onKeyDown={hadleKeyDown}
           placeholder="새로운 습관을 입력해보세요"
         />
         <button className={styles.editBtn} onClick={handleAdd}>
