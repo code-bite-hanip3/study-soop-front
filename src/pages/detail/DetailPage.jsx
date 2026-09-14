@@ -40,7 +40,7 @@ function DetailPage() {
   return (
     <Frame>
       <PageHeader study={study}></PageHeader>
-      <PageTable></PageTable>
+      <PageTable studyId={studyId}></PageTable>
     </Frame>
   );
 }
