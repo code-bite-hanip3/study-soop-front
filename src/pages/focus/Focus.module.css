@@ -5,17 +5,14 @@
 .title {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 1rem;
 }
 .userTitle {
   margin-right: auto;
-  font-size: 3rem;
+  font-size: 2.3rem;
   font-weight: 800;
   color: var(--color-black);
 }
 .linkTag {
-  width: 9rem;
-  height: 3rem;
   border-radius: 0.9375rem;
   border: 1px solid var(--color-gray-light);
   background: #fff;
@@ -24,25 +21,40 @@
   align-items: center;
   font-weight: 500;
   margin-left: 2rem;
+  font-size: 1rem;
+  color: var(--color-gray);
+  padding: 0rem 1rem;
+  max-height: 3rem;
 }
+
+.pointAndList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .pointText {
   color: var(--color-gray);
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 .earnedPoint {
-  display: inline;
-  padding: 0.5rem 0.75rem;
-  border-radius: 3.125rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  font-size: 1.6rem;
+  margin-top: 0.5rem;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+}
+
+.listButton {
+  border-radius: 0.9375rem;
+  border: 1px solid var(--color-gray-light);
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  color: var(--color-gray);
+  align-self: center;
 }
 
 .wrapper {
   border-radius: 20px;
-  border: 1px solid var(--color-black);
+  border: 1px solid var(--color-gray-light);
   margin: auto;
   width: 100%;
   display: flex;
@@ -56,8 +68,16 @@
   margin: 4rem auto;
 }
 
+.content {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--color-black);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
 .timerInput {
-  width: 38rem;
+  width: 42rem;
   height: 14rem;
   color: var(--color-black);
   text-align: center;
@@ -68,19 +88,30 @@
   background-color: transparent;
 }
 
-.content {
-  font-size: 3rem;
-  text-align: center;
-  margin-bottom: 8rem;
-}
-
-.button {
+.controls {
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
   margin-bottom: 5rem;
+}
+.addTimeButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 3rem;
+}
+.addTimeButton {
+  background-color: transparent;
+  width: 9rem;
+  height: 3.5rem;
+  font-size: 1.8rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.9375rem;
+  border: 1px solid var(--color-gray-light);
+  line-height: 120%;
 }
 .start {
   display: block;
@@ -100,4 +131,32 @@
 
 .timerAlert {
   color: red;
+}
+
+@media (max-width: 800px) {
+  .timerInput {
+    width: 32rem;
+    height: 13rem;
+    font-size: 9rem;
+    font-weight: 800;
+  }
+}
+
+@media (max-width: 600px) {
+  .userTitle {
+    font-size: 2.5rem;
+  }
+
+  .linkTag {
+    font-weight: 400;
+    margin-left: 1.4rem;
+    font-size: 1.2rem;
+    padding: 0.7rem 1rem 0.7rem 1.3rem;
+  }
+
+  .timerInput {
+    width: 32rem;
+    height: 13rem;
+    font-weight: 800;
+  }
 }

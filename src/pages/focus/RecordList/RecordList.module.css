@@ -1,0 +1,56 @@
+.listTitle {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 26rem;
+  text-align: center;
+  padding: 0.8rem;
+}
+.point {
+  transform: translateX(10px);
+}
+.date {
+  transform: translateX(-8px);
+}
+.time {
+  transform: translateX(-14px);
+}
+.moreButton {
+  width: 7rem;
+  height: 3rem;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 0.9375rem;
+  color: var(--color-gray);
+  font-size: 1rem;
+}
+.recordList {
+  background-color: var(--color-gray-lighter);
+  list-style: none;
+  padding-left: 0;
+  overflow-y: auto;
+  max-height: 400px;
+  width: 26rem;
+  text-align: center;
+  border-radius: 0.9375rem;
+}
+.record {
+  font-size: 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--color-gray-light);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 10px;
+}
+.recordRow {
+  text-align: center;
+}
+
+/* 스크롤 바 삭제 */
+.recordList {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.recordList::-webkit-scrollbar {
+  display: none;
+}
