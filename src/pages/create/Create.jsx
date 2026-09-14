@@ -41,7 +41,7 @@ function CreatePage() {
   const [nameError, setNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [passwordConfirmError, setPasswordConfirmError] = useState('');
-
+  const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -51,19 +51,21 @@ function CreatePage() {
       return;
     }
 
-    if (!creatorNickname) {
+    setFormError('');
+
+    if (!creatorNickname.trim()) {
       setNicknameError('닉네임을 입력해 주세요');
       return;
     }
     setNicknameError('');
 
-    if (!name) {
+    if (!name.trim()) {
       setNameError('스터디 이름을 입력해 주세요');
       return;
     }
     setNameError('');
 
-    if (studyPassword.length <= 3) {
+    if (studyPassword.trim().length < 4) {
       setPasswordError('비밀번호는 4자 이상 입력해 주세요');
       return;
     }
@@ -79,9 +81,9 @@ function CreatePage() {
       setIsSubmitting(true);
 
       const result = await createStudy({
-        creatorNickname,
-        name,
-        description,
+        creatorNickname: creatorNickname.trim(),
+        name:name.trim(),
+        description: description.trim(),
         backgroundType,
         backgroundValue,
         password: studyPassword,
@@ -91,7 +93,7 @@ function CreatePage() {
 
       navigate(`/studies/${result.id}`);
     } catch (error) {
-      setNameError(error.message);
+      setFormError(error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -191,6 +193,7 @@ function CreatePage() {
         </div>
 
         <div className={styles.underButton}>
+          {formError && <p className={styles.formError}>*{formError}</p>}
           <Button bgcolor="primary" size="type02" disabled={isSubmitting}>
             {isSubmitting ? '생성 중...' : '만들기'}
           </Button>

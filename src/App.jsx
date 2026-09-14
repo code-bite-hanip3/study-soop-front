@@ -19,6 +19,8 @@ function App() {
         <Route path="/studies/:studyId" element={<DetailPage />} />
         <Route path="/studies/:studyId/habits" element={<HabitsPage />} />
         <Route path="/focus" element={<Focus />} />
+      </Route>
+      <Route element={<Layout />}>
         <Route path="/create" element={<CreatePage />} />
       </Route>
     </Routes>
