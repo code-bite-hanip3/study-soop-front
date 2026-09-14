@@ -74,6 +74,7 @@ export function useCountdown() {
       setFocusSessionId(res.id);
     } catch (error) {
       console.log(error);
+      setStatus('READY');
     }
   };
 
