@@ -10,7 +10,7 @@ export function TotalPointChip() {
   const { data } = useQuery({
     queryKey: ['totalPoint', studyId],
     queryFn: () => timer.getTotalCount(studyId),
-    enabled: !studyId,
+    enabled: !!studyId,
     refetchInterval: 20000,
   });
 
