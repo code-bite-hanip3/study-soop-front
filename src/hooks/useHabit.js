@@ -8,7 +8,7 @@ export function useHabit(studyId) {
 
   const getHabits = useCallback(async () => {
     setIsLoading(true);  //로딩 시작
-
+    setError(null); //재시작 했을 때 에러 state 초기화
     try {
       const result = await fetchHabits(studyId);
       setHabits(result.habits);

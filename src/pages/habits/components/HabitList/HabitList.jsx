@@ -1,19 +1,11 @@
-// import { useHabit } from '@/hooks/useHabit';
-import { useState } from 'react';   //useEffect
+import { useState } from 'react';
 import { createHabitRecord, updateHabitRecord } from '@/api/habit-records';
 import styles from './HabitList.module.css';
 import { getTodayDate } from '@/utils/koreaServerTime';
-// import { useParams } from 'react-router';
-// import { useParams } from 'react-router'; -> study페이지 완성되면 적용
 
 export function HabitList({ habits, setHabits }) {
-  // const { studyId } = useParams();
-  // const { habits, setHabits, error } = useHabit(studyId);
-
   //더블클릭 방지:먼저 클릭한 데이터의 habitId 추적
   const [pendingHabit, setPendingHabit] = useState(new Set());
-
- 
 
   //습관 목록이 없을 경우
   if (habits.length === 0) {
