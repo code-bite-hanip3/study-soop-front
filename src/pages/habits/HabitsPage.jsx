@@ -8,11 +8,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useHabit } from '@/hooks/useHabit';
 import { LoadingBar } from './components/LoadingBar';
+import { fetchStudyDetail } from '@/api/studies';
 
 export function HabitsPage() {
   const { studyId } = useParams();
   const { habits, setHabits, error, getHabits, isLoading } = useHabit(studyId);
   const [isModalOpen, setIsModalOpen] = useState(false); //모달창 열고 닫고 상태 관리
+  const [studyName, setStudyName] = useState('');
 
   const nowDate = useRealTime(); //dayjs로 실시간 가져오기
 
@@ -22,12 +24,25 @@ export function HabitsPage() {
     }
   }, [error]);
 
+  useEffect(() => {
+    const getStudyData = async () => {
+      try {
+        const result = await fetchStudyDetail(studyId);
+        setStudyName(result.name);
+      } catch (error) {
+        console.log(error.message);
+        setStudyName('알 수 없는 스터디'); //실패할 경우 스터디 이름자리가 비어있지않게
+      }
+    };
+    getStudyData();
+  }, [studyId]);
+
   return (
     <>
       <Frame>
         <div className={styles.head}>
           <div className={styles.habitNav}>
-            <h2>스터디 이름</h2>
+            <h2>{studyName}</h2>
             <div className={styles.habitBtns}>
               <NavButton to={`/studies/${studyId}/focus`} size="type01">
                 오늘의 집중
@@ -55,7 +70,7 @@ export function HabitsPage() {
               </button>
             </div>
             {isLoading ? (
-              <LoadingBar/>
+              <LoadingBar />
             ) : (
               <ul className={styles.habitList}>
                 <HabitList habits={habits} setHabits={setHabits} />
