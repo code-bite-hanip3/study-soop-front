@@ -14,11 +14,12 @@
   background-color: #ffc954;
 }
 
-.habitListWrap{
+.habitListWrap {
   width: 100%;
   border-radius: 30px;
   margin-bottom: 14px;
   overflow: hidden;
+  transition: all 0.2s ease-in-out;
 }
 .habitListWrap .habitList {
   width: 100%;
@@ -48,10 +49,10 @@
     transparent 100%
   );
 
-
   & .editBox {
     position: relative;
     width: 60%;
+    transition: all 0.2s ease-in-out;
 
     & .habitContent {
       width: 100%;
@@ -67,7 +68,7 @@
       text-underline-offset: 2px;
       text-underline-position: from-font;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease-in-out;
     }
 
     & .deleteBtn {
@@ -119,6 +120,7 @@
 }
 .inputValue::placeholder {
   font-weight: normal;
+  transition: all 0.2s ease-in-out;
 }
 .editBtn {
   border: 1px solid #000;
@@ -137,4 +139,31 @@
   justify-content: space-between;
   align-items: center;
   gap: 24px;
+}
+
+@media (width <=700px){
+  .habitListWrap .habitList{
+    overflow-x: hidden;
+  }
+}
+
+@media (width <= 500px) {
+  /* .habitListWrap {
+    width: 110%;
+  } */
+  .habitListWrap .habitList .editBox .habitContent {
+    font-size: 14px;
+  }
+  .inputValue::placeholder {
+    font-size: 14px;
+  }
+  .habitListWrap .habitList::-webkit-scrollbar {
+    display: none;
+  }
+  .habitListWrap .habitList {
+    align-items: baseline;
+    & .editBox {
+      width: 80%;
+    }
+  }
 }
