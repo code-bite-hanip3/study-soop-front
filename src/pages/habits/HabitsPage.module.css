@@ -11,6 +11,10 @@
 
   & h2 {
     font-size: 32px;
+    flex: 1; /* 남는 공간을 다 차지 */
+    min-width: 0; /* 줄어들 수 있게 허용 */
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
   & .habitBtns {
@@ -79,7 +83,9 @@
   align-items: center;
   width: 45%;
   margin-bottom: 24px;
-  & .spacer, p, .listEdit{
+  & .spacer,
+  p,
+  .listEdit {
     flex-shrink: 0;
   }
 
