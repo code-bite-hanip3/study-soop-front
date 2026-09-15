@@ -21,7 +21,7 @@ const cancel = async (focusSessionId) => {
 };
 
 const getTotalCount = async (studyId) => {
-  const res = await http.get(`/focus-sessions/total`, {
+  const res = await http.get(`/point-histories`, {
     params: { studyId },
   });
   return res.data;
