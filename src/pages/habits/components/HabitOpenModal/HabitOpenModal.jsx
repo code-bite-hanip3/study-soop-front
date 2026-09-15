@@ -55,7 +55,7 @@ export const HabitOpenModal = ({ onClose }) => {
         ...prev,
         {
           id: `fake_${Date.now()}`, //FE에서 쓸 임시 id만 만들어둠 BE로 안보냄
-          name: inputHabit.trim(),  //저장하는 시점에도 공백 제거
+          name: inputHabit.trim(), //저장하는 시점에도 공백 제거
           isNew: true, //이걸로 추가된 걸 구분에서 BE로 보냄
         },
       ]);
@@ -86,10 +86,18 @@ export const HabitOpenModal = ({ onClose }) => {
   //최종 BE로 보내는 기능
   const handleSubmit = async () => {
     try {
+      // <상세페이지에서 password 인증 로직 구현 후>
+      // const password = sessionStorage.getItem(`study_${studyId}_password`);
+      // if (!password) {
+      //   alert('패스워드 정보가 없어요. 다시 로그인 해주세요');
+      //   return;
+      // }
+
       const newHabitList = copyHabit.filter((h) => h.isNew);
       await updateHabitBatch(studyId, {
         removeHabit,
         newHabit: newHabitList.map((h) => ({ name: h.name })),
+        // password,
       });
 
       window.location.reload(); // 페이지 전체 새로고침
