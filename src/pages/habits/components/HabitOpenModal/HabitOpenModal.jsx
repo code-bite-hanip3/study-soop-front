@@ -46,7 +46,7 @@ export const HabitOpenModal = ({ onClose }) => {
     }
 
     // 하루 습관 개수 제한
-    if (copyHabit.length > MAX_HABIT_COUNT) {
+    if (copyHabit.length >= MAX_HABIT_COUNT) {
       alert('작심삼일이 되고 싶습니까 휴먼...');
       setInputHabit(''); //클릭했을 때 공란으로 만들어줌
       return;
@@ -55,7 +55,7 @@ export const HabitOpenModal = ({ onClose }) => {
         ...prev,
         {
           id: `fake_${Date.now()}`, //FE에서 쓸 임시 id만 만들어둠 BE로 안보냄
-          name: inputHabit,
+          name: inputHabit.trim(),  //저장하는 시점에도 공백 제거
           isNew: true, //이걸로 추가된 걸 구분에서 BE로 보냄
         },
       ]);
@@ -65,7 +65,7 @@ export const HabitOpenModal = ({ onClose }) => {
   };
 
   //Enter 키로 습관 목록 추가
-  const hadleKeyDown = (event) => {
+  const handleKeyDown = (event) => {
     if (event.nativeEvent.isComposing) return;
 
     if (event.key === 'Enter') {
@@ -122,7 +122,7 @@ export const HabitOpenModal = ({ onClose }) => {
           type="text"
           value={inputHabit}
           onChange={handleInputChange}
-          onKeyDown={hadleKeyDown}
+          onKeyDown={handleKeyDown}
           placeholder="새로운 습관을 입력해보세요"
         />
         <button className={styles.editBtn} onClick={handleAdd}>
