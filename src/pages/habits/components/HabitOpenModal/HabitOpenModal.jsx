@@ -1,17 +1,19 @@
 import styles from './HabitOpenModal.module.css';
 import { Modal } from '@/components/Modal';
-import { useHabit } from '@/hooks/useHabit';
+// import { useHabit } from '@/hooks/useHabit';
 import { Button } from '@/components/Button/BasicButton/Button';
 import { useEffect, useState } from 'react';
 import { updateHabitBatch } from '@/api/habits';
 import { useParams } from 'react-router';
 
-export const HabitOpenModal = ({ onClose }) => {
+export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
   const MAX_HABIT_COUNT = 7;
 
   const { studyId } = useParams();
 
-  const { habits, error } = useHabit(studyId);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // const { habits} = useHabit(studyId);
   const [copyHabit, setCopyHabit] = useState([]); //사본
   const [removeHabit, setRemoveHabit] = useState([]); // 삭제 습관
   const [inputHabit, setInputHabit] = useState(''); //입력된 추가 습관
@@ -24,12 +26,6 @@ export const HabitOpenModal = ({ onClose }) => {
   useEffect(() => {
     setCopyHabit(habits); //원본 카피 : 사본
   }, [habits]);
-
-  useEffect(() => {
-    if (error) {
-      alert('데이터를 불러오지 못했습니다....ㅠ');
-    }
-  }, [error]);
 
   //사본에서 추가
   const handleAdd = () => {
@@ -85,6 +81,8 @@ export const HabitOpenModal = ({ onClose }) => {
 
   //최종 BE로 보내는 기능
   const handleSubmit = async () => {
+    setIsLoading(true);  //로딩 시작
+
     try {
       const newHabitList = copyHabit.filter((h) => h.isNew);
       await updateHabitBatch(studyId, {
@@ -92,11 +90,13 @@ export const HabitOpenModal = ({ onClose }) => {
         newHabit: newHabitList.map((h) => ({ name: h.name })),
       });
 
-      window.location.reload(); // 페이지 전체 새로고침
-      // onComplete();
+      // window.location.reload(); // 페이지 전체 새로고침
+      onComplete();  //reload 대체
     } catch (error) {
       console.log(error);
       alert('저장에 실패했습니다.');
+    } finally{
+      setIsLoading(false);
     }
   };
 
@@ -132,8 +132,11 @@ export const HabitOpenModal = ({ onClose }) => {
           <Button size="type02" bgcolor="gray" onClick={onClose}>
             취소
           </Button>
-          <Button size="type02" onClick={handleSubmit}>
-            수정완료
+          <Button 
+          size="type02" 
+          onClick={handleSubmit}
+          disabled={isLoading}>
+            {isLoading ? '저장 중 ...' : '수정완료'}
           </Button>
         </div>
       </Modal>
