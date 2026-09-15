@@ -137,6 +137,19 @@ export function useCountdown() {
       return;
     }
 
+    const completeFocusSession = async (focusSessionId, studyId) => {
+      try {
+        const res = await timer.changeFocusStatus(
+          focusSessionId,
+          'COMPLETED',
+          studyId,
+        );
+
+        setEarnPoint(res.updatedResult.earnedPoint);
+      } catch (error) {
+        console.log('성공 처리 실패', error);
+      }
+    };
     intervalRef.current = setInterval(
       () =>
         setRemainingSeconds((prev) => {
@@ -146,10 +159,7 @@ export function useCountdown() {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
 
-            timer
-              .changeFocusStatus(focusSessionId, 'COMPLETED', studyId)
-              .then((res) => setEarnPoint(res.pointHistory.earnedPoint))
-              .catch((error) => console.log('성공 처리 실패', error));
+            completeFocusSession(focusSessionId, studyId);
 
             setStatus('READY');
             setTimerAlert(false);
