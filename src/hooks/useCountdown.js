@@ -110,7 +110,7 @@ export function useCountdown() {
       calculateValidNum(status);
       setTimerAlert(false);
       setStatus('READY');
-      const res = await timer.cancel(focusSessionId);
+      const res = await timer.cancel(focusSessionId, studyId);
       if (focusSessionId !== res.id) {
         throw new Error('해당 기록이 아닙니다.');
       }
