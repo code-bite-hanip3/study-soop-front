@@ -14,10 +14,6 @@
   transform: translateY(-2px);
 }
 
-.themeDefault {
-  border: 1px solid #ececE5;
-}
-
 .themeGreen {
   background: #e3eedd;
   --title-color: #3f7a34;
@@ -36,6 +32,13 @@
   background: #e0f1f5;
   --title-color: #2f4f7a;
   --day-color: #6f8aa8;
+  --desc-color: #2f2f2f;
+}
+
+.themePink {
+  background: #fde0e9;
+  --title-color: #a34e73;
+  --day-color: #b58aa0;
   --desc-color: #2f2f2f;
 }
 

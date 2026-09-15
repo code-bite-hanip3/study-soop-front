@@ -14,10 +14,10 @@ import bg03 from '../../assets/bg/bg03.png';
 import bg04 from '../../assets/bg/bg04.png';
 
 const bgOptions = [
-  { type: 'COLOR', value: 'var(--color-green-light)' },
-  { type: 'COLOR', value: 'var(--color-yellow-light)' },
-  { type: 'COLOR', value: 'var(--color-blue-light)' },
-  { type: 'COLOR', value: 'var(--color-pink-light)' },
+  { type: 'COLOR', value: '#E3EEDD' },
+  { type: 'COLOR', value: '#FBEFD3' },
+  { type: 'COLOR', value: '#E0F1F5' },
+  { type: 'COLOR', value: '#FDE0E9' },
   { type: 'IMAGE', value: bg01 },
   { type: 'IMAGE', value: bg02 },
   { type: 'IMAGE', value: bg03 },
@@ -32,7 +32,7 @@ function CreatePage() {
   const [description, setDescription] = useState('');
   const [backgroundType, setBackgroundType] = useState('COLOR');
   const [backgroundValue, setBackgroundValue] = useState(
-    'var(--color-green-light)',
+    '#E3EEDD',
   );
   const [studyPassword, setStudyPassword] = useState('');
   const [studyPasswordConfirm, setStudyPasswordConfirm] = useState('');
