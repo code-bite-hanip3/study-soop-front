@@ -1,128 +1,70 @@
 import { cx } from 'classix';
 import styles from './PageTable.module.css';
-import sticker01 from '../../assets/sticker/sticker_blue_100_07.svg';
-import stickerEmpty from '../../assets/sticker/sticker_empty.svg';
+import { stickerEmpty } from './constants/stickers';
+import { getStickerByIndex } from './utils/getSticker';
+import { useHabitTable } from '@/hooks/useHabitTable';
 
-function PageTable() {
+function PageTable({ studyId }) {
+  const { habits, habitRecords, error, weekStart, weekEnd } =
+    useHabitTable(studyId);
+
+  const yearMonth = weekStart.format('YYYY년 M월');
+  const dateRange = `${weekStart.format('D일')} ~ ${weekEnd.format('D일')}`;
+  const weekDays = Array.from({ length: 7 }, (_, index) =>
+    weekStart.add(index, 'day'),
+  );
+  const dayNames = ['월', '화', '수', '목', '금', '토', '일'];
+
+  if (error) {
+    return (
+      <div className={styles.habitTable}>습관 기록을 불러오지 못했어요.</div>
+    );
+  }
+
   return (
     <section className={styles.habitTable}>
-      <h2 className={styles.habitTitle}>습관 기록표</h2>
+      <div className={styles.habitHeader}>
+        <div className={styles.yearMonth}>{yearMonth}</div>
+        <h2 className={styles.habitTitle}>습관 기록표</h2>
+        <div>{dateRange}</div>
+      </div>
 
-      {/* 헤더 행 */}
       <div className={styles.row}>
         <div className={styles.habitName}></div>
-        <div className={cx(styles.cell, styles.day)}>월</div>
-        <div className={cx(styles.cell, styles.day)}>화</div>
-        <div className={cx(styles.cell, styles.day)}>수</div>
-        <div className={cx(styles.cell, styles.day)}>목</div>
-        <div className={cx(styles.cell, styles.day)}>금</div>
-        <div className={cx(styles.cell, styles.day)}>토</div>
-        <div className={cx(styles.cell, styles.day)}>일</div>
+        {dayNames.map((day) => (
+          <div className={cx(styles.cell, styles.day)} key={day}>
+            {day}
+          </div>
+        ))}
       </div>
 
-      {/* 습관 1: 미라클모닝 6시 기상 */}
-      <div className={styles.row}>
-        <div className={styles.habitName}>미라클모닝 6시 기상</div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-      </div>
+      {habits.map((habit, index) => {
+        const activeSticker = getStickerByIndex(index);
 
-      {/* 습관 2: 아침 챙겨 먹기 */}
-      <div className={styles.row}>
-        <div className={styles.habitName}>아침 챙겨 먹기</div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-      </div>
+        return (
+          <div className={styles.row} key={habit.id}>
+            <div className={styles.habitName}>{habit.name}</div>
 
-      {/* 습관 3: React 스터디 책 1챕터 읽기 */}
-      <div className={styles.row}>
-        <div className={styles.habitName}>React 스터디 책 1챕터 읽기</div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-      </div>
+            {weekDays.map((day) => {
+              const dateKey = day.format('YYYY-MM-DD');
+              const record = habitRecords.find(
+                (record) =>
+                  record.habitId === habit.id && record.dateKey === dateKey,
+              );
 
-      {/* 습관 4: 스트레칭 (한 번도 안 함) */}
-      <div className={styles.row}>
-        <div className={styles.habitName}>스트레칭</div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={sticker01} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-        <div className={styles.cell}>
-          <img className={styles.sticker} src={stickerEmpty} alt="스티커" />
-        </div>
-      </div>
+              return (
+                <div className={styles.cell} key={dateKey}>
+                  <img
+                    className={styles.sticker}
+                    src={record?.isCompleted ? activeSticker : stickerEmpty}
+                    alt="스티커"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
     </section>
   );
 }
