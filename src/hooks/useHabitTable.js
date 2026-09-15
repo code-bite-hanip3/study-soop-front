@@ -19,14 +19,18 @@ export function useHabitTable(studyId) {
 
     const getHabitsAndRecords = async () => {
       try {
-        const habitsData = await fetchHabits(studyId);
-        setHabits(habitsData.habits);
+        setError(null);
 
-        const recordsData = await fetchHabitRecords({
-          studyId,
-          from: effectWeekStart.format('YYYY-MM-DD'),
-          to: effectWeekEnd.format('YYYY-MM-DD'),
-        });
+        const [habitsData, recordsData] = await Promise.all([
+          fetchHabits(studyId),
+          fetchHabitRecords({
+            studyId,
+            from: effectWeekStart.format('YYYY-MM-DD'),
+            to: effectWeekEnd.format('YYYY-MM-DD'),
+          }),
+        ]);
+
+        setHabits(habitsData.habits);
         setHabitRecords(recordsData.records);
       } catch (error) {
         setError(error.message);
