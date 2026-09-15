@@ -7,6 +7,8 @@ import { updateHabitBatch } from '@/api/habits';
 import { useParams } from 'react-router';
 
 export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
+  const MAX_HABIT_COUNT = 7;
+
   const { studyId } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -28,16 +30,43 @@ export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
   //사본에서 추가
   const handleAdd = () => {
     if (!inputHabit.trim()) return;
-    setCopyHabit((prev) => [
-      ...prev,
-      {
-        id: `fake_${Date.now()}`, //FE에서 쓸 임시 id만 만들어둠 BE로 안보냄
-        name: inputHabit,
-        isNew: true, //이걸로 추가된 걸 구분에서 BE로 보냄
-      },
-    ]);
+
+    //습관 이름 중복 확인 (공백, 대소문자 차이도 동일 습관으로 처리)
+    const isSameHabit = copyHabit.find(
+      (h) => h.name.trim().toLowerCase() === inputHabit.trim().toLowerCase(),
+    );
+    if (isSameHabit) {
+      alert('이미 같은 습관이 있어요!');
+      setInputHabit('');
+      return;
+    }
+
+    // 하루 습관 개수 제한
+    if (copyHabit.length >= MAX_HABIT_COUNT) {
+      alert('작심삼일이 되고 싶습니까 휴먼...');
+      setInputHabit(''); //클릭했을 때 공란으로 만들어줌
+      return;
+    } else {
+      setCopyHabit((prev) => [
+        ...prev,
+        {
+          id: `fake_${Date.now()}`, //FE에서 쓸 임시 id만 만들어둠 BE로 안보냄
+          name: inputHabit.trim(),  //저장하는 시점에도 공백 제거
+          isNew: true, //이걸로 추가된 걸 구분에서 BE로 보냄
+        },
+      ]);
+    }
 
     setInputHabit('');
+  };
+
+  //Enter 키로 습관 목록 추가
+  const handleKeyDown = (event) => {
+    if (event.nativeEvent.isComposing) return;
+
+    if (event.key === 'Enter') {
+      handleAdd();
+    }
   };
 
   //사본에서 삭제
@@ -93,6 +122,7 @@ export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
           type="text"
           value={inputHabit}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           placeholder="새로운 습관을 입력해보세요"
         />
         <button className={styles.editBtn} onClick={handleAdd}>

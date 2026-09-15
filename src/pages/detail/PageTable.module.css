@@ -7,15 +7,24 @@
   transition: all 0.5s ease;
   overflow-x: auto;
 }
+.habitHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.yearMonth {
+  font-size: 14px;
+}
 .habitTitle {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 24px;
   font-weight: 800;
   color: var(--color-black);
 }
 
 .row {
-  display: grid;
   display: grid;
   /* grid-template-columns: 1fr repeat(7, 100px); */
   /* grid-template-columns: 3fr repeat(7, 1fr); */
