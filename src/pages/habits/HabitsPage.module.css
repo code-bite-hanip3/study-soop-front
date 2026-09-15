@@ -11,6 +11,7 @@
 
   & h2 {
     font-size: 32px;
+    white-space: nowrap;
   }
   & .habitBtns {
     display: flex;
