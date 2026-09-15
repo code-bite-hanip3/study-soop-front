@@ -9,6 +9,7 @@ dayjs.extend(isoWeek);
 export function useHabitTable(studyId) {
   const [habits, setHabits] = useState([]);
   const [habitRecords, setHabitRecords] = useState([]);
+  const [loading, setLoading] = useState(true); // 새로 추가 한 부분
   const [error, setError] = useState(null);
   const weekStart = dayjs().startOf('isoWeek');
   const weekEnd = weekStart.add(6, 'day');
@@ -19,6 +20,7 @@ export function useHabitTable(studyId) {
 
     const getHabitsAndRecords = async () => {
       try {
+        setLoading(true); // 새로 추가한 부분
         setError(null);
 
         const [habitsData, recordsData] = await Promise.all([
@@ -34,10 +36,12 @@ export function useHabitTable(studyId) {
         setHabitRecords(recordsData.records);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false); // 성공하든 실패하든 무조건 로딩 종료
       }
     };
     getHabitsAndRecords();
   }, [studyId]);
 
-  return { habits, habitRecords, error, weekStart, weekEnd };
+  return { habits, habitRecords, loading, error, weekStart, weekEnd };
 }
