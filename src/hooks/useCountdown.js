@@ -147,7 +147,7 @@ export function useCountdown() {
             intervalRef.current = null;
 
             timer
-              .changeFocusStatus(focusSessionId, 'COMPLETED')
+              .changeFocusStatus(focusSessionId, 'COMPLETED', studyId)
               .then((res) => setEarnPoint(res.pointHistory.earnedPoint))
               .catch((error) => console.log('성공 처리 실패', error));
 
