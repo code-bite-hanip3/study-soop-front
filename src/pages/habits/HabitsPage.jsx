@@ -4,16 +4,23 @@ import { Frame } from '@/components/Frame';
 import { HabitList } from './components/HabitList';
 import { HabitOpenModal } from './components/HabitOpenModal';
 import { useRealTime } from '@/hooks/useRealTime';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-
+import { useHabit } from '@/hooks/useHabit';
+import { LoadingBar } from './components/LoadingBar';
 
 export function HabitsPage() {
-  //모달창 열고 닫고 상태 관리
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { studyId } = useParams();
+  const { habits, setHabits, error, getHabits, isLoading } = useHabit(studyId);
+  const [isModalOpen, setIsModalOpen] = useState(false); //모달창 열고 닫고 상태 관리
 
-  const nowDate = useRealTime();
+  const nowDate = useRealTime(); //dayjs로 실시간 가져오기
+
+  useEffect(() => {
+    if (error) {
+      alert('데이터를 불러오지 못했습니다....ㅠ');
+    }
+  }, [error]);
 
   return (
     <>
@@ -47,14 +54,25 @@ export function HabitsPage() {
                 목록수정
               </button>
             </div>
-            <ul className={styles.habitList}>
-              <HabitList />
-            </ul>
+            {isLoading ? (
+              <LoadingBar />
+            ) : (
+              <ul className={styles.habitList}>
+                <HabitList habits={habits} setHabits={setHabits} />
+              </ul>
+            )}
           </div>
         </div>
         {/* 조건문으로 모달창이 열리고 닫히는걸 구현 */}
         {isModalOpen && (
-          <HabitOpenModal onClose={() => setIsModalOpen(false)} />
+          <HabitOpenModal
+            onClose={() => setIsModalOpen(false)}
+            habits={habits}
+            onComplete={() => {
+              getHabits(); //수정된 최신 목록 불러오기
+              setIsModalOpen(false); //모달창 닫기
+            }}
+          />
         )}
       </Frame>
     </>

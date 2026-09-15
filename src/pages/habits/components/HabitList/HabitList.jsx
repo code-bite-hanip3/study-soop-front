@@ -1,32 +1,28 @@
-import { useHabit } from '@/hooks/useHabit';
-import { useEffect, useState } from 'react';
+// import { useHabit } from '@/hooks/useHabit';
+import { useState } from 'react';   //useEffect
 import { createHabitRecord, updateHabitRecord } from '@/api/habit-records';
 import styles from './HabitList.module.css';
 import { getTodayDate } from '@/utils/koreaServerTime';
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
 // import { useParams } from 'react-router'; -> study페이지 완성되면 적용
 
-export function HabitList() {
-  const { studyId } = useParams();
-  const { habits, setHabits, error } = useHabit(studyId);
+export function HabitList({ habits, setHabits }) {
+  // const { studyId } = useParams();
+  // const { habits, setHabits, error } = useHabit(studyId);
 
   //더블클릭 방지:먼저 클릭한 데이터의 habitId 추적
   const [pendingHabit, setPendingHabit] = useState(new Set());
 
-  useEffect(() => {
-    if (error) {
-      alert('데이터를 불러오지 못했습니다....ㅠ');
-    }
-  }, [error]);
+ 
 
   //습관 목록이 없을 경우
   if (habits.length === 0) {
     return (
       <>
-        <div className={styles.habitNothing}>
+        <li className={styles.habitNothing}>
           <p>아직 생성된 습관이 없어요</p>
           <p>목록 수정을 눌러 새로운 습관을 시작해요</p>
-        </div>
+        </li>
       </>
     );
   }
