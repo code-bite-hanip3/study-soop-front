@@ -4,9 +4,7 @@ import { Point } from '@/components/Point/Point';
 import { NavButton } from '@/components/Button/NavButton';
 import { useParams } from 'react-router';
 
-function PageHeader({ study }) {
-  const { studyId } = useParams();
-
+function PageHeader({ study, studyId }) {
   return (
     <section className={styles.studyInfo}>
       <div className={styles.studyInfoHeader}>
