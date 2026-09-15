@@ -7,7 +7,7 @@ import { useRealTime } from '@/hooks/useRealTime';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useHabit } from '@/hooks/useHabit';
-import { LoadingBar } from './components/LoadingBar';
+// import { LoadingBar } from './components/LoadingBar';
 
 export function HabitsPage() {
   const { studyId } = useParams();
@@ -55,7 +55,7 @@ export function HabitsPage() {
               </button>
             </div>
             {isLoading ? (
-              <LoadingBar />
+              'Loading...'
             ) : (
               <ul className={styles.habitList}>
                 <HabitList habits={habits} setHabits={setHabits} />

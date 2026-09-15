@@ -1,15 +1,14 @@
 import styles from './LoadingBar.module.css';
-import { ProgressBar } from 'basic-loading';
 
 export function LoadingBar() {
-  const option = {
-    width: 300,
-    speed: 3,
-  };
   return (
     <>
-      <div className={styles.loadingText}>Loading...</div>
-      <ProgressBar option={option} />
+      <div className={styles.wrapper}>
+        <div className={styles.text}>Loading...</div>
+        <div className={styles.loadingBarOuter}>
+          <div className={styles.loadingBar}></div>
+        </div>
+      </div>
     </>
   );
 }
