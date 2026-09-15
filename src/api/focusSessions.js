@@ -15,8 +15,10 @@ const changeFocusStatus = async (focusSessionId, status, studyId) => {
   return res.data;
 };
 
-const cancel = async (focusSessionId) => {
-  const res = await http.delete(`/focus-sessions/${focusSessionId}`);
+const cancel = async (focusSessionId, studyId) => {
+  const res = await http.delete(`/focus-sessions/${focusSessionId}`, {
+    studyId,
+  });
   return res.data;
 };
 
