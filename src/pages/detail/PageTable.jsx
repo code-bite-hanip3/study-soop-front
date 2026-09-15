@@ -5,7 +5,7 @@ import { getStickerByIndex } from './utils/getSticker';
 import { useHabitTable } from '@/hooks/useHabitTable';
 
 function PageTable({ studyId }) {
-  const { habits, habitRecords, error, weekStart, weekEnd } =
+  const { habits, habitRecords, loading, error, weekStart, weekEnd } =
     useHabitTable(studyId);
 
   const yearMonth = weekStart.format('YYYY년 M월');
@@ -15,9 +15,42 @@ function PageTable({ studyId }) {
   );
   const dayNames = ['월', '화', '수', '목', '금', '토', '일'];
 
+  if (loading) {
+    return (
+      <section className={styles.habitTable}>
+        <div className={styles.habitHeader}>
+          <h2 className={styles.habitTitle}>습관 기록표</h2>
+        </div>
+        <div className={styles.emptyState}>
+          습관 기록을 불러오는 중이에요...
+        </div>
+      </section>
+    );
+  }
+
   if (error) {
     return (
-      <div className={styles.habitTable}>습관 기록을 불러오지 못했어요.</div>
+      <section className={styles.habitTable}>
+        <div className={styles.habitHeader}>
+          <h2 className={styles.habitTitle}>습관 기록표</h2>
+        </div>
+        <div className={styles.emptyState}>습관 기록을 불러오지 못했어요.</div>
+      </section>
+    );
+  }
+
+  if (habits.length === 0) {
+    return (
+      <section className={styles.habitTable}>
+        <div className={styles.habitHeader}>
+          <h2 className={styles.habitTitle}>습관 기록표</h2>
+        </div>
+        <div className={styles.emptyState}>
+          아직 습관이 없어요.
+          <br />
+          오늘의 습관에서 습관을 생성해보세요.
+        </div>
+      </section>
     );
   }
 
