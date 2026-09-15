@@ -30,7 +30,12 @@ function PageTable({ studyId }) {
 
   if (error) {
     return (
-      <div className={styles.habitTable}>습관 기록을 불러오지 못했어요.</div>
+      <section className={styles.habitTable}>
+        <div className={styles.habitHeader}>
+          <h2 className={styles.habitTitle}>습관 기록표</h2>
+        </div>
+        <div className={styles.emptyState}>습관 기록을 불러오지 못했어요.</div>
+      </section>
     );
   }
 
