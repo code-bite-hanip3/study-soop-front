@@ -136,11 +136,12 @@
   transition: all 0.1s ease-in-out;
 }
 .Buttons {
-  width: 100%;
+  width: 60%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
+  transition: all 0.1s ease-in-out;
 }
 
 @media (width <=700px){
@@ -166,6 +167,9 @@
     }
   }
   .inputValue, .editBtn{
+    width: 100%;
+  }
+  .Buttons{
     width: 100%;
   }
 }
