@@ -154,6 +154,10 @@
   /* .habitListWrap {
     width: 110%;
   } */
+  .title{
+    font-size: 20px;
+  }
+
   .habitListWrap .habitList .editBox .habitContent {
     font-size: 14px;
   }

@@ -11,6 +11,7 @@
 
   & h2 {
     font-size: 32px;
+    white-space: nowrap;
   }
   & .habitBtns {
     display: flex;
@@ -127,8 +128,16 @@
 @media (width <= 500px) {
   .habitNav {
     flex-direction: column;
+
+    & h2{
+      font-size: 24px;
+    }
   }
   .habitFrame .habitBox .todayHabit {
     width: 120%;
+
+    & p{
+      font-size: 18px;
+    }
   }
 }

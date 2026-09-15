@@ -27,7 +27,7 @@ export function HabitsPage() {
       <Frame>
         <div className={styles.head}>
           <div className={styles.habitNav}>
-            <h2>스터디 이름</h2>
+            <h2>스터디 이름fdafdsafasd</h2>
             <div className={styles.habitBtns}>
               <NavButton to={`/studies/${studyId}/focus`} size="type01">
                 오늘의 집중
