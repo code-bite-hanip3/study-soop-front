@@ -12,9 +12,11 @@ import styles from './Toast.module.css';
 
 export function Toast({ imoji, number, text, variant, className = '' }) {
   const [isToast, setIsToast] = useState(true);
+  const [point, setPoint] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsToast(false), 3000);
+    setPoint(number);
     return () => clearTimeout(timer);
   }, []);
 
@@ -26,7 +28,7 @@ export function Toast({ imoji, number, text, variant, className = '' }) {
     >
       <span className={styles.imoji}>{imoji}</span>
       <span>
-        {number}
+        {point}
         {text}
       </span>
     </div>
