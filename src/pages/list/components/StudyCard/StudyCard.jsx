@@ -14,12 +14,14 @@ const THEME_KEY_BY_HEX = {
   '#E3EEDD': 'green',
   '#FBEFD3': 'yellow',
   '#E0F1F5': 'blue',
+  '#FDE0E9': 'pink',
 };
 
 const THEME_CLASS = {
   green: styles.themeGreen,
   yellow: styles.themeYellow,
   blue: styles.themeBlue,
+  pink: styles.themePink,
 };
 
 const DARK_IMAGES = ['banff', 'calgary', 'canmore', 'sf'];
@@ -67,12 +69,13 @@ function StudyCard({ study, onReact, onVisit }) {
 
   const hasImage = backgroundType === 'IMAGE';
   const thumbnail = hasImage ? extractThumbnailKey(backgroundValue) : '';
-  const themeKey = THEME_KEY_BY_HEX[backgroundValue?.toUpperCase()] ?? '';
+  const thumbnailSrc = THUMBNAILS[thumbnail] ?? backgroundValue;
+  const themeKey = THEME_KEY_BY_HEX[backgroundValue?.toUpperCase()] ?? 'green';
   const reactionItems = mapReactions(reactions);
 
   const cardClassName = [
     styles.card,
-    hasImage ? styles.hasImage : THEME_CLASS[themeKey] || styles.themeDefault,
+    hasImage ? styles.hasImage : THEME_CLASS[themeKey] || styles.themeGreen,
     hasImage && DARK_IMAGES.includes(thumbnail) ? styles.hasImageDark : '',
   ].join(' ');
 
@@ -101,7 +104,7 @@ function StudyCard({ study, onReact, onVisit }) {
       {hasImage && (
         <img
           className={styles.thumbnailImg}
-          src={THUMBNAILS[thumbnail]}
+          src={thumbnailSrc}
           alt=""
           aria-hidden="true"
         />
