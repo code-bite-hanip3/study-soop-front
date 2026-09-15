@@ -1,1 +1,1 @@
-// export { LoadingBar } from './LoadingBar';
+export { LoadingBar } from './LoadingBar';
