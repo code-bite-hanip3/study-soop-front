@@ -11,7 +11,6 @@
 
   & h2 {
     font-size: 32px;
-    white-space: nowrap;
   }
   & .habitBtns {
     display: flex;
@@ -96,6 +95,7 @@
     font-style: normal;
     font-weight: 800;
     line-height: normal;
+    transition: all 0.2s;
   }
   & .listEdit {
     color: var(--gray-gray_818181, #818181);
@@ -129,15 +129,15 @@
   .habitNav {
     flex-direction: column;
 
-    & h2{
+    /* & h2{
       font-size: 24px;
-    }
+    } */
   }
   .habitFrame .habitBox .todayHabit {
     width: 120%;
 
     & p{
-      font-size: 18px;
+      font-size: 22px;
     }
   }
 }
