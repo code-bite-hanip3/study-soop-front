@@ -1,5 +1,4 @@
 import styles from './PageHeader.module.css';
-import iconSmile from '../../assets/icon_smile.svg';
 import { Point } from '@/components/Point/Point';
 import { NavButton } from '@/components/Button/NavButton';
 import { StudyReactions } from './StudyReactions'; // 상단 import 추가
@@ -10,16 +9,6 @@ function PageHeader({ study, studyId }) {
       <div className={styles.studyInfoHeader}>
         <div className={styles.studyInfoTopRow}>
           <StudyReactions studyId={studyId} />
-          {/* <div className={styles.emojiGroup}>
-            <div className={styles.emojiWrapper}>
-              <div className={styles.emoji}>👩🏻‍💻 37</div>
-              <div className={styles.emoji}>👍🏻 11</div>
-              <div className={styles.emoji}>🤩 9</div>
-            </div>
-            <div className={styles.addButton}>
-              <img src={iconSmile} alt="스마일 아이콘" /> 추가
-            </div>
-          </div> */}
           <div className={styles.actionLinks}>
             <button className={styles.shareLink}>공유하기</button>
             <div className={styles.seperator}>|</div>
