@@ -3,13 +3,14 @@ import { Frame } from '@/components/Frame';
 import { RecordButton } from '@/components/Button/RecordButton';
 import { CircleButton } from '@/components/Button/CircleButton';
 import { useCountdown } from '@/hooks/useCountdown.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from '@/components/Modal';
 import { Toast } from '@/components/Toast';
 import { TotalPointChip } from '@/components/TotalPointChip';
 import icon_arrow_right from '@/assets/icon_arrow_right.svg';
 import { RecordList } from './RecordList/RecordList.jsx';
 import { Link, useParams } from 'react-router';
+import { fetchStudyDetail } from '@/api/studies';
 
 // 화면에 보이는 숫자 계산
 const formatTime = (totalSeconds) => {
@@ -31,6 +32,7 @@ const formatInitMinutes = (num) => {
 function Focus() {
   const [isEditing, setIsEditing] = useState(false);
   const [showRecordList, setShowRecordList] = useState(false);
+  const [title, setTitle] = useState('');
   const { studyId } = useParams();
 
   const handleFocus = () => {
@@ -41,6 +43,18 @@ function Focus() {
     setIsEditing(false);
     setInputMinutes(validInputMinutes(inputMinutes));
   };
+
+  useEffect(() => {
+    const fetchTitle = async (studyId) => {
+      try {
+        const res = await fetchStudyDetail(studyId);
+        setTitle(res.name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTitle(studyId);
+  }, [studyId]);
 
   const {
     status,
@@ -63,7 +77,7 @@ function Focus() {
       <Frame>
         <section className={styles.intro}>
           <div className={styles.title}>
-            <p className={styles.userTitle}>연우의 개발공장</p>
+            <p className={styles.userTitle}>{title}</p>
             <Link to={`/studies/${studyId}/habits`} className={styles.linkTag}>
               오늘의 습관 <img src={icon_arrow_right} aria-hidden="true" />
             </Link>

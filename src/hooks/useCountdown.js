@@ -145,7 +145,7 @@ export function useCountdown() {
 
     let ignore = false;
 
-    const completeFocusSession = async () => {
+    const completeFocusSession = async (focusSessionId, studyId) => {
       try {
         const res = await timer.changeFocusStatus(
           focusSessionId,
@@ -163,7 +163,7 @@ export function useCountdown() {
       }
     };
 
-    completeFocusSession();
+    completeFocusSession(focusSessionId, studyId);
 
     return () => (ignore = true);
   }, [remainingSeconds, status, focusSessionId, studyId]);
