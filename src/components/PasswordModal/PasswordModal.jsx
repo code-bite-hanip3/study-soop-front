@@ -26,6 +26,8 @@ function PasswordModal({
       setShowToast(true);
       return;
     }
+    
+    setIsSubmitting(true);
 
     try {
       await verifyStudyPassword(studyId, password);
