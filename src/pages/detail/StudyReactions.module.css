@@ -1,0 +1,113 @@
+.wrapper {
+  position: relative;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-gray-lighter);
+  cursor: pointer;
+}
+
+/* '전체 목록보기' 버튼을 감싸는 wrapper — 이 width가 0→target으로 바뀌면서
+   옆의 '추가' 버튼이 자연스럽게 밀려나는 효과를 만든다 */
+.listButtonWrap {
+  /* overflow: hidden; */
+  transition: width 0.3s ease;
+  flex-shrink: 0;
+}
+
+.listButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-gray-light);
+  color: var(--color-gray);
+  white-space: nowrap; /* wrapper가 좁아도 버튼 자체는 줄바꿈 없이 자기 너비 유지 */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.listButton.fadeIn {
+  opacity: 1;
+}
+
+.addButton {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  cursor: pointer;
+}
+
+/* '뿅' 팝업 애니메이션 */
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.listArea {
+  position: relative;
+}
+
+.fullListPop {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  z-index: 10;
+  animation: popIn 0.25s ease-out;
+  display: grid;
+  grid-template-columns: repeat(4, 58px);
+  gap: 8px;
+  list-style: none;
+  padding: 12px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+.fullListPop .badge {
+  width: 100%;
+  justify-content: center;
+}
+
+.pickerArea {
+  position: relative;
+}
+
+.pickerPop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  z-index: 10;
+  animation: popIn 0.25s ease-out;
+}
+
+.badge.popIn {
+  animation: popIn 0.3s ease-out;
+}

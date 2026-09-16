@@ -1,4 +1,3 @@
-// import styles from './DetailPage.module.css';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { fetchStudyDetail } from '@/api/studies';
