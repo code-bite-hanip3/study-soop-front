@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import styles from './Create.module.css';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import styles from './Edit.module.css';
 import { Panel } from '../../components/Panel';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button/BasicButton';
-import { createStudy } from '../../api/studies.js';
-import { setPassword } from '../../api/client.js';
+import { fetchStudyDetail, updateStudy } from '../../api/studies.js';
+import { getPassword } from '../../api/client.js';
 
 import bgSelectedIcon from '../../assets/icon_bg_selected.svg';
 import bg01 from '../../assets/bg/bg01.png';
@@ -24,23 +24,37 @@ const bgOptions = [
   { type: 'IMAGE', value: bg04 },
 ];
 
-function CreatePage() {
+function EditPage() {
+  const { studyId } = useParams();
   const navigate = useNavigate();
 
-  const [creatorNickname, setCreatorNickname] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [backgroundType, setBackgroundType] = useState('COLOR');
   const [backgroundValue, setBackgroundValue] = useState('#E3EEDD');
-  const [studyPassword, setStudyPassword] = useState('');
-  const [studyPasswordConfirm, setStudyPasswordConfirm] = useState('');
 
-  const [nicknameError, setNicknameError] = useState('');
   const [nameError, setNameError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordConfirmError, setPasswordConfirmError] = useState('');
   const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!getPassword()) {
+      navigate(`/studies/${studyId}`, { replace: true });
+      return;
+    }
+
+    fetchStudyDetail(studyId)
+      .then((study) => {
+        setName(study.name ?? '');
+        setDescription(study.description ?? '');
+        setBackgroundType(study.backgroundType ?? 'COLOR');
+        setBackgroundValue(study.backgroundValue ?? '#E3EEDD');
+      })
+      .catch((error) => setFormError(error.message))
+      .finally(() => setIsLoading(false));
+  }, [studyId, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,45 +65,23 @@ function CreatePage() {
 
     setFormError('');
 
-    if (!creatorNickname.trim()) {
-      setNicknameError('닉네임을 입력해 주세요');
-      return;
-    }
-    setNicknameError('');
-
     if (!name.trim()) {
       setNameError('스터디 이름을 입력해 주세요');
       return;
     }
     setNameError('');
 
-    if (studyPassword.trim().length < 4) {
-      setPasswordError('비밀번호는 4자 이상 입력해 주세요');
-      return;
-    }
-    setPasswordError('');
-
-    if (studyPassword !== studyPasswordConfirm) {
-      setPasswordConfirmError('비밀번호가 일치하지 않습니다');
-      return;
-    }
-    setPasswordConfirmError('');
-
     try {
       setIsSubmitting(true);
 
-      const result = await createStudy({
-        creatorNickname: creatorNickname.trim(),
+      await updateStudy(studyId, {
         name: name.trim(),
         description: description.trim(),
         backgroundType,
         backgroundValue,
-        password: studyPassword,
       });
 
-      setPassword(studyPassword);
-
-      navigate(`/studies/${result.id}`);
+      navigate(`/studies/${studyId}`);
     } catch (error) {
       setFormError(error.message);
     } finally {
@@ -97,19 +89,18 @@ function CreatePage() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <Panel>
+        <p className={styles.statusText}>불러오는 중...</p>
+      </Panel>
+    );
+  }
+
   return (
     <Panel>
       <form onSubmit={handleSubmit}>
-        <h1 className={styles.inputTitle}>스터디 만들기</h1>
-        <div className={styles.inputSpacing}>
-          <Input
-            label={'닉네임'}
-            placeholder={'닉네임을 입력해 주세요'}
-            value={creatorNickname}
-            onChange={(e) => setCreatorNickname(e.target.value)}
-            error={nicknameError}
-          />
-        </div>
+        <h1 className={styles.inputTitle}>스터디 수정하기</h1>
 
         <div className={styles.inputSpacing}>
           <Input
@@ -166,34 +157,10 @@ function CreatePage() {
           })}
         </div>
 
-        <div className={styles.inputSpacing}>
-          <Input
-            label={'비밀번호'}
-            type="password"
-            autoComplete="new-password"
-            placeholder={'비밀번호를 입력해 주세요'}
-            value={studyPassword}
-            onChange={(e) => setStudyPassword(e.target.value)}
-            error={passwordError}
-          />
-        </div>
-
-        <div className={styles.inputSpacing}>
-          <Input
-            label={'비밀번호 확인'}
-            type="password"
-            autoComplete="new-password"
-            placeholder={'비밀번호를 입력해 주세요'}
-            value={studyPasswordConfirm}
-            onChange={(e) => setStudyPasswordConfirm(e.target.value)}
-            error={passwordConfirmError}
-          />
-        </div>
-
         <div className={styles.underButton}>
           {formError && <p className={styles.formError}>*{formError}</p>}
           <Button bgcolor="primary" size="type02" disabled={isSubmitting}>
-            {isSubmitting ? '생성 중...' : '만들기'}
+            {isSubmitting ? '수정 중...' : '수정하기'}
           </Button>
         </div>
       </form>
@@ -201,4 +168,4 @@ function CreatePage() {
   );
 }
 
-export default CreatePage;
+export default EditPage;

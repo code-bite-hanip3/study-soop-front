@@ -1,4 +1,4 @@
-// 스터디 API (③ 담당) 
+// 스터디 API (③ 담당)
 import { http } from './client.js';
 
 // GET /studies?q&sort&page&size
@@ -40,5 +40,11 @@ export const addReaction = async (studyId, emoji) => {
 // GET /studies/:studyId/reactions  → count 내림차순 이모지 순위 (상위 3개는 프론트에서 노출)
 export const fetchReactions = async (studyId) => {
   const res = await http.get(`/studies/${studyId}/reactions`);
+  return res.data;
+};
+
+// PATCH /studies/:studyId  { name, description, backgroundType, backgroundValue }
+export const updateStudy = async (studyId, studyData) => {
+  const res = await http.patch(`/studies/${studyId}`, studyData);
   return res.data;
 };
