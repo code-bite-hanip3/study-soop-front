@@ -24,8 +24,6 @@ const THEME_CLASS = {
   pink: styles.themePink,
 };
 
-const DARK_IMAGES = ['banff', 'calgary', 'canmore', 'sf'];
-
 const THUMBNAILS = {
   listBack,
   sf,
@@ -76,7 +74,7 @@ function StudyCard({ study, onReact, onVisit }) {
   const cardClassName = [
     styles.card,
     hasImage ? styles.hasImage : THEME_CLASS[themeKey] || styles.themeGreen,
-    hasImage && DARK_IMAGES.includes(thumbnail) ? styles.hasImageDark : '',
+    hasImage ? styles.hasImageDark : '',
   ].join(' ');
 
   const handleCardClick = (event) => {

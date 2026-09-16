@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Frame } from '../../components/Frame';
 import SortDropdown from './components/SortDropdown/SortDropdown';
 import StudyCard from './components/StudyCard/StudyCard';
+import StudyCardSkeleton from './components/StudyCardSkeleton/StudyCardSkeleton';
+import MascotLoading from './components/MascotLoading/MascotLoading';
 import { fetchStudies } from '../../api/studies';
 import { useRecentStudies } from '../../hooks/useRecentStudies';
 import styles from './Home.module.css';
@@ -129,7 +131,7 @@ function Home() {
             <h2 className={styles.sectionTitle}>최근 조회한 스터디</h2>
 
             {isRecentLoading ? (
-              <p className={styles.stateText}>불러오는 중이에요...</p>
+              <StudyCardSkeleton count={3} variant="recent" />
             ) : recentStudies.length === 0 ? (
               <p className={styles.stateText}>아직 조회한 스터디가 없어요</p>
             ) : (
@@ -168,7 +170,7 @@ function Home() {
             </div>
 
             {isExploreLoading ? (
-              <p className={styles.stateText}>불러오는 중이에요...</p>
+              <StudyCardSkeleton count={6} />
             ) : exploreStudies.length === 0 ? (
               <p className={styles.stateText}>아직 둘러 볼 스터디가 없어요</p>
             ) : (
@@ -187,7 +189,11 @@ function Home() {
                       onClick={handleLoadMore}
                       disabled={isMoreLoading}
                     >
-                      {isMoreLoading ? '불러오는 중...' : '더보기'}
+                      {isMoreLoading ? (
+                        <MascotLoading size="sm" message="자라는 중..." />
+                      ) : (
+                        '더보기'
+                      )}
                     </button>
                   </div>
                 )}

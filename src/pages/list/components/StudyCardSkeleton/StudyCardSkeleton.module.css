@@ -1,0 +1,157 @@
+.skeletonList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.recentRow {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.recentRow .item {
+  flex: 1 1 calc((100% - 40px) / 3);
+  min-width: 260px;
+}
+
+.card {
+  position: relative;
+  min-height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #e9e6df;
+}
+
+.thumbBlock {
+  position: absolute;
+  inset: 0;
+  background: #e9e6df;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.block {
+  display: block;
+  border-radius: 6px;
+  background: #d8d4cc;
+}
+
+.titleBar {
+  flex: 1;
+  max-width: 160px;
+  height: 20px;
+}
+
+.pointBar {
+  width: 52px;
+  height: 20px;
+}
+
+.dayBar {
+  width: 90px;
+  height: 12px;
+  margin-top: 8px;
+}
+
+.descBar {
+  width: 90%;
+  height: 12px;
+  margin-top: 14px;
+}
+
+.descBarShort {
+  width: 60%;
+  height: 12px;
+  margin-top: 6px;
+}
+
+.reactions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.reactionPill {
+  width: 52px;
+  height: 24px;
+  border-radius: 999px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recentRow .item {
+    flex: 0 0 300px;
+  }
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card::after {
+    animation: none;
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recentRow .item {
+    flex: 0 0 300px;
+  }
+}
+
+@media (max-width: 440px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recentRow .item {
+    flex: 0 0 260px;
+  }
+}
