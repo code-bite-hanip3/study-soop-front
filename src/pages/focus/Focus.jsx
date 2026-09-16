@@ -45,9 +45,13 @@ function Focus() {
   };
 
   useEffect(() => {
-    const fetchTitle = async () => {
-      const res = await fetchStudyDetail(studyId);
-      setTitle(res.name);
+    const fetchTitle = async (studyId) => {
+      try {
+        const res = await fetchStudyDetail(studyId);
+        setTitle(res.name);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchTitle(studyId);
   }, [studyId]);
