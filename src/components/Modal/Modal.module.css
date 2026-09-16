@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
 }
-.wrapModal .mainModal {
+.mainModal {
   display: flex;
   flex-direction: column;
   align-items: center;
