@@ -11,7 +11,6 @@ export function useCountdown() {
   const [inputMinutes, setInputMinutes] = useState(DEFAULT_MINUTES);
   // Status는 'READY', 'RUNNING', 'PAUSED' 'COMPLETED'
   const [status, setStatus] = useState('READY');
-  const [timerAlert, setTimerAlert] = useState(false);
   const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
   const { studyId } = useParams();
@@ -108,7 +107,6 @@ export function useCountdown() {
   const cancel = async () => {
     try {
       calculateValidNum(status);
-      setTimerAlert(false);
       setStatus('READY');
       const res = await timer.cancel(focusSessionId, studyId);
       if (focusSessionId !== res.id) {
@@ -121,16 +119,10 @@ export function useCountdown() {
   };
 
   // 1분 이하 빨간색
-  useEffect(() => {
-    const underOneMinute = (remainingSeconds) => {
-      if (remainingSeconds >= ALERT_SECONDS) {
-        setTimerAlert(false);
-      } else if (remainingSeconds < ALERT_SECONDS) {
-        setTimerAlert(true);
-      }
-    };
-    underOneMinute(remainingSeconds);
-  }, [remainingSeconds]);
+  const timerAlert =
+    status === 'RUNNING' &&
+    remainingSeconds > 0 &&
+    remainingSeconds < ALERT_SECONDS;
 
   // 타이머
   useEffect(() => {
