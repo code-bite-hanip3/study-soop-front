@@ -125,18 +125,14 @@
   list-style: none;
 }
 
-@media (width <= 500px) {
+@media (width <= 480px) {
   .habitNav {
     flex-direction: column;
-
-    /* & h2{
-      font-size: 24px;
-    } */
   }
   .habitFrame .habitBox .todayHabit {
     width: 120%;
 
-    & p{
+    & p {
       font-size: 22px;
     }
   }

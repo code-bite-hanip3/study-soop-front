@@ -150,7 +150,7 @@
   }
 }
 
-@media (width <= 500px) {
+@media (width <= 480px) {
   /* .habitListWrap {
     width: 110%;
   } */
