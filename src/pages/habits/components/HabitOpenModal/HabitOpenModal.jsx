@@ -96,7 +96,8 @@ export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
       onComplete();  //reload 대체
     } catch (error) {
       console.log(error);
-      alert('저장에 실패했습니다.');
+      alert(error.message || '저장에 실패했습니다.');
+      //client.js서버가 message를 errordp 담아줌 -> 상황에 따라 에러메세지가 다르게 나옴
     } finally{
       setIsLoading(false);
     }
