@@ -22,6 +22,7 @@ export function StudyReactions({ studyId }) {
   const [isPickerClosing, setIsPickerClosing] = useState(false);
 
   const [poppingEmoji, setPoppingEmoji] = useState(null);
+  const [reactedEmojis, setReactedEmojis] = useState(new Set());
 
   const listButtonRef = useRef(null);
   const listAreaRef = useRef(null);
@@ -111,8 +112,11 @@ export function StudyReactions({ studyId }) {
   };
 
   const handleReact = async (emoji) => {
+    if (reactedEmojis.has(emoji)) return;
+
     try {
       await react(emoji);
+      setReactedEmojis((prev) => new Set(prev).add(emoji));
       setPoppingEmoji(emoji);
       setTimeout(() => setPoppingEmoji(null), 300);
     } catch {
@@ -150,6 +154,7 @@ export function StudyReactions({ studyId }) {
             key={r.emoji}
             reaction={r}
             isPopping={poppingEmoji === r.emoji}
+            isDisabled={reactedEmojis.has(r.emoji)}
             onClick={() => handleReact(r.emoji)}
           />
         ))}
@@ -189,6 +194,7 @@ export function StudyReactions({ studyId }) {
                       <ReactionBadge
                         reaction={r}
                         isPopping={poppingEmoji === r.emoji}
+                        isDisabled={reactedEmojis.has(r.emoji)}
                         onClick={() => handleReact(r.emoji)}
                       />
                     </li>
@@ -226,12 +232,13 @@ export function StudyReactions({ studyId }) {
   );
 }
 
-function ReactionBadge({ reaction, isPopping, onClick }) {
+function ReactionBadge({ reaction, isPopping, isDisabled, onClick }) {
   return (
     <button
       type="button"
       className={cx(styles.badge, isPopping && styles.popIn)}
       onClick={onClick}
+      disabled={isDisabled}
     >
       <span aria-hidden="true">{reaction.emoji}</span>
       {reaction.count}
