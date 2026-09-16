@@ -18,7 +18,7 @@ export function Toast({ imoji, number, text, variant, className = '' }) {
     const timer = setTimeout(() => setIsToast(false), 3000);
     setPoint(number);
     return () => clearTimeout(timer);
-  }, []);
+  }, [number, text]);
 
   if (!isToast) return null;
 
