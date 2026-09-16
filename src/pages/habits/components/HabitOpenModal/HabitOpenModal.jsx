@@ -32,8 +32,10 @@ export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
     if (!inputHabit.trim()) return;
 
     //습관 이름 중복 확인 (공백, 대소문자 차이도 동일 습관으로 처리)
+    const spaceCheck = (str) => str.replace(/\s+/g, '').toLowerCase();
+
     const isSameHabit = copyHabit.find(
-      (h) => h.name.trim().toLowerCase() === inputHabit.trim().toLowerCase(),
+      (h) => spaceCheck(h.name) === spaceCheck(inputHabit)
     );
     if (isSameHabit) {
       alert('이미 같은 습관이 있어요!');
