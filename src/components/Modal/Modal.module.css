@@ -10,11 +10,12 @@
   justify-content: center;
   align-items: center;
 }
-.wrapModal .mainModal {
+.mainModal {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  max-width: 648px;
   width: 64.8%;
   /* height: 861px; */
   /*height 내용 채우면 지워도됨   */
@@ -23,4 +24,12 @@
   border-radius: 20px;
   border: 1px solid var(--gray-gray_DDDDDD, #ddd);
   background: #fff;
+
+  transition: all 0.2s ease-in-out;
+}
+
+@media (width <=480px) {
+  .wrapModal .mainModal {
+    padding: 20px 16px;
+  }
 }

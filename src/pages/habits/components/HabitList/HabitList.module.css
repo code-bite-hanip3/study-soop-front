@@ -55,8 +55,12 @@
   }
 }
 
-@media (width <= 480px){
-  .habitNothing p{
+@media (width <= 480px) {
+  .habitNothing p {
     font-size: 16px;
+  }
+  .habitCompleted,
+  .habitNotok {
+    width: 100%;
   }
 }
