@@ -48,3 +48,9 @@ export const updateStudy = async (studyId, studyData) => {
   const res = await http.patch(`/studies/${studyId}`, studyData);
   return res.data;
 };
+
+// DELETE /studies/:studyId { password }
+export const deleteStudy = async (studyId, password) => {
+  const res = await http.delete(`/studies/${studyId}`, { password });
+  return res.data;
+};

@@ -5,6 +5,7 @@ import { Point } from '@/components/Point/Point';
 import { NavButton } from '@/components/Button/NavButton';
 import { passwordModal as PasswordModal } from '@/components/PasswordModal';
 import { getPassword, setPassword as setCachedPassword } from '@/api/client';
+import { deleteStudy } from '@/api/studies';
 import { StudyReactions } from './StudyReactions';
 
 const VERIFIED_STUDY_KEY = 'verifiedStudyId';
@@ -14,14 +15,19 @@ function PageHeader({ study, studyId }) {
   const navigate = useNavigate();
   const [pendingAction, setPendingAction] = useState(null);
 
-  const runAction = (action) => {
+  const runAction = async (action, password) => {
     switch (action.type) {
       case 'edit':
-        navigate(`/studies/${studyId}/edit`);
+        // TODO: /studies/:studyId/edit 라우트 준비되면 navigate로 교체
+        alert('수정 기능은 준비 중이에요');
         break;
       case 'delete':
-        // TODO: 다음 PR 때 연결
-        navigate('/');
+        try {
+          await deleteStudy(studyId, password);
+          navigate('/');
+        } catch (err) {
+          alert(err.message ?? '스터디 삭제에 실패했습니다.');
+        }
         break;
       case 'habit':
         navigate(`/studies/${studyId}/habits`);
@@ -42,7 +48,7 @@ function PageHeader({ study, studyId }) {
 
   const handleProtectedAction = (action) => {
     if (CACHE_ALLOWED_ACTIONS.has(action.type) && isVerifiedForThisStudy()) {
-      runAction(action);
+      runAction(action, getPassword());
       return;
     }
     setPendingAction(action);
@@ -140,7 +146,7 @@ function PageHeader({ study, studyId }) {
             setCachedPassword(password);
             localStorage.setItem(VERIFIED_STUDY_KEY, studyId);
             setPendingAction(null);
-            runAction(pendingAction);
+            runAction(pendingAction, password);
           }}
         />
       )}
