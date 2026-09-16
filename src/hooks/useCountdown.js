@@ -11,7 +11,6 @@ export function useCountdown() {
   const [inputMinutes, setInputMinutes] = useState(DEFAULT_MINUTES);
   // Status는 'READY', 'RUNNING', 'PAUSED' 'COMPLETED'
   const [status, setStatus] = useState('READY');
-  const [timerAlert, setTimerAlert] = useState(false);
   const [focusSessionId, setFocusSessionId] = useState(null);
   const intervalRef = useRef(null);
   const { studyId } = useParams();
@@ -108,7 +107,6 @@ export function useCountdown() {
   const cancel = async () => {
     try {
       calculateValidNum(status);
-      setTimerAlert(false);
       setStatus('READY');
       const res = await timer.cancel(focusSessionId, studyId);
       if (focusSessionId !== res.id) {
@@ -121,13 +119,10 @@ export function useCountdown() {
   };
 
   // 1분 이하 빨간색
-  const underOneMinute = (remainingSeconds) => {
-    if (remainingSeconds >= ALERT_SECONDS) {
-      setTimerAlert(false);
-    } else if (remainingSeconds < ALERT_SECONDS) {
-      setTimerAlert(true);
-    }
-  };
+  const timerAlert =
+    status === 'RUNNING' &&
+    remainingSeconds > 0 &&
+    remainingSeconds < ALERT_SECONDS;
 
   // 타이머
   useEffect(() => {
@@ -137,34 +132,41 @@ export function useCountdown() {
       return;
     }
 
-    intervalRef.current = setInterval(
-      () =>
-        setRemainingSeconds((prev) => {
-          const next = prev - 1;
-
-          if (next <= 0) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-
-            timer
-              .changeFocusStatus(focusSessionId, 'COMPLETED')
-              .then((res) => setEarnPoint(res.pointHistory.earnedPoint))
-              .catch((error) => console.log('성공 처리 실패', error));
-
-            setStatus('READY');
-            setTimerAlert(false);
-            setFocusSessionId(null);
-            setEarnPoint(0);
-            return 0;
-          }
-          underOneMinute(next);
-          return next;
-        }),
-      1000,
-    );
+    intervalRef.current = setInterval(() => {
+      setRemainingSeconds((prev) => Math.max(prev - 1, 0));
+    }, 1000);
 
     return () => clearInterval(intervalRef.current);
-  }, [status, focusSessionId]);
+  }, [status]);
+
+  // 성공 처리
+  useEffect(() => {
+    if (status !== 'RUNNING' || remainingSeconds > 0) return;
+
+    let ignore = false;
+
+    const completeFocusSession = async () => {
+      try {
+        const res = await timer.changeFocusStatus(
+          focusSessionId,
+          'COMPLETED',
+          studyId,
+        );
+        if (!ignore) setEarnPoint(res.updatedResult.earnedPoint);
+      } catch (error) {
+        console.log('성공 처리 실패', error);
+      } finally {
+        if (!ignore) {
+          setStatus('READY');
+          setFocusSessionId(null);
+        }
+      }
+    };
+
+    completeFocusSession();
+
+    return () => (ignore = true);
+  }, [remainingSeconds, status, focusSessionId, studyId]);
 
   const value = {
     status,
