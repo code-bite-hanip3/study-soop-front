@@ -78,7 +78,9 @@
   align-items: center;
   width: 45%;
   margin-bottom: 24px;
-  & .spacer, p, .listEdit{
+  & .spacer,
+  p,
+  .listEdit {
     flex-shrink: 0;
   }
 
