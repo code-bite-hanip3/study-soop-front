@@ -22,6 +22,15 @@ export const fetchStudyDetail = async (studyId) => {
   return res.data;
 };
 
+// POST /studies/:studyId/verify-password
+export const verifyStudyPassword = async (studyId, password) => {
+  const res = await http.post(`/studies/${studyId}/verify-password`, {
+    password,
+  });
+
+  return res.data;
+};
+
 // POST /studies/:studyId/reactions  { emoji }
 export const addReaction = async (studyId, emoji) => {
   const res = await http.post(`/studies/${studyId}/reactions`, { emoji });
