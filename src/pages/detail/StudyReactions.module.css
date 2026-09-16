@@ -1,61 +1,23 @@
 .wrapper {
   position: relative;
 }
-
 .badgeRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
-
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border-radius: 999px;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 50px;
   border: none;
   background: var(--color-gray-lighter);
   cursor: pointer;
 }
 
-/* '전체 목록보기' 버튼을 감싸는 wrapper — 이 width가 0→target으로 바뀌면서
-   옆의 '추가' 버튼이 자연스럽게 밀려나는 효과를 만든다 */
-.listButtonWrap {
-  /* overflow: hidden; */
-  transition: width 0.3s ease;
-  flex-shrink: 0;
-}
-
-.listButton {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: none;
-  background: var(--color-gray-light);
-  color: var(--color-gray);
-  white-space: nowrap; /* wrapper가 좁아도 버튼 자체는 줄바꿈 없이 자기 너비 유지 */
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  cursor: pointer;
-}
-
-.listButton.fadeIn {
-  opacity: 1;
-}
-
-.addButton {
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: none;
-  background: var(--color-primary);
-  color: white;
-  cursor: pointer;
-}
-
-/* '뿅' 팝업 애니메이션 */
 @keyframes popIn {
   0% {
     transform: scale(0);
@@ -69,11 +31,57 @@
     opacity: 1;
   }
 }
+@keyframes popOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.listButtonWrap {
+  transition: width 0.4s ease;
+  flex-shrink: 0;
+}
+.listButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 50px;
+  border: none;
+  background: var(--color-gray-light);
+  color: var(--color-gray);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+.listButton.fadeIn {
+  opacity: 1;
+}
+
+.addButton {
+  background: var(--color-green-light);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: 500;
+}
 
 .listArea {
   position: relative;
 }
-
 .fullListPop {
   position: absolute;
   top: 100%;
@@ -94,11 +102,12 @@
   width: 100%;
   justify-content: center;
 }
-
+.fullListPop.popOut {
+  animation: popOut 0.2s ease-in forwards;
+}
 .pickerArea {
   position: relative;
 }
-
 .pickerPop {
   position: absolute;
   top: 100%;
@@ -107,7 +116,55 @@
   z-index: 10;
   animation: popIn 0.25s ease-out;
 }
-
+.pickerPop.popOut {
+  animation: popOut 0.2s ease-in forwards;
+}
 .badge.popIn {
   animation: popIn 0.3s ease-out;
+}
+
+@media (width <= 1024px) {
+  .fullListPop {
+    grid-template-columns: repeat(3, 58px);
+  }
+}
+
+@media (width <= 700px) {
+  .pickerPop {
+    position: fixed;
+    left: 50%;
+    top: unset;
+    right: auto;
+    transform: translateX(-50%);
+    animation: popInCentered 0.25s ease-out;
+  }
+
+  .pickerPop.popOut {
+    animation: popOutCentered 0.2s ease-in forwards;
+  }
+
+  @keyframes popInCentered {
+    0% {
+      transform: translateX(-50%) scale(0);
+      opacity: 0;
+    }
+    70% {
+      transform: translateX(-50%) scale(1.1);
+    }
+    100% {
+      transform: translateX(-50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes popOutCentered {
+    0% {
+      transform: translateX(-50%) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-50%) scale(0);
+      opacity: 0;
+    }
+  }
 }

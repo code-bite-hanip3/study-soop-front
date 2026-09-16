@@ -1,53 +1,82 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { cx } from 'classix';
+import { useReactions } from '@/hooks/useReactions';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { useReactions } from '@/hooks/useReactions';
 import styles from './StudyReactions.module.css';
+import iconSmile from '../../assets/icon_smile.svg';
 
 const VISIBLE_COUNT = 3;
+const CLOSE_ANIMATION_MS = 200;
 
 export function StudyReactions({ studyId }) {
   const { reactions, loading, error, react } = useReactions(studyId);
 
   const [revealStage, setRevealStage] = useState('idle');
-  const [listButtonVisible, setListButtonVisible] = useState(false); // opacity 페이드인 여부
-  const [isListOpen, setIsListOpen] = useState(false); // 전체 목록 팝업
-  const [isPickerOpen, setIsPickerOpen] = useState(false); // 이모지 피커
+  const [listButtonVisible, setListButtonVisible] = useState(false);
+
+  const [isListOpen, setIsListOpen] = useState(false);
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+
+  const [isListClosing, setIsListClosing] = useState(false);
+  const [isPickerClosing, setIsPickerClosing] = useState(false);
+
   const [poppingEmoji, setPoppingEmoji] = useState(null);
 
-  const listButtonRef = useRef(null); // 실제 너비 측정용
-  const listButtonWrapRef = useRef(null); // width transition 걸 wrapper
+  const listButtonRef = useRef(null);
   const listAreaRef = useRef(null);
   const pickerAreaRef = useRef(null);
 
-  // 전체 목록보기 버튼의 실제 너비를 미리 측정해서 wrapper에 세팅
   const [targetWidth, setTargetWidth] = useState(0);
   useLayoutEffect(() => {
     if (listButtonRef.current) {
       setTargetWidth(listButtonRef.current.getBoundingClientRect().width);
     }
-  }, [reactions.length]); // 이모지 개수 바뀌면(+N 숫자 자릿수 변화 등) 다시 측정
+  }, [reactions.length]);
 
-  // 바깥 클릭 시 각각 독립적으로 닫기
+  const openList = () => {
+    setIsListClosing(false);
+    setIsListOpen(true);
+  };
+
+  const closeList = () => {
+    setIsListClosing(true);
+    setTimeout(() => {
+      setIsListOpen(false);
+      setIsListClosing(false);
+    }, CLOSE_ANIMATION_MS);
+  };
+
+  const openPicker = () => {
+    setIsPickerClosing(false);
+    setIsPickerOpen(true);
+  };
+
+  const closePicker = () => {
+    setIsPickerClosing(true);
+    setTimeout(() => {
+      setIsPickerOpen(false);
+      setIsPickerClosing(false);
+    }, CLOSE_ANIMATION_MS);
+  };
+
   useEffect(() => {
     function handleOutsideClick(e) {
       if (
         isListOpen &&
         listAreaRef.current &&
-        // !listAreaRef.current.contains(e.target)
         !listAreaRef.current.contains(e.target) &&
         !pickerAreaRef.current?.contains(e.target)
       ) {
-        setIsListOpen(false);
+        closeList();
       }
       if (
         isPickerOpen &&
         pickerAreaRef.current &&
-        // !pickerAreaRef.current.contains(e.target)
         !pickerAreaRef.current.contains(e.target) &&
         !listAreaRef.current?.contains(e.target)
       ) {
-        setIsPickerOpen(false);
+        closePicker();
       }
     }
     if (isListOpen || isPickerOpen) {
@@ -58,25 +87,27 @@ export function StudyReactions({ studyId }) {
 
   const handleAddClick = () => {
     if (revealStage === 'idle') {
-      setRevealStage('revealing'); // width 0 → target 애니메이션 시작
+      setRevealStage('revealing');
       return;
     }
-    // 이미 다 펼쳐진 상태라면, 추가 버튼은 그냥 피커 토글 역할만
-    setIsPickerOpen((prev) => !prev);
+
+    if (isPickerOpen) {
+      closePicker();
+    } else {
+      openPicker();
+    }
   };
 
-  // width transition이 끝나는 시점 — 여기서 두 가지가 동시에 트리거됨
   const handleWidthTransitionEnd = (e) => {
     if (e.propertyName !== 'width') return;
     setRevealStage('revealed');
-    setListButtonVisible(true); // 전체목록보기 버튼 페이드인 시작
-    setIsPickerOpen(true); // 이모지 피커 pop-in으로 오픈
+    setListButtonVisible(true);
+    openPicker();
   };
 
-  // opacity(페이드인) transition이 끝나는 시점 — 전체 목록 팝업 자동 오픈
   const handleFadeTransitionEnd = (e) => {
     if (e.propertyName !== 'opacity') return;
-    setIsListOpen(true);
+    openList();
   };
 
   const handleReact = async (emoji) => {
@@ -85,12 +116,12 @@ export function StudyReactions({ studyId }) {
       setPoppingEmoji(emoji);
       setTimeout(() => setPoppingEmoji(null), 300);
     } catch {
-      // 3번 항목(토스트)은 나중에 처리
+      // 3번 항목(토스트)은 나중에 처리 할 예정이에요!
     }
   };
 
   const handleEmojiSelect = (emoji) => {
-    setIsListOpen(true); // 새 이모지 추가하면 전체 목록 자동 오픈 유지
+    openList();
     handleReact(emoji.native);
   };
 
@@ -123,10 +154,8 @@ export function StudyReactions({ studyId }) {
           />
         ))}
 
-        {/* width 0 → target 으로 transition, 그 결과로 옆의 '추가' 버튼이 밀려남 */}
         {hiddenCount > 0 && (
           <div
-            ref={listButtonWrapRef}
             className={styles.listButtonWrap}
             style={{
               width: revealStage === 'idle' ? 0 : targetWidth,
@@ -134,22 +163,27 @@ export function StudyReactions({ studyId }) {
             }}
             onTransitionEnd={handleWidthTransitionEnd}
           >
-            {/* 버튼과 전체 목록 패널을 listAreaRef 하나로 묶음 */}
             <div ref={listAreaRef} className={styles.listArea}>
               <button
                 ref={listButtonRef}
                 type="button"
-                className={`${styles.listButton} ${
-                  listButtonVisible ? styles.fadeIn : ''
-                }`}
+                className={cx(
+                  styles.listButton,
+                  listButtonVisible && styles.fadeIn,
+                )}
                 onTransitionEnd={handleFadeTransitionEnd}
-                onClick={() => setIsListOpen((prev) => !prev)}
+                onClick={() => (isListOpen ? closeList() : openList())}
               >
                 +{hiddenCount}
               </button>
 
               {isListOpen && (
-                <ul className={styles.fullListPop}>
+                <ul
+                  className={cx(
+                    styles.fullListPop,
+                    isListClosing && styles.popOut,
+                  )}
+                >
                   {reactions.map((r) => (
                     <li key={r.emoji}>
                       <ReactionBadge
@@ -165,18 +199,20 @@ export function StudyReactions({ studyId }) {
           </div>
         )}
 
-        {/* 추가 버튼과 피커를 pickerAreaRef 하나로 묶음 */}
         <div ref={pickerAreaRef} className={styles.pickerArea}>
           <button
             type="button"
             className={styles.addButton}
             onClick={handleAddClick}
           >
+            <img src={iconSmile} alt="스마일 아이콘" />
             추가
           </button>
 
           {isPickerOpen && (
-            <div className={styles.pickerPop}>
+            <div
+              className={cx(styles.pickerPop, isPickerClosing && styles.popOut)}
+            >
               <Picker
                 data={data}
                 onEmojiSelect={handleEmojiSelect}
@@ -194,7 +230,7 @@ function ReactionBadge({ reaction, isPopping, onClick }) {
   return (
     <button
       type="button"
-      className={`${styles.badge} ${isPopping ? styles.popIn : ''}`}
+      className={cx(styles.badge, isPopping && styles.popIn)}
       onClick={onClick}
     >
       <span aria-hidden="true">{reaction.emoji}</span>
