@@ -1,6 +1,5 @@
 import styles from './HabitOpenModal.module.css';
 import { Modal } from '@/components/Modal';
-// import { useHabit } from '@/hooks/useHabit';
 import { Button } from '@/components/Button/BasicButton/Button';
 import { useEffect, useState } from 'react';
 import { updateHabitBatch } from '@/api/habits';
@@ -13,11 +12,9 @@ export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // const { habits} = useHabit(studyId);
   const [copyHabit, setCopyHabit] = useState([]); //사본
   const [removeHabit, setRemoveHabit] = useState([]); // 삭제 습관
   const [inputHabit, setInputHabit] = useState(''); //입력된 추가 습관
-  // const [newHabit, setNewHabit ] = useState([]); // 최종 수정된 습관 목록
 
   const handleInputChange = (event) => {
     setInputHabit(event.target.value);
