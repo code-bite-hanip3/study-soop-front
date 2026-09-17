@@ -10,6 +10,7 @@ function PasswordModal({
   studyId,
   studyName,
   mode = 'edit',
+  confirmLabel,
   onClose,
   onSuccess,
 }) {
@@ -26,7 +27,7 @@ function PasswordModal({
       setShowToast(true);
       return;
     }
-    
+
     setIsSubmitting(true);
 
     try {
@@ -78,7 +79,8 @@ function PasswordModal({
                 onClick={handleSubmit}
                 disabled={isSubmitting}
               >
-                {mode === 'delete' ? '삭제하기' : '수정하러 가기'}
+                {confirmLabel ??
+                  (mode === 'delete' ? '삭제하기' : '수정하러 가기')}
               </Button>
             </div>
           </div>
