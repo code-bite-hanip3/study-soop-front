@@ -8,7 +8,6 @@
   border: 1px solid var(--color-gray-light);
   border-radius: 20px;
   transition: all 0.5s ease;
-  overflow-x: auto;
 }
 .habitHeader {
   display: flex;
@@ -21,10 +20,15 @@
   font-size: 14px;
 }
 .habitTitle {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-size: 24px;
   font-weight: 800;
   color: var(--color-black);
+}
+.habitDate {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 4px 8px;
+  border-radius: 50px;
 }
 .emptyState {
   position: absolute;
@@ -34,16 +38,15 @@
   align-items: center;
   text-align: center;
 }
-
+.rowWrapper {
+  overflow-x: auto;
+}
 .row {
   display: grid;
-  /* grid-template-columns: 1fr repeat(7, 100px); */
-  /* grid-template-columns: 3fr repeat(7, 1fr); */
   grid-template-columns: minmax(100px, 1fr) repeat(7, minmax(64px, 1fr));
   min-width: fit-content;
   align-items: center;
   justify-items: center;
-  /* padding: 8px 0; */
 }
 .cell.day {
   font-size: 18px;
@@ -57,9 +60,6 @@
   font-size: 18px;
   font-weight: 700;
   color: var(--color-black);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .sticker {
   padding: 14px 20px;
@@ -68,10 +68,6 @@
 @media (width <= 1024px) {
   .habitTable {
     min-height: 460px;
-  }
-
-  .row {
-    /* grid-template-columns: 2fr repeat(7, 1fr); */
   }
 }
 @media (width <= 480px) {
