@@ -4,7 +4,11 @@ import styles from './Edit.module.css';
 import { Panel } from '../../components/Panel';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button/BasicButton';
-import { fetchStudyDetail, updateStudy } from '../../api/studies.js';
+import {
+  fetchStudyDetail,
+  updateStudy,
+  verifyStudyPassword,
+} from '../../api/studies.js';
 import { getPassword, clearPassword } from '../../api/client.js';
 
 import bgSelectedIcon from '../../assets/icon_bg_selected.svg';
@@ -40,19 +44,24 @@ function EditPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!getPassword()) {
+    const password = getPassword();
+
+    if (!password) {
       navigate(`/studies/${studyId}`, { replace: true });
       return;
     }
-
-    fetchStudyDetail(studyId)
+    verifyStudyPassword(studyId, password)
+      .then(() => fetchStudyDetail(studyId))
       .then((study) => {
         setName(study.name ?? '');
         setDescription(study.description ?? '');
         setBackgroundType(study.backgroundType ?? 'COLOR');
         setBackgroundValue(study.backgroundValue ?? '#E3EEDD');
       })
-      .catch((error) => setFormError(error.message))
+      .catch(() => {
+        clearPassword();
+        navigate(`/studies/${studyId}`, { replace: true });
+      })
       .finally(() => setIsLoading(false));
   }, [studyId, navigate]);
 
