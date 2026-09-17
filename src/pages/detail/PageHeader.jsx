@@ -18,8 +18,7 @@ function PageHeader({ study, studyId }) {
   const runAction = async (action, password) => {
     switch (action.type) {
       case 'edit':
-        // TODO: /studies/:studyId/edit 라우트 준비되면 navigate로 교체
-        alert('수정 기능은 준비 중이에요');
+        navigate(`/studies/${studyId}/edit`);
         break;
       case 'delete':
         try {
