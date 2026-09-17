@@ -5,7 +5,7 @@ import { Panel } from '../../components/Panel';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button/BasicButton';
 import { fetchStudyDetail, updateStudy } from '../../api/studies.js';
-import { getPassword } from '../../api/client.js';
+import { getPassword, clearPassword } from '../../api/client.js';
 
 import bgSelectedIcon from '../../assets/icon_bg_selected.svg';
 import bg01 from '../../assets/bg/bg01.png';
@@ -59,9 +59,7 @@ function EditPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isSubmitting) {
-      return;
-    }
+    if (isSubmitting) return;
 
     setFormError('');
 
@@ -83,6 +81,12 @@ function EditPage() {
 
       navigate(`/studies/${studyId}`);
     } catch (error) {
+      if (error.message.includes('비밀번호')) {
+        clearPassword();
+        navigate(`/studies/${studyId}`, { replace: true });
+        return;
+      }
+
       setFormError(error.message);
     } finally {
       setIsSubmitting(false);
