@@ -110,7 +110,7 @@
   align-items: flex-start;
   gap: 8px;
 }
-.pontLabel {
+.pointLabel {
   font-size: 18px;
   font-weight: 400;
   color: var(--color-gray);
