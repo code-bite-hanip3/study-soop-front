@@ -86,18 +86,10 @@ export const HabitOpenModal = ({ onClose, onComplete, habits }) => {
     setIsLoading(true);  //로딩 시작
 
     try {
-      // <상세페이지에서 password 인증 로직 구현 후>
-      // const password = sessionStorage.getItem(`study_${studyId}_password`);
-      // if (!password) {
-      //   alert('패스워드 정보가 없어요. 다시 로그인 해주세요');
-      //   return;
-      // }
-
       const newHabitList = copyHabit.filter((h) => h.isNew);
       await updateHabitBatch(studyId, {
         removeHabit,
         newHabit: newHabitList.map((h) => ({ name: h.name })),
-        // password,
       });
 
       // window.location.reload(); // 페이지 전체 새로고침
