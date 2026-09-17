@@ -59,45 +59,47 @@ function PageTable({ studyId }) {
       <div className={styles.habitHeader}>
         <div className={styles.yearMonth}>{yearMonth}</div>
         <h2 className={styles.habitTitle}>습관 기록표</h2>
-        <div>{dateRange}</div>
+        <div className={styles.habitDate}>{dateRange}</div>
       </div>
 
-      <div className={styles.row}>
-        <div className={styles.habitName}></div>
-        {dayNames.map((day) => (
-          <div className={cx(styles.cell, styles.day)} key={day}>
-            {day}
-          </div>
-        ))}
+      <div className={styles.rowWrapper}>
+        <div className={styles.row}>
+          <div className={styles.habitName}></div>
+          {dayNames.map((day) => (
+            <div className={cx(styles.cell, styles.day)} key={day}>
+              {day}
+            </div>
+          ))}
+        </div>
+
+        {habits.map((habit, index) => {
+          const activeSticker = getStickerByIndex(index);
+
+          return (
+            <div className={styles.row} key={habit.id}>
+              <div className={styles.habitName}>{habit.name}</div>
+
+              {weekDays.map((day) => {
+                const dateKey = day.format('YYYY-MM-DD');
+                const record = habitRecords.find(
+                  (record) =>
+                    record.habitId === habit.id && record.dateKey === dateKey,
+                );
+
+                return (
+                  <div className={styles.cell} key={dateKey}>
+                    <img
+                      className={styles.sticker}
+                      src={record?.isCompleted ? activeSticker : stickerEmpty}
+                      alt="스티커"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
-
-      {habits.map((habit, index) => {
-        const activeSticker = getStickerByIndex(index);
-
-        return (
-          <div className={styles.row} key={habit.id}>
-            <div className={styles.habitName}>{habit.name}</div>
-
-            {weekDays.map((day) => {
-              const dateKey = day.format('YYYY-MM-DD');
-              const record = habitRecords.find(
-                (record) =>
-                  record.habitId === habit.id && record.dateKey === dateKey,
-              );
-
-              return (
-                <div className={styles.cell} key={dateKey}>
-                  <img
-                    className={styles.sticker}
-                    src={record?.isCompleted ? activeSticker : stickerEmpty}
-                    alt="스티커"
-                  />
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
     </section>
   );
 }
