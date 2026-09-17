@@ -10,6 +10,7 @@ import { Focus } from './pages/focus';
 import ListPage from './pages/list';
 import { DetailPage } from './pages/detail';
 import CreatePage from './pages/create';
+import { EditPage } from './pages/edit/Edit';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       </Route>
       <Route element={<Layout />}>
         <Route path="/create" element={<CreatePage />} />
+        <Route path="/studies/:studyId/edit" element={<EditPage />} />
       </Route>
     </Routes>
   );
